@@ -1,0 +1,23 @@
+//
+//  inke-Prefix.pch
+//  inke
+//
+//  Created by Sam on 12/5/16.
+//  Copyright © 2016 Zhejiang University of Tech. All rights reserved.
+//
+
+#ifndef inke_Prefix_pch
+#define inke_Prefix_pch
+
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "Masonry.h"
+#import "YYKit.h"
+#import "APIConfig.h"
+#import "MJExtension.h"
+#import "UIImageView+SDWebImage.h"
+#import "SDWebImageManager.h"
+
+#endif /* inke_Prefix_pch */
