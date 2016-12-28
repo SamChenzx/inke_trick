@@ -10,12 +10,15 @@
 #import "SamLiveCell.h"
 #import "SamLive.h"
 #import "SamPlayerViewController.h"
+#import "SamActivitiesView.h"
 
 static NSString * identifier = @"focus";
+static NSString * headerIdentifier = @"focusHeader";
 
 @interface SamFocusViewController ()
 
 @property(nonatomic, strong) NSArray *dataList;
+@property(nonatomic, strong) SamActivitiesView *activitiesView;
 
 @end
 
@@ -30,10 +33,17 @@ static NSString * identifier = @"focus";
     [self loadData];
 }
 
+-(SamActivitiesView *)activitiesView
+{
+    if (!_activitiesView) {
+        _activitiesView = [SamActivitiesView loadActivitiesView];
+    }
+    return _activitiesView;
+}
+
 -(void) initUI
 {
     [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier] ;
-    
 }
 
 -(void) loadData
@@ -54,8 +64,6 @@ static NSString * identifier = @"focus";
 
 #pragma mark TableView staff
 
-
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return self.dataList.count;
@@ -74,9 +82,7 @@ static NSString * identifier = @"focus";
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SamLiveCell" owner:self options:nil] lastObject];
     }
     cell.live = self.dataList[indexPath.row];
-    
-    
-    
+
     return cell;
 }
 
@@ -85,6 +91,20 @@ static NSString * identifier = @"focus";
     CGFloat cellHeight;
     cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
     return cellHeight;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return self.activitiesView;
+    }
+    
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kScreenHeight*0.3;
 }
 
 #pragma mark TableView delegate

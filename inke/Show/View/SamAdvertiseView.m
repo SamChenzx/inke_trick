@@ -43,11 +43,8 @@
 
 + (instancetype) loadAdvertiseView
 {
-    
     return [[[NSBundle mainBundle] loadNibNamed:@"SamAdvertiseView" owner:self options:nil] lastObject];
 }
-
-
 
 // advertise init
 - (void)awakeFromNib

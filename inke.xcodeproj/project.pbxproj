@@ -45,8 +45,6 @@
 		225449461DF851160055BCA0 /* MJExtensionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 225449451DF851160055BCA0 /* MJExtensionConfig.m */; };
 		2254494D1DF902AD0055BCA0 /* SamLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254494B1DF902AD0055BCA0 /* SamLiveCell.m */; };
 		2254494E1DF902AD0055BCA0 /* SamLiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */; };
-		22741CAF1E0FB8500052A197 /* SamScrollPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22741CAE1E0FB8500052A197 /* SamScrollPageView.m */; };
-		22741CB11E0FB86D0052A197 /* SamScrollPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22741CB01E0FB86D0052A197 /* SamScrollPageView.xib */; };
 		22741CBE1E0FF9130052A197 /* SamTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22741CBD1E0FF9130052A197 /* SamTestView.m */; };
 		22741CC01E0FF9240052A197 /* SamTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22741CBF1E0FF9240052A197 /* SamTestView.xib */; };
 		22741CCB1E10F6630052A197 /* SamNearbyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22741CC91E10F6630052A197 /* SamNearbyHeaderView.m */; };
@@ -103,6 +101,8 @@
 		22C76E521DEF1BC2003A7518 /* SamMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C76E501DEF1BC2003A7518 /* SamMainViewController.m */; };
 		22C76E531DEF1BC2003A7518 /* SamMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C76E511DEF1BC2003A7518 /* SamMainViewController.xib */; };
 		22C76E5B1DEF1D51003A7518 /* SamBaseNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C76E5A1DEF1D51003A7518 /* SamBaseNavViewController.m */; };
+		22DAE84F1E12129E00F14BBD /* SamActivitiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */; };
+		22DAE8511E1241ED00F14BBD /* SamActivitiesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */; };
 		22F693771E096A080083BAAE /* LFLivePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F693761E096A080083BAAE /* LFLivePreview.m */; };
 		B85656C18A038563AEB6009A /* libPods-inke.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1762FD23C83472EC2F856E53 /* libPods-inke.a */; };
 		D175DA9CB974583158ED0A7D /* libPods-inkeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF2FF6EB5425482BD86D9C7 /* libPods-inkeTests.a */; };
@@ -190,9 +190,6 @@
 		2254494A1DF902AD0055BCA0 /* SamLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLiveCell.h; sourceTree = "<group>"; };
 		2254494B1DF902AD0055BCA0 /* SamLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLiveCell.m; sourceTree = "<group>"; };
 		2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamLiveCell.xib; sourceTree = "<group>"; };
-		22741CAD1E0FB8500052A197 /* SamScrollPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamScrollPageView.h; sourceTree = "<group>"; };
-		22741CAE1E0FB8500052A197 /* SamScrollPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamScrollPageView.m; sourceTree = "<group>"; };
-		22741CB01E0FB86D0052A197 /* SamScrollPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamScrollPageView.xib; sourceTree = "<group>"; };
 		22741CBC1E0FF9130052A197 /* SamTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTestView.h; sourceTree = "<group>"; };
 		22741CBD1E0FF9130052A197 /* SamTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTestView.m; sourceTree = "<group>"; };
 		22741CBF1E0FF9240052A197 /* SamTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamTestView.xib; sourceTree = "<group>"; };
@@ -288,6 +285,9 @@
 		22C76E511DEF1BC2003A7518 /* SamMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamMainViewController.xib; sourceTree = "<group>"; };
 		22C76E591DEF1D51003A7518 /* SamBaseNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamBaseNavViewController.h; sourceTree = "<group>"; };
 		22C76E5A1DEF1D51003A7518 /* SamBaseNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamBaseNavViewController.m; sourceTree = "<group>"; };
+		22DAE84D1E12129E00F14BBD /* SamActivitiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamActivitiesView.h; sourceTree = "<group>"; };
+		22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamActivitiesView.m; sourceTree = "<group>"; };
+		22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamActivitiesView.xib; sourceTree = "<group>"; };
 		22F693751E096A080083BAAE /* LFLivePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFLivePreview.h; sourceTree = "<group>"; };
 		22F693761E096A080083BAAE /* LFLivePreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFLivePreview.m; sourceTree = "<group>"; };
 		2434F0A613EAC3282535845E /* Pods-inkeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inkeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-inkeUITests/Pods-inkeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -748,12 +748,12 @@
 				2236FA461E0401C2003529C6 /* SamAdvertiseView.h */,
 				2236FA471E0401C2003529C6 /* SamAdvertiseView.m */,
 				2236FA491E0401E4003529C6 /* SamAdvertiseView.xib */,
-				22741CAD1E0FB8500052A197 /* SamScrollPageView.h */,
-				22741CAE1E0FB8500052A197 /* SamScrollPageView.m */,
-				22741CB01E0FB86D0052A197 /* SamScrollPageView.xib */,
 				22741CBC1E0FF9130052A197 /* SamTestView.h */,
 				22741CBD1E0FF9130052A197 /* SamTestView.m */,
 				22741CBF1E0FF9240052A197 /* SamTestView.xib */,
+				22DAE84D1E12129E00F14BBD /* SamActivitiesView.h */,
+				22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */,
+				22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -960,7 +960,6 @@
 			files = (
 				227A00481DFEEDBE00F87208 /* SamNearbyLiveCell.xib in Resources */,
 				224F09EF1DDDC2F200EAC0F4 /* LaunchScreen.storyboard in Resources */,
-				22741CB11E0FB86D0052A197 /* SamScrollPageView.xib in Resources */,
 				2223C02D1DEDACD2004F3C7F /* Images.xcassets in Resources */,
 				22B103BD1E0AAD6B00605CB0 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				22B103C41E0AAD6B00605CB0 /* read_me.txt in Resources */,
@@ -982,6 +981,7 @@
 				2223CC171E097BB6007F1CC9 /* SamLoginViewController.xib in Resources */,
 				22AF218B1DF148550035F221 /* SamNearbyViewController.xib in Resources */,
 				22B103C11E0AAD6B00605CB0 /* WeiboSDK.bundle in Resources */,
+				22DAE8511E1241ED00F14BBD /* SamActivitiesView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,7 +1167,6 @@
 				225449371DF7E49B0055BCA0 /* UIImageView+SDWebImage.m in Sources */,
 				229183951DEDB4D900680984 /* SamTabBarViewController.m in Sources */,
 				22B103D61E0BC10B00605CB0 /* SamMeInfoView.m in Sources */,
-				22741CAF1E0FB8500052A197 /* SamScrollPageView.m in Sources */,
 				22AF217B1DF13B300035F221 /* SamLaunchViewController.m in Sources */,
 				2236FA4D1E040B02003529C6 /* SamCacheHelper.m in Sources */,
 				22AF21851DF148230035F221 /* SamHotViewController.m in Sources */,
@@ -1183,6 +1182,7 @@
 				22C76E521DEF1BC2003A7518 /* SamMainViewController.m in Sources */,
 				22B1038C1E0AAC5D00605CB0 /* AppDelegate+SamUmeng.m in Sources */,
 				2254493A1DF82A830055BCA0 /* SamBaseHandler.m in Sources */,
+				22DAE84F1E12129E00F14BBD /* SamActivitiesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
