@@ -35,8 +35,11 @@
         self.headView.image = [UIImage imageNamed:@"Sam"];
         self.liveImageView.image = [UIImage imageNamed:@"Sam"];
     } else {
-        [self.headView downloadImage:[NSString stringWithFormat:@"%@%@",IMAGE_SERVER_HOST,live.creator.portrait] placeholder:@"default_room"];
-        [self.liveImageView downloadImage:[NSString stringWithFormat:@"%@%@",IMAGE_SERVER_HOST,live.creator.portrait] placeholder:@"default_room"];
+        if (![live.creator.portrait hasPrefix:IMAGE_SERVER_HOST]) {
+            live.creator.portrait = [IMAGE_SERVER_HOST stringByAppendingString:live.creator.portrait];
+        }
+        [self.headView downloadImage:live.creator.portrait placeholder:@"default_room"];
+        [self.liveImageView downloadImage:live.creator.portrait placeholder:@"default_room"];
     }
     
 }
