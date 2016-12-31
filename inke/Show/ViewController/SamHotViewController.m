@@ -12,12 +12,15 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "SamPlayerViewController.h"
 #import "SamTabBarViewController.h"
+#import "SamTickersView.h"
 
 static NSString *identifier = @"SamLiveCell";
 
-@interface SamHotViewController ()
+@interface SamHotViewController () <SamTickersDelegate>
 
 @property (nonatomic, strong) NSMutableArray *dataList;
+@property(nonatomic, strong) SamTickersView *tickersView;
+@property(nonatomic, strong) NSMutableArray *imageAndLinkArray;
 
 @end
 
@@ -32,6 +35,30 @@ static NSString *identifier = @"SamLiveCell";
     return _dataList;
 }
 
+-(NSMutableArray *)imageAndLinkArray
+{
+    if (!_imageAndLinkArray) {
+        _imageAndLinkArray = [NSMutableArray array];
+        if (!_imageAndLinkArray) {
+            for (int i = 0; i < 7; i++) {
+                UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+1]];
+                [_imageAndLinkArray addObject:image];
+            }
+        }
+        
+    }
+    return _imageAndLinkArray;
+}
+
+-(SamTickersView *)TickersView
+{
+    if (!_tickersView) {
+        _tickersView = [SamTickersView loadTickersView];
+    }
+    return _tickersView;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -39,6 +66,8 @@ static NSString *identifier = @"SamLiveCell";
     [self initUI];
     
     [self loadData];
+    
+    NSLog(@"NSNull is:%@",[NSNull null]);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -50,6 +79,11 @@ static NSString *identifier = @"SamLiveCell";
 -(void) initUI
 {
     [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier] ;
+    self.tickersView = [SamTickersView loadTickersView];
+    self.tickersView.delegate = self;
+    [self.tickersView layoutIfNeeded];
+    self.tableView.tableHeaderView = self.tickersView;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
 }
 
@@ -60,9 +94,15 @@ static NSString *identifier = @"SamLiveCell";
         [self.dataList addObjectsFromArray:obj];
         [self.tableView reloadData];
     } failed:^(id obj) {
-        
+        NSLog(@"%@",obj);        
+    }];
+    
+    [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
+        [self.imageAndLinkArray removeAllObjects];
+        [self.imageAndLinkArray addObjectsFromArray:obj];
+        [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+    } failed:^(id obj) {
         NSLog(@"%@",obj);
-        
     }];
 }
 
@@ -124,14 +164,5 @@ static NSString *identifier = @"SamLiveCell";
     
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

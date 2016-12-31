@@ -10,19 +10,45 @@
 #import "SamLiveCell.h"
 #import "SamLive.h"
 #import "SamPlayerViewController.h"
-#import "SamActivitiesView.h"
+#import "SamTickersView.h"
+#import "SamLiveHandler.h"
+
 
 static NSString * identifier = @"focus";
-static NSString * headerIdentifier = @"focusHeader";
 
-@interface SamFocusViewController ()
+@interface SamFocusViewController () <SamTickersDelegate>
 
 @property(nonatomic, strong) NSArray *dataList;
-@property(nonatomic, strong) SamActivitiesView *activitiesView;
+@property(nonatomic, strong) SamTickersView *tickersView;
+@property(nonatomic, strong) NSMutableArray *imageAndLinkArray;
 
 @end
 
 @implementation SamFocusViewController
+
+-(NSMutableArray *)imageAndLinkArray
+{
+    if (!_imageAndLinkArray) {
+        _imageAndLinkArray = [NSMutableArray array];
+//        [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
+//            [_imageAndLinkArray removeAllObjects];
+//            [_imageAndLinkArray addObjectsFromArray:obj];
+//            [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+//            //NSLog(@"_imageAndLinkArray init: %@",_imageAndLinkArray);
+//        } failed:^(id obj) {
+//            NSLog(@"%@",obj);
+//        }];
+        // if failed to get tickers from internet, load images from local.
+        if (!_imageAndLinkArray) {
+            for (int i = 0; i < 7; i++) {
+                UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+1]];
+                [_imageAndLinkArray addObject:image];
+            }
+        }
+        
+    }
+    return _imageAndLinkArray;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,17 +59,22 @@ static NSString * headerIdentifier = @"focusHeader";
     [self loadData];
 }
 
--(SamActivitiesView *)activitiesView
+-(SamTickersView *)TickersView
 {
-    if (!_activitiesView) {
-        _activitiesView = [SamActivitiesView loadActivitiesView];
+    if (!_tickersView) {
+        _tickersView = [SamTickersView loadTickersView];
     }
-    return _activitiesView;
+    return _tickersView;
 }
 
 -(void) initUI
 {
-    [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier] ;
+    [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier];
+    self.tickersView = [SamTickersView loadTickersView];
+    self.tickersView.delegate = self;
+    self.tableView.tableHeaderView = self.tickersView;
+//    [self.view addSubview:self.tickersView];
+    
 }
 
 -(void) loadData
@@ -57,8 +88,17 @@ static NSString * headerIdentifier = @"focusHeader";
     creator.nick = @"Sam";
     creator.portrait = @"Sam";
     live.creator = creator;
-    
     self.dataList = @[live];
+    
+    [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
+        [self.imageAndLinkArray removeAllObjects];
+        [self.imageAndLinkArray addObjectsFromArray:obj];
+        [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+    } failed:^(id obj) {
+        NSLog(@"%@",obj);
+    }];
+
+    
     [self.tableView reloadData];
 }
 
@@ -82,7 +122,6 @@ static NSString * headerIdentifier = @"focusHeader";
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SamLiveCell" owner:self options:nil] lastObject];
     }
     cell.live = self.dataList[indexPath.row];
-
     return cell;
 }
 
@@ -91,20 +130,6 @@ static NSString * headerIdentifier = @"focusHeader";
     CGFloat cellHeight;
     cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
     return cellHeight;
-}
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return self.activitiesView;
-    }
-    
-    return nil;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return kScreenHeight*0.3;
 }
 
 #pragma mark TableView delegate
@@ -122,17 +147,24 @@ static NSString * headerIdentifier = @"focusHeader";
     //    self.parentViewController.view.hidden = YES;
     //    playerVC.hidesBottomBarWhenPushed = YES;
     //    [self.navigationController pushViewController:playerVC animated:YES];
-    
-    
-    /****
-     // we can't use the default media player
-     MPMoviePlayerViewController *movieVC = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:live.streamAddr]];
-     [self presentViewController:movieVC animated:YES completion:nil];
-     ****/
-    
-    
 }
 
+#pragma mark TickersDelegate
+
+-(NSMutableArray *)tickersDataList
+{
+    return self.imageAndLinkArray;
+}
+
+-(CGSize)sizeForTickersView
+{
+    if ([[self.imageAndLinkArray firstObject] isKindOfClass:[UIImage class]]) {
+        UIImage *image = [self.imageAndLinkArray firstObject];
+        return CGSizeMake(image.size.width, image.size.height);
+    } else {
+        return CGSizeMake(kScreenWidth, kScreenHeight*0.3);
+    }
+}
 
 /*
 #pragma mark - Navigation

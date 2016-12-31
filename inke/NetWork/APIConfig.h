@@ -13,7 +13,7 @@
 #define INFO_SERVER_HOST @"http://service.inke.com"
 
 // image server address
-#define IMAGE_SERVER_HOST @"http://img.meelive.cn/"
+#define IMAGE_SERVER_HOST @"http://img2.inke.cn/"
 
 // hot live
 #define API_HOT_LIVE @"api/live/gettop"
@@ -25,6 +25,9 @@
 
 //advertisement
 #define API_ADVERTISE @"advertise/get"
+
+//tickers
+#define API_LIVE_TICKER @"api/live/ticker"
 
 #define LIVE_SAM @"rtmp://live.hkstv.hk.lxdns.com:1935/live/sam"
 

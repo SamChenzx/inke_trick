@@ -9,6 +9,7 @@
 #import "SamLiveHandler.h"
 #import "HttpTool.h"
 #import "SamLive.h"
+#import "SamTickers.h"
 #import "SamLocationManager.h"
 #import "SamAdvertise.h"
 
@@ -44,8 +45,27 @@
             // get correct data
             NSArray *lives = [SamLive mj_objectArrayWithKeyValuesArray:json[@"lives"]];
             success(lives);
-        }    } failure:^(NSError *error) {
+        }
+    } failure:^(NSError *error) {
        
+        failed(error);
+    }];
+}
+
++ (void)executeGetTickersTaskWithSuccess:(SuccessBlock)success failed:(FailedBlock)failed
+{
+//    NSDictionary *params = @{@"lc":@"0000000000000043",@"cc":@"TG0001",@"cv":@"IK3.8.10_Iphone",@"proto":@"7",@"idfa":@"00000000-0000-0000-0000-000000000000",@"idfv":@"73A74722-B15B-48E1-8246-BBF344D3FA8C",@"devi":@"49ada13d88c4c6e87b0d5cc7c510fbb900bb2904",@"osversion":@"ios_10.100000",@"ua":@"iPhone7_2",@"imei":@"",@"imsi":@"",@"uid":@"313054160",@"sid":@"20gPQiPAyqHk3D22keDdi0Q2cAXeLtFWsAju4Rhm9cZ9TcKzi1Vfe",@"conn":@"wifi",@"mtid":@"e7d80f17b447125143549330ee05cb30",@"mtxid":@"80e650124b1a",@"logid":@"133,5",@"s_sg":@"1eea2e8d2d24f7377e6fbd182ee84066",@"s_sc":@"100",@"s_st":@"1483074130"};
+     NSDictionary *params = @{@"lc":@"0000000000000043",@"cc":@"TG0001",@"cv":@"IK3.8.10_Iphone",@"proto":@"7",@"idfa":@"00000000-0000-0000-0000-000000000000",@"idfv":@"73A74722-B15B-48E1-8246-BBF344D3FA8C",@"devi":@"49ada13d88c4c6e87b0d5cc7c510fbb900bb2904",@"osversion":@"ios_10.100000",@"ua":@"iPhone7_2",@"imei":@"",@"imsi":@"",@"uid":@"313054160",@"sid":@"20gPQiPAyqHk3D22keDdi0Q2cAXeLtFWsAju4Rhm9cZ9TcKzi1Vfe",@"conn":@"wifi",@"mtid":@"e7d80f17b447125143549330ee05cb30",@"mtxid":@"80e650124b1a",@"logid":@"133,5",@"s_sg":@"306945c8aa66f792a61f08a3f19b8e29",@"s_sc":@"100",@"s_st":@"1483079664"};
+    [HttpTool getWithPath:API_LIVE_TICKER params:params success:^(id json) {
+        if ([json[@"dm_error"]integerValue]) {
+            failed(json[@"error_msg"]);
+        } else {
+            // get correct data
+            NSArray *ticker = [SamTickers mj_objectArrayWithKeyValuesArray:json[@"ticker"]];
+            NSLog(@"ticker firstObject.image:%@",((SamTickers *)[ticker firstObject]).image);
+            success(ticker);
+        }
+    } failure:^(NSError *error) {
         failed(error);
     }];
 }

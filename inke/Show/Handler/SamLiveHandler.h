@@ -12,23 +12,31 @@
 
 /**
  * Get hot live information
- * @param success
- * @param failed
+ * @param success ()
+ * @param failed ()
  **/
 +(void) executeGetHotLiveTaskWithSuccess:(SuccessBlock) success failed:(FailedBlock) failed;
 
 
 /**
  * Get nearby live information
- * @param success
- * @param failed
+ * @param success ()
+ * @param failed ()
  **/
 +(void) executeGetNearbyLiveTaskWithSuccess:(SuccessBlock) success failed:(FailedBlock) failed;
 
+
+/**
+ * Get nearby tickers information
+ * @param success ()
+ * @param failed ()
+ **/
++ (void)executeGetTickersTaskWithSuccess:(SuccessBlock) success failed: (FailedBlock)failed;
+
 /**
  * Get advertise information
- * @param success
- * @param failed
+ * @param success ()
+ * @param failed ()
  **/
 +(void) executeGetAdvertiseTaskWithSuccess:(SuccessBlock) success failed:(FailedBlock) failed;
 

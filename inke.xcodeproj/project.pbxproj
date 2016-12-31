@@ -55,6 +55,7 @@
 		227A00431DFEBAE000F87208 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 227A00421DFEBAE000F87208 /* CoreLocation.framework */; };
 		227A00471DFEEDBE00F87208 /* SamNearbyLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 227A00451DFEEDBE00F87208 /* SamNearbyLiveCell.m */; };
 		227A00481DFEEDBE00F87208 /* SamNearbyLiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 227A00461DFEEDBE00F87208 /* SamNearbyLiveCell.xib */; };
+		227F9CF91E16199800822960 /* SamTickers.m in Sources */ = {isa = PBXBuildFile; fileRef = 227F9CF81E16199800822960 /* SamTickers.m */; };
 		229183951DEDB4D900680984 /* SamTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 229183941DEDB4D900680984 /* SamTabBarViewController.m */; };
 		229183981DEDB52900680984 /* SamTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 229183971DEDB52900680984 /* SamTabBar.m */; };
 		22A525111DF53D2D00EDB904 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A525101DF53D2D00EDB904 /* AssetsLibrary.framework */; };
@@ -101,8 +102,8 @@
 		22C76E521DEF1BC2003A7518 /* SamMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C76E501DEF1BC2003A7518 /* SamMainViewController.m */; };
 		22C76E531DEF1BC2003A7518 /* SamMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C76E511DEF1BC2003A7518 /* SamMainViewController.xib */; };
 		22C76E5B1DEF1D51003A7518 /* SamBaseNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C76E5A1DEF1D51003A7518 /* SamBaseNavViewController.m */; };
-		22DAE84F1E12129E00F14BBD /* SamActivitiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */; };
-		22DAE8511E1241ED00F14BBD /* SamActivitiesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */; };
+		22DAE84F1E12129E00F14BBD /* SamTickersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22DAE84E1E12129E00F14BBD /* SamTickersView.m */; };
+		22DAE8511E1241ED00F14BBD /* SamTickersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22DAE8501E1241ED00F14BBD /* SamTickersView.xib */; };
 		22F693771E096A080083BAAE /* LFLivePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F693761E096A080083BAAE /* LFLivePreview.m */; };
 		B85656C18A038563AEB6009A /* libPods-inke.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1762FD23C83472EC2F856E53 /* libPods-inke.a */; };
 		D175DA9CB974583158ED0A7D /* libPods-inkeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBF2FF6EB5425482BD86D9C7 /* libPods-inkeTests.a */; };
@@ -205,6 +206,8 @@
 		227A00441DFEEDBE00F87208 /* SamNearbyLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamNearbyLiveCell.h; sourceTree = "<group>"; };
 		227A00451DFEEDBE00F87208 /* SamNearbyLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamNearbyLiveCell.m; sourceTree = "<group>"; };
 		227A00461DFEEDBE00F87208 /* SamNearbyLiveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamNearbyLiveCell.xib; sourceTree = "<group>"; };
+		227F9CF71E16199800822960 /* SamTickers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTickers.h; sourceTree = "<group>"; };
+		227F9CF81E16199800822960 /* SamTickers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTickers.m; sourceTree = "<group>"; };
 		229183931DEDB4D900680984 /* SamTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTabBarViewController.h; sourceTree = "<group>"; };
 		229183941DEDB4D900680984 /* SamTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTabBarViewController.m; sourceTree = "<group>"; };
 		229183961DEDB52900680984 /* SamTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTabBar.h; sourceTree = "<group>"; };
@@ -285,9 +288,9 @@
 		22C76E511DEF1BC2003A7518 /* SamMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamMainViewController.xib; sourceTree = "<group>"; };
 		22C76E591DEF1D51003A7518 /* SamBaseNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamBaseNavViewController.h; sourceTree = "<group>"; };
 		22C76E5A1DEF1D51003A7518 /* SamBaseNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamBaseNavViewController.m; sourceTree = "<group>"; };
-		22DAE84D1E12129E00F14BBD /* SamActivitiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamActivitiesView.h; sourceTree = "<group>"; };
-		22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamActivitiesView.m; sourceTree = "<group>"; };
-		22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamActivitiesView.xib; sourceTree = "<group>"; };
+		22DAE84D1E12129E00F14BBD /* SamTickersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTickersView.h; sourceTree = "<group>"; };
+		22DAE84E1E12129E00F14BBD /* SamTickersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTickersView.m; sourceTree = "<group>"; };
+		22DAE8501E1241ED00F14BBD /* SamTickersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamTickersView.xib; sourceTree = "<group>"; };
 		22F693751E096A080083BAAE /* LFLivePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFLivePreview.h; sourceTree = "<group>"; };
 		22F693761E096A080083BAAE /* LFLivePreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFLivePreview.m; sourceTree = "<group>"; };
 		2434F0A613EAC3282535845E /* Pods-inkeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inkeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-inkeUITests/Pods-inkeUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -727,6 +730,8 @@
 				225449421DF8496D0055BCA0 /* SamCreator.m */,
 				2236FA431E04001E003529C6 /* SamAdvertise.h */,
 				2236FA441E04001E003529C6 /* SamAdvertise.m */,
+				227F9CF71E16199800822960 /* SamTickers.h */,
+				227F9CF81E16199800822960 /* SamTickers.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -751,9 +756,9 @@
 				22741CBC1E0FF9130052A197 /* SamTestView.h */,
 				22741CBD1E0FF9130052A197 /* SamTestView.m */,
 				22741CBF1E0FF9240052A197 /* SamTestView.xib */,
-				22DAE84D1E12129E00F14BBD /* SamActivitiesView.h */,
-				22DAE84E1E12129E00F14BBD /* SamActivitiesView.m */,
-				22DAE8501E1241ED00F14BBD /* SamActivitiesView.xib */,
+				22DAE84D1E12129E00F14BBD /* SamTickersView.h */,
+				22DAE84E1E12129E00F14BBD /* SamTickersView.m */,
+				22DAE8501E1241ED00F14BBD /* SamTickersView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -981,7 +986,7 @@
 				2223CC171E097BB6007F1CC9 /* SamLoginViewController.xib in Resources */,
 				22AF218B1DF148550035F221 /* SamNearbyViewController.xib in Resources */,
 				22B103C11E0AAD6B00605CB0 /* WeiboSDK.bundle in Resources */,
-				22DAE8511E1241ED00F14BBD /* SamActivitiesView.xib in Resources */,
+				22DAE8511E1241ED00F14BBD /* SamTickersView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,6 +1165,7 @@
 				220C038B1DF9A33F0088D79F /* SamPlayerViewController.m in Sources */,
 				224F09E11DDDC2F200EAC0F4 /* AppDelegate.m in Sources */,
 				2236FA451E04001E003529C6 /* SamAdvertise.m in Sources */,
+				227F9CF91E16199800822960 /* SamTickers.m in Sources */,
 				2231C47A1DF2E718006DC590 /* SamMainTopView.m in Sources */,
 				227A00471DFEEDBE00F87208 /* SamNearbyLiveCell.m in Sources */,
 				2254494D1DF902AD0055BCA0 /* SamLiveCell.m in Sources */,
@@ -1182,7 +1188,7 @@
 				22C76E521DEF1BC2003A7518 /* SamMainViewController.m in Sources */,
 				22B1038C1E0AAC5D00605CB0 /* AppDelegate+SamUmeng.m in Sources */,
 				2254493A1DF82A830055BCA0 /* SamBaseHandler.m in Sources */,
-				22DAE84F1E12129E00F14BBD /* SamActivitiesView.m in Sources */,
+				22DAE84F1E12129E00F14BBD /* SamTickersView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

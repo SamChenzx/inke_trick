@@ -8,19 +8,69 @@
 
 #import "SamContributionViewController.h"
 #import "SamTestView.h"
+#import "SamTickersView.h"
+#import "SamTickers.h"
+#import "SamLiveHandler.h"
 
-@interface SamContributionViewController ()
+@interface SamContributionViewController () <SamTickersDelegate>
+
+@property(nonatomic, strong) SamTickersView *tickersView;
+@property(nonatomic, strong) NSMutableArray *imageAndLinkArray;
 
 @end
 
 @implementation SamContributionViewController
 
+#pragma mark - SamtickersDelegate
+
+-(NSMutableArray *)imageAndLinkArray
+{
+    if (!_imageAndLinkArray) {
+        _imageAndLinkArray = [NSMutableArray array];
+        //        [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
+        //            [_imageAndLinkArray removeAllObjects];
+        //            [_imageAndLinkArray addObjectsFromArray:obj];
+        //            [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+        //            //NSLog(@"_imageAndLinkArray init: %@",_imageAndLinkArray);
+        //        } failed:^(id obj) {
+        //            NSLog(@"%@",obj);
+        //        }];
+        // if failed to get tickers from internet, load images from local.
+        if (!_imageAndLinkArray) {
+            for (int i = 0; i < 7; i++) {
+                UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+1]];
+                [_imageAndLinkArray addObject:image];
+            }
+        }
+        
+    }
+    return _imageAndLinkArray;
+}
+
+-(void) initUI
+{
+    self.tickersView = [SamTickersView loadTickersView];
+    [self.view addSubview:self.tickersView];
+    self.tickersView.delegate = self;
+}
+
+-(void) loadData
+{
+        [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
+        [self.imageAndLinkArray removeAllObjects];
+        [self.imageAndLinkArray addObjectsFromArray:obj];
+        [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+    } failed:^(id obj) {
+        NSLog(@"%@",obj);
+    }];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    SamTestView *test = [SamTestView loadView];
-    test.frame = CGRectMake(0, 50, [UIScreen mainScreen].bounds.size.width, 50);
-    [self.view addSubview:test];
+//    self.tickers = [[SamtickersView alloc] initWithFrame:CGRectMake(0, 150, kScreenWidth, kScreenHeight*0.3)];
+    [self initUI];
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {

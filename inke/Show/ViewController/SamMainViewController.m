@@ -104,9 +104,7 @@
     // index to move button line
     [self.topView scrolling:index];
     
-    // get view controller according index
-    NSString * vcName = NSStringFromClass([self.childViewControllers[index] class]);
-    
+    // get view controller according index    
     UIViewController *vc = self.childViewControllers[index];
     // test if vc has execute viewDidLoaded
     if ([vc isViewLoaded]) {
