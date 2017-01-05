@@ -120,9 +120,9 @@
         return;
     }
     
-//    self.lastItem.selected = NO;
+    self.lastItem.selected = NO;
     button.selected = YES;
-//    self.lastItem = button;
+    self.lastItem = button;
     [UIView animateWithDuration:0.2
                      animations:^{
         button.transform = CGAffineTransformMakeScale(1.2, 1.2);

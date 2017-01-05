@@ -19,6 +19,8 @@
 
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, strong) NSMutableArray *images;
+@property (nonatomic, strong) NSMutableDictionary *etagForLinks;
+
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSOperationQueue *queue;
@@ -53,6 +55,15 @@
     return _dataList;
 }
 
+-(NSMutableDictionary *)etagForLinks
+{
+    if (!_etagForLinks) {
+        _etagForLinks = [[NSMutableDictionary alloc] init];
+    }
+    return _etagForLinks;
+}
+
+
 -(NSMutableArray *)images
 {
     if (!_images) {
@@ -70,6 +81,8 @@
 {
     [super awakeFromNib];
 //    [self setupImageViews];
+    
+    
     [self initUI];
 }
 
@@ -138,7 +151,7 @@
 - (void)updateForImagesAndLinks:(NSMutableArray *)resourceArray
 {
     if (resourceArray.count) {
-        NSLog(@"%s",__FUNCTION__);
+//        NSLog(@"%s",__FUNCTION__);
         
         [self.dataList removeAllObjects];
         [self.images removeAllObjects];
@@ -150,6 +163,7 @@
                 [self.images addObject:object];
                 
             } else if ([object isKindOfClass:[SamTickers class]]) {
+
                 [self.images addObject:[UIImage imageNamed:@"default_tickers_empty"]];
                 [self downloadImageWithURLString:((SamTickers*)object).image atIndex:i];
                 if (self.images.count > 1) {
@@ -181,27 +195,35 @@
      */
     
     NSURL *URL = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request =[[NSMutableURLRequest alloc] initWithURL:URL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:15.0];
-    
+    NSMutableURLRequest *request =[[NSMutableURLRequest alloc] initWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15.0];
+    self.localEtag = [[NSUserDefaults standardUserDefaults] objectForKey:urlString];
+    if (self.localEtag != nil) {
+        [request setValue:self.localEtag forHTTPHeaderField:@"If-None-Match"];
+    }
+
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         NSLog(@"statusCode == %@", @(httpResponse.statusCode));
-        
-        // 获取并且纪录 etag，区分大小写
-                self.localEtag = httpResponse.allHeaderFields[@"Etag"];
+        if (httpResponse.statusCode == 304) {
+            NSLog(@"I've already loaded this ticker last time");
+            NSCachedURLResponse *cacheResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
+            data = cacheResponse.data;
+        }
+        // get and record Etag
+        self.localEtag = httpResponse.allHeaderFields[@"Etag"];
         NSLog(@"self.localEtag:%@", self.localEtag);
-        // 获取并且纪录 LastModified
-        self.localLastModified = httpResponse.allHeaderFields[@"Last-Modified"];
-        //        NSLog(@"%@", self.etag);
-        NSLog(@"self.localLastModified:%@", self.localLastModified);
-        
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:urlString] == nil) {
+            [[NSUserDefaults standardUserDefaults] setObject:self.localEtag forKey:urlString];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
         if ([UIImage imageWithData:data].size.width >= 250) {
             [self.images setObject:[UIImage imageWithData:data] atIndexedSubscript:index];
         } else {
             //[self.images removeObjectAtIndex:index];
         }
+        
         if (index == 0) {
             NSLog(@"Finish download images in block!");
             // init pageControl
@@ -215,7 +237,7 @@
                 [self reloadImages];
             });
         }
-    } ];
+    }];
     [task resume];
 }
 

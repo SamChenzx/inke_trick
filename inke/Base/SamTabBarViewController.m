@@ -27,11 +27,11 @@
 {
     if (!_samTabBar) {
         _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50, [UIScreen mainScreen].bounds.size.width, 50)];
+
         _samTabBar.delegate = self;
     }
     return _samTabBar;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,7 +80,6 @@
     
     NSLog(@"Launch Live");
 }
-
 
 /*
 #pragma mark - Navigation
