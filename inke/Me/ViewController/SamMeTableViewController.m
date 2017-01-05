@@ -10,6 +10,7 @@
 #import "SamMeInfoView.h"
 #import "SamSetting.h"
 #import "SamContributionViewController.h"
+#import "SamShortVideosViewController.h"
 
 @interface SamMeTableViewController ()
 
@@ -65,7 +66,7 @@
     SamSetting *setting2 = [[SamSetting alloc]init];
     setting2.title = @"短视频";
     setting2.subTitle = @"";
-    setting2.vcName = @"SamSnapViewController";
+    setting2.vcName = @"SamShortVideosViewController";
     
     SamSetting *setting3 = [[SamSetting alloc]init];
     setting3.title = @"收益";
@@ -157,8 +158,14 @@
         
         // Push the view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
+    } else if ([setting.vcName isEqualToString:(NSStringFromClass([SamShortVideosViewController class]))]){
+        
+        SamShortVideosViewController *detailViewController = [[SamShortVideosViewController alloc]init];
+        detailViewController.urlString = @"https://www.baidu.com";
+        // Push the view controller.
+        [self.navigationController pushViewController:detailViewController animated:YES];
     } else {
-        return;
+        return ;
     }
     
     

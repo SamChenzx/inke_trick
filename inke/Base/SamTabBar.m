@@ -10,9 +10,9 @@
 
 @interface SamTabBar()
 
-@property(nonatomic, strong) UIImageView *tabbgView;
 @property(nonatomic, strong) NSArray *datalist;
 @property(nonatomic, strong) UIButton *lastItem;
+@property(nonatomic, strong) UIButton *cameraButton;
 
 @end
 
@@ -26,6 +26,18 @@
 }
 */
 
+- (UIButton *)cameraButton {
+    
+    if (!_cameraButton) {
+        _cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_cameraButton setImage:[UIImage imageNamed:@"tab_launch"] forState:UIControlStateNormal];
+        [_cameraButton sizeToFit];
+        
+        [_cameraButton addTarget:self action:@selector(clickItem:) forControlEvents:UIControlEventTouchUpInside];
+        _cameraButton.tag = SamItemTypeLaunch;
+    }
+    return _cameraButton;
+}
 
 
 -(NSArray *)datalist
@@ -36,20 +48,14 @@
     return _datalist;
 }
 
--(UIImageView *)tabbgView
-{
-    if (!_tabbgView) {
-        _tabbgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"global_tab_bg"]];
-    }
-    return _tabbgView;
-}
-
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // add background
-        [self addSubview:self.tabbgView];
+        UIImageView *backGroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"global_tab_bg"]];
+        backGroundImage.frame = frame;
+        [self addSubview:backGroundImage];
+        [self setBackgroundColor:[UIColor whiteColor]];
         // add items
         for (NSInteger i = 0; i<self.datalist.count; i++) {
             UIButton *item = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -66,14 +72,13 @@
             [self addSubview:item];
         }
     }
+    [self addSubview:self.cameraButton];
     return self;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    
-    self.tabbgView.frame = self.frame;
     CGFloat width = self.frame.size.width/self.datalist.count;
     
     for (NSInteger i = 0; i<[self subviews].count; i++) {
@@ -82,6 +87,23 @@
             btn.frame = CGRectMake((btn.tag - SamItemTypeLive)*width, 0, width, self.frame.size.height);
         }
     }
+    
+    [self.cameraButton sizeToFit];
+    self.cameraButton.center = CGPointMake(self.frame.size.width/2, 10);
+}
+
+-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    UIView *view = [super hitTest:point withEvent:event];
+    if (view == nil) {
+        for (UIView *subView in self.subviews) {
+            CGPoint tp = [subView convertPoint:point fromView:self];
+            if (CGRectContainsPoint(subView.bounds, tp)) {
+                view = subView;
+            }
+        }
+    }
+    return view;
 }
 
 -(void)clickItem:(UIButton *)button
@@ -94,10 +116,13 @@
     if (self.block) {
         self.block(self,button.tag);
     }
+    if (button.tag == SamItemTypeLaunch) {
+        return;
+    }
     
-    self.lastItem.selected = NO;
+//    self.lastItem.selected = NO;
     button.selected = YES;
-    self.lastItem = button;
+//    self.lastItem = button;
     [UIView animateWithDuration:0.2
                      animations:^{
         button.transform = CGAffineTransformMakeScale(1.2, 1.2);

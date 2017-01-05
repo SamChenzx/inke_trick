@@ -27,6 +27,8 @@
 		2236FA481E0401C2003529C6 /* SamAdvertiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236FA471E0401C2003529C6 /* SamAdvertiseView.m */; };
 		2236FA4A1E0401E4003529C6 /* SamAdvertiseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2236FA491E0401E4003529C6 /* SamAdvertiseView.xib */; };
 		2236FA4D1E040B02003529C6 /* SamCacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236FA4C1E040B02003529C6 /* SamCacheHelper.m */; };
+		2248EE411E1D195D00461399 /* SamShortVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2248EE401E1D195D00461399 /* SamShortVideosViewController.m */; };
+		2248EE431E1D1C9600461399 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2248EE421E1D1C9600461399 /* WebKit.framework */; };
 		224F09DE1DDDC2F200EAC0F4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 224F09DD1DDDC2F200EAC0F4 /* main.m */; };
 		224F09E11DDDC2F200EAC0F4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 224F09E01DDDC2F200EAC0F4 /* AppDelegate.m */; };
 		224F09E71DDDC2F200EAC0F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 224F09E51DDDC2F200EAC0F4 /* Main.storyboard */; };
@@ -157,6 +159,9 @@
 		2236FA491E0401E4003529C6 /* SamAdvertiseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamAdvertiseView.xib; sourceTree = "<group>"; };
 		2236FA4B1E040B02003529C6 /* SamCacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamCacheHelper.h; sourceTree = "<group>"; };
 		2236FA4C1E040B02003529C6 /* SamCacheHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamCacheHelper.m; sourceTree = "<group>"; };
+		2248EE3F1E1D195D00461399 /* SamShortVideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamShortVideosViewController.h; sourceTree = "<group>"; };
+		2248EE401E1D195D00461399 /* SamShortVideosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamShortVideosViewController.m; sourceTree = "<group>"; };
+		2248EE421E1D1C9600461399 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		224F09D91DDDC2F200EAC0F4 /* inke_Sam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inke_Sam.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		224F09DD1DDDC2F200EAC0F4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		224F09DF1DDDC2F200EAC0F4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../AppDelegate.h; sourceTree = "<group>"; };
@@ -307,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2248EE431E1D1C9600461399 /* WebKit.framework in Frameworks */,
 				22B103CB1E0AAEEE00605CB0 /* libsqlite3.tbd in Frameworks */,
 				227A00431DFEBAE000F87208 /* CoreLocation.framework in Frameworks */,
 				22B103BC1E0AAD6B00605CB0 /* TencentOpenAPI.framework in Frameworks */,
@@ -411,6 +417,8 @@
 				2227500E1E0CBF0A0065A15E /* SamContributionViewController.h */,
 				2227500F1E0CBF0A0065A15E /* SamContributionViewController.m */,
 				222750101E0CBF0A0065A15E /* SamContributionViewController.xib */,
+				2248EE3F1E1D195D00461399 /* SamShortVideosViewController.h */,
+				2248EE401E1D195D00461399 /* SamShortVideosViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -803,6 +811,7 @@
 		D3729BDDE8FD2D4220E9C43E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2248EE421E1D1C9600461399 /* WebKit.framework */,
 				22B103CA1E0AAEEE00605CB0 /* libsqlite3.tbd */,
 				227A00421DFEBAE000F87208 /* CoreLocation.framework */,
 				220C03821DF9A2590088D79F /* VideoToolbox.framework */,
@@ -1160,6 +1169,7 @@
 				2254493D1DF836DC0055BCA0 /* SamLiveHandler.m in Sources */,
 				225449461DF851160055BCA0 /* MJExtensionConfig.m in Sources */,
 				22C76E5B1DEF1D51003A7518 /* SamBaseNavViewController.m in Sources */,
+				2248EE411E1D195D00461399 /* SamShortVideosViewController.m in Sources */,
 				22AF218A1DF148550035F221 /* SamNearbyViewController.m in Sources */,
 				2223CC161E097BB6007F1CC9 /* SamLoginViewController.m in Sources */,
 				220C038B1DF9A33F0088D79F /* SamPlayerViewController.m in Sources */,

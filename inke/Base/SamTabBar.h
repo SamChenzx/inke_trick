@@ -10,9 +10,9 @@
 
 typedef NS_ENUM(NSInteger, SamItemType) {
     
-    SamItemTypeLaunch = 10, // Launch live
+    SamItemTypeLaunch = 10,// Launch live
     SamItemTypeLive = 100, // show live
-    SamItemTypeMe,   // show me
+    SamItemTypeMe,         // show me
     
     
 };

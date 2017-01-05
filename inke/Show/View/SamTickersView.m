@@ -23,6 +23,9 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSOperationQueue *queue;
 
+@property (nonatomic, strong) NSString *localEtag;
+@property (nonatomic, strong) NSString *localLastModified;
+
 @end
 
 @implementation SamTickersView
@@ -166,26 +169,38 @@
     if (![urlString hasPrefix:@"http://img2.inke.cn"]) {
         urlString = [@"http://img2.inke.cn/" stringByAppendingString:urlString];
     }
-/*
-    UIImageView *imageVIew = [[UIImageView alloc]init];
-    [imageVIew downloadImage:urlString placeholder:@"default_tickers_empty" success:^(UIImage *image) {
-        [self.images setObject:imageVIew.image atIndexedSubscript:index];
-    } failed:^(NSError *error) {
-        NSLog(@"%@",error);
-    } progress:^(CGFloat progress) {
-        NSLog(@"%f",progress);
-    }];
-*/
+    /*
+     UIImageView *imageVIew = [[UIImageView alloc]init];
+     [imageVIew downloadImage:urlString placeholder:@"default_tickers_empty" success:^(UIImage *image) {
+     [self.images setObject:imageVIew.image atIndexedSubscript:index];
+     } failed:^(NSError *error) {
+     NSLog(@"%@",error);
+     } progress:^(CGFloat progress) {
+     NSLog(@"%f",progress);
+     }];
+     */
     
     NSURL *URL = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    NSMutableURLRequest *request =[[NSMutableURLRequest alloc] initWithURL:URL cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:15.0];
+    
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-       
+        
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        NSLog(@"statusCode == %@", @(httpResponse.statusCode));
+        
+        // 获取并且纪录 etag，区分大小写
+                self.localEtag = httpResponse.allHeaderFields[@"Etag"];
+        NSLog(@"self.localEtag:%@", self.localEtag);
+        // 获取并且纪录 LastModified
+        self.localLastModified = httpResponse.allHeaderFields[@"Last-Modified"];
+        //        NSLog(@"%@", self.etag);
+        NSLog(@"self.localLastModified:%@", self.localLastModified);
+        
         if ([UIImage imageWithData:data].size.width >= 250) {
             [self.images setObject:[UIImage imageWithData:data] atIndexedSubscript:index];
         } else {
-            [self.images removeObjectAtIndex:index];
+            //[self.images removeObjectAtIndex:index];
         }
         if (index == 0) {
             NSLog(@"Finish download images in block!");
