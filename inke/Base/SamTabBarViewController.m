@@ -15,10 +15,6 @@
 
 @property(nonatomic, strong) SamTabBar* samTabBar;
 
-
-
-
-
 @end
 
 @implementation SamTabBarViewController
@@ -27,6 +23,7 @@
 {
     if (!_samTabBar) {
         _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50, [UIScreen mainScreen].bounds.size.width, 50)];
+//        _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 50)];
 
         _samTabBar.delegate = self;
     }
@@ -42,7 +39,12 @@
     [[UITabBar appearance] setShadowImage:[UIImage new]];
     self.tabBar.hidden = YES;
     [self.view addSubview:self.samTabBar];
+//    self.tabBar.userInteractionEnabled = YES;
+//    [self.tabBar addSubview:self.samTabBar];
+//    self.tabBar.clipsToBounds = NO;
 }
+
+
 
 -(void)viewWillLayoutSubviews
 {
@@ -77,7 +79,6 @@
 {
     SamLaunchViewController *launchVC = [[SamLaunchViewController alloc]init];
     [self presentViewController:launchVC animated:YES completion:nil];
-    
     NSLog(@"Launch Live");
 }
 

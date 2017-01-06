@@ -19,8 +19,6 @@
 
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, strong) NSMutableArray *images;
-@property (nonatomic, strong) NSMutableDictionary *etagForLinks;
-
 
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSOperationQueue *queue;
@@ -54,15 +52,6 @@
     }
     return _dataList;
 }
-
--(NSMutableDictionary *)etagForLinks
-{
-    if (!_etagForLinks) {
-        _etagForLinks = [[NSMutableDictionary alloc] init];
-    }
-    return _etagForLinks;
-}
-
 
 -(NSMutableArray *)images
 {
@@ -205,15 +194,14 @@
     NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        NSLog(@"statusCode == %@", @(httpResponse.statusCode));
+//        NSLog(@"statusCode == %@", @(httpResponse.statusCode));
         if (httpResponse.statusCode == 304) {
-            NSLog(@"I've already loaded this ticker last time");
             NSCachedURLResponse *cacheResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
             data = cacheResponse.data;
         }
         // get and record Etag
         self.localEtag = httpResponse.allHeaderFields[@"Etag"];
-        NSLog(@"self.localEtag:%@", self.localEtag);
+//        NSLog(@"self.localEtag:%@", self.localEtag);
         if ([[NSUserDefaults standardUserDefaults] objectForKey:urlString] == nil) {
             [[NSUserDefaults standardUserDefaults] setObject:self.localEtag forKey:urlString];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -340,9 +328,10 @@
     [self rollingImages:self.scrollView];
 }
 
--(NSInteger)currentPageIndex
+-(NSString *)LinkAtCurrentPageIndex
 {
-    return self.pageControl.currentPage;
+    
+    return ((SamTickers *)self.dataList[self.pageControl.currentPage]).link;
 }
 
 -(instancetype)initWithFrame:(CGRect)frame {

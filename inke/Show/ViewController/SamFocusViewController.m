@@ -12,6 +12,7 @@
 #import "SamPlayerViewController.h"
 #import "SamTickersView.h"
 #import "SamLiveHandler.h"
+#import "SamTickerActionsViewController.h"
 
 
 static NSString * identifier = @"focus";
@@ -72,12 +73,19 @@ static NSString * identifier = @"focus";
     [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier];
     self.tickersView = [SamTickersView loadTickersView];
     self.tickersView.delegate = self;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
+    [self.tickersView addGestureRecognizer:tapGesture];
     self.tableView.tableHeaderView = self.tickersView;
-//    [self.view addSubview:self.tickersView];
-    
 }
 
--(void) loadData
+- (void)clickTickerOfTickersView:(UITapGestureRecognizer *)tapGesture
+{
+    SamTickerActionsViewController *actionVC = [[SamTickerActionsViewController alloc]init];
+    actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
+    [self.navigationController pushViewController:actionVC animated:YES];
+}
+
+- (void)loadData
 {
     SamLive *live = [[SamLive alloc]init];
     live.city = @"杭州";

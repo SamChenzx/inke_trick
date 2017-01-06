@@ -26,7 +26,7 @@
 
 - (void)updateForImagesAndLinks:(NSMutableArray *)resourceArray;
 
-- (NSInteger)currentPageIndex;
+- (NSString *)LinkAtCurrentPageIndex;
 
 
 @end
