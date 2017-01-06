@@ -7,13 +7,12 @@
 //
 
 #import "SamTabBarViewController.h"
-#import "SamTabBar.h"
 #import "SamBaseNavViewController.h"
 #import "SamLaunchViewController.h"
 
 @interface SamTabBarViewController () <SamTabBarDelegate>
 
-@property(nonatomic, strong) SamTabBar* samTabBar;
+//@property(nonatomic, strong) SamTabBar* samTabBar;
 
 @end
 
@@ -37,7 +36,7 @@
     [self configViewControllers];
     // add tabbar
     [[UITabBar appearance] setShadowImage:[UIImage new]];
-    self.tabBar.hidden = YES;
+//    self.tabBar.hidden = YES;
     [self.view addSubview:self.samTabBar];
 //    self.tabBar.userInteractionEnabled = YES;
 //    [self.tabBar addSubview:self.samTabBar];

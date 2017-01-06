@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SamTabBar.h"
 
 @interface SamTabBarViewController : UITabBarController
+
+@property(nonatomic, strong) SamTabBar* samTabBar;
 
 @end
