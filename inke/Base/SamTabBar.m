@@ -55,7 +55,7 @@
         UIImageView *backGroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"global_tab_bg"]];
         backGroundImage.frame = frame;
         [self addSubview:backGroundImage];
-        [self setBackgroundColor:[UIColor whiteColor]];
+        self.translucent = NO;
         // add items
         for (NSInteger i = 0; i<self.datalist.count; i++) {
             UIButton *item = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -94,14 +94,21 @@
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    UIView *view = [super hitTest:point withEvent:event];
-    if (view == nil) {
-        for (UIView *subView in self.subviews) {
-            CGPoint tp = [subView convertPoint:point fromView:self];
-            if (CGRectContainsPoint(subView.bounds, tp)) {
+    UIView *view = nil;
+    
+    for (UIView *subView in self.subviews) {
+        CGPoint tp = [subView convertPoint:point fromView:self];
+        if (CGRectContainsPoint(subView.bounds, tp)) {
+            if (CGRectContainsRect(subView.bounds, self.cameraButton.bounds)) {
+                view = subView;
+                return view;
+            } else if ([subView isKindOfClass:[UIButton class]]) {
                 view = subView;
             }
         }
+    }
+    if (view == nil) {
+        view = [super hitTest:point withEvent:event];
     }
     return view;
 }
@@ -125,13 +132,13 @@
     self.lastItem = button;
     [UIView animateWithDuration:0.2
                      animations:^{
-        button.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2
-                         animations:^{
-            button.transform = CGAffineTransformIdentity;
-        }];
-    }];
+                         button.transform = CGAffineTransformMakeScale(1.2, 1.2);
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.2
+                                          animations:^{
+                                              button.transform = CGAffineTransformIdentity;
+                                          }];
+                     }];
 }
 
 

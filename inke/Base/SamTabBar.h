@@ -25,7 +25,7 @@ typedef void(^TabBlock)(SamTabBar *tabBar, SamItemType index);
 
 @end
 
-@interface SamTabBar : UIView
+@interface SamTabBar : UITabBar
 
 @property(nonatomic, assign) id<SamTabBarDelegate> delegate;
 @property(nonatomic, copy) TabBlock block;

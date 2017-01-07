@@ -55,9 +55,6 @@
     self.navigationController.navigationBar.topItem.title = @"";
     self.navigationItem.titleView = titleLabel;
     
-    UIWindow * window = [UIApplication sharedApplication].keyWindow;
-    SamTabBarViewController * STBVC =(SamTabBarViewController *) window.rootViewController;
-    STBVC.samTabBar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,7 +66,7 @@
 {
     if ([keyPath isEqual:@"estimatedProgress"] && [object isKindOfClass:[WKWebView class]]) {
         self.progressView.progress = [change[@"new"] floatValue];
-        NSLog(@"change[new]:%f",[change[@"new"] floatValue]);
+//        NSLog(@"change[new]:%f",[change[@"new"] floatValue]);
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIView animateWithDuration:0.2 animations:^{
                  self.progressView.progress = [change[@"new"] floatValue];
@@ -82,6 +79,8 @@
                 self.progressView.hidden = NO;
             }
         });
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
@@ -89,23 +88,6 @@
 {
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
-
-
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:animated];
-//    self.tabBarController.tabBar.hidden = YES;
-//}
-//
-//- (void)viewDidDisappear:(BOOL)animated
-//{
-//    [super viewDidDisappear:YES];
-//    UIWindow * window = [UIApplication sharedApplication].keyWindow;
-//    SamTabBarViewController * STBVC =(SamTabBarViewController *) window.rootViewController;
-//    STBVC.samTabBar.hidden = NO;
-//    self.tabBarController.tabBar.hidden = NO;
-// 
-//}
 
 /*
 #pragma mark - Navigation

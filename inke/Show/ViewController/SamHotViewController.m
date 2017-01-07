@@ -13,6 +13,7 @@
 #import "SamPlayerViewController.h"
 #import "SamTabBarViewController.h"
 #import "SamTickersView.h"
+#import "SamTickerActionsViewController.h"
 
 static NSString *identifier = @"SamLiveCell";
 
@@ -81,11 +82,20 @@ static NSString *identifier = @"SamLiveCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier] ;
     self.tickersView = [SamTickersView loadTickersView];
     self.tickersView.delegate = self;
-    [self.tickersView layoutIfNeeded];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
+    [self.tickersView addGestureRecognizer:tapGesture];
     self.tableView.tableHeaderView = self.tickersView;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
 }
+
+- (void)clickTickerOfTickersView:(UITapGestureRecognizer *)tapGesture
+{
+    SamTickerActionsViewController *actionVC = [[SamTickerActionsViewController alloc]init];
+    actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
+    [self.navigationController pushViewController:actionVC animated:YES];
+}
+
 
 -(void) loadData
 {

@@ -40,7 +40,7 @@
     [self.view addSubview:self.samTabBar];
 //    self.tabBar.userInteractionEnabled = YES;
 //    [self.tabBar addSubview:self.samTabBar];
-//    self.tabBar.clipsToBounds = NO;
+    [self setValue:self.samTabBar forKey:@"tabBar"];
 }
 
 
