@@ -27,16 +27,23 @@
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
     NSURL *url = [NSURL URLWithString:self.urlString];
+
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     [self.view addSubview:self.webView];
     
     // progress bar
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-    self.progressView = [[UIProgressView alloc]initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), 3)];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height+self.navigationController.navigationBar.frame.origin.y, kScreenWidth, 3)];
     self.progressView.backgroundColor = [UIColor clearColor];
+    self.progressView.tintColor = [UIColor clearColor];
+    self.progressView.trackTintColor = [UIColor clearColor];
+    self.progressView.progressTintColor = [UIColor greenColor];
+    self.progressView.progress = 0;
     [self.view addSubview:self.progressView];
     
+    
+    // title
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"what we got?";//self.urlString;
     titleLabel.textColor = [UIColor whiteColor];
@@ -58,69 +65,30 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)observeValueForKeyPath:(NSString* )keyPath ofObject:(id)object change:(NSDictionary* )change context:(void *)context {
-    
-    if ([keyPath isEqualToString:@"loading"]) {
-        
-    } else if ([keyPath isEqualToString:@"title"]) {
-        self.title = self.webView.title;
-    } else if ([keyPath isEqualToString:@"URL"]) {
-        
-    } else if ([keyPath isEqualToString:@"estimatedProgress"]) {
-        
-        self.progressView.progress = self.webView.estimatedProgress;
-    }
-    
-    if (object == self.webView && [keyPath isEqualToString:@"estimatedProgress"]) {
-        CGFloat newprogress = [[change objectForKey:NSKeyValueChangeNewKey] doubleValue];
-        if (newprogress == 1) {
-            self.progressView.hidden = YES;
-            [self.progressView setProgress:0 animated:NO];
-        }else {
-            self.progressView.hidden = NO;
-            [self.progressView setProgress:newprogress animated:YES];
-        }
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqual:@"estimatedProgress"] && [object isKindOfClass:[WKWebView class]]) {
+        self.progressView.progress = [change[@"new"] floatValue];
+        NSLog(@"change[new]:%f",[change[@"new"] floatValue]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.2 animations:^{
+                 self.progressView.progress = [change[@"new"] floatValue];
+            }];
+            if (self.progressView.progress == 1.0) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    self.progressView.hidden = YES;
+                });
+            } else {
+                self.progressView.hidden = NO;
+            }
+        });
     }
 }
 
-- (void)setLoadCount:(NSUInteger)totalCount {
-    _totalCount = totalCount;
-    
-    if (totalCount == 0) {
-        self.progressView.hidden = YES;
-        [self.progressView setProgress:0 animated:NO];
-    }else {
-        self.progressView.hidden = NO;
-        CGFloat oldP = self.progressView.progress;
-        CGFloat newP = (1.0 - oldP) / (totalCount + 1) + oldP;
-        if (newP > 0.95) {
-            newP = 0.95;
-        }
-        [self.progressView setProgress:newP animated:YES];
-        
-    }
-}
-
-
-
-- (void)dealloc{
+-(void)dealloc
+{
     [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
 }
-
-// 页面开始加载时调用
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    self.totalCount ++;
-}
-// 内容返回时
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-    self.totalCount --;
-}
-//失败
-- (void)webView:(WKWebView *)webView didFailNavigation: (null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    self.totalCount --;
-    NSLog(@"%@",error);
-}
-
 
 
 //- (void)viewWillAppear:(BOOL)animated

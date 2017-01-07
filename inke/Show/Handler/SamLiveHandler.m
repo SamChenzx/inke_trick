@@ -66,7 +66,6 @@
         } else {
             // get correct data
             NSArray *ticker = [SamTickers mj_objectArrayWithKeyValuesArray:json[@"ticker"]];
-            NSLog(@"ticker firstObject.image:%@",((SamTickers *)[ticker firstObject]).image);
             success(ticker);
         }
     } failure:^(NSError *error) {

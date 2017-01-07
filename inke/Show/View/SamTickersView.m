@@ -213,7 +213,7 @@
         }
         
         if (index == 0) {
-            NSLog(@"Finish download images in block!");
+//            NSLog(@"Finish download images in block!");
             // init pageControl
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.images.count > 1) {
