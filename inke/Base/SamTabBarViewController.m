@@ -12,7 +12,7 @@
 
 @interface SamTabBarViewController () <SamTabBarDelegate>
 
-//@property(nonatomic, strong) SamTabBar* samTabBar;
+@property(nonatomic, strong) SamTabBar* samTabBar;
 
 @end
 
@@ -22,8 +22,6 @@
 {
     if (!_samTabBar) {
         _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50, [UIScreen mainScreen].bounds.size.width, 50)];
-//        _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 50)];
-
         _samTabBar.delegate = self;
     }
     return _samTabBar;
@@ -36,10 +34,6 @@
     [self configViewControllers];
     // add tabbar
     [[UITabBar appearance] setShadowImage:[UIImage new]];
-//    self.tabBar.hidden = YES;
-    [self.view addSubview:self.samTabBar];
-//    self.tabBar.userInteractionEnabled = YES;
-//    [self.tabBar addSubview:self.samTabBar];
     [self setValue:self.samTabBar forKey:@"tabBar"];
 }
 
@@ -65,7 +59,6 @@
 -(void)tabBar:(SamTabBar *)tabBar clickButton:(SamItemType)index
 {
     if (index != SamItemTypeLaunch) {
-        //当前tabbar的索引
         self.selectedIndex = index - SamItemTypeLive;
         
     } else if(index == SamItemTypeLaunch) {

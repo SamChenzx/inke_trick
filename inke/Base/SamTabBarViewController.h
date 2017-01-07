@@ -11,6 +11,4 @@
 
 @interface SamTabBarViewController : UITabBarController
 
-@property(nonatomic, strong) SamTabBar* samTabBar;
-
 @end
