@@ -158,12 +158,14 @@
         
         // Push the view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
+        return;
     } else if ([setting.vcName isEqualToString:(NSStringFromClass([SamShortVideosViewController class]))]){
         
         SamShortVideosViewController *detailViewController = [[SamShortVideosViewController alloc]init];
         detailViewController.urlString = @"https://www.baidu.com";
         // Push the view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
+        return;
     } else {
         return ;
     }

@@ -9,7 +9,6 @@
 #import "SamBaseViewController.h"
 
 @interface SamBaseViewController ()
-
 @end
 
 @implementation SamBaseViewController
@@ -17,12 +16,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.view.backgroundColor = [UIColor colorWithRed:arc4random_uniform(255)/225.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*

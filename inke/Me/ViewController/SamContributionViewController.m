@@ -11,6 +11,7 @@
 #import "SamTickersView.h"
 #import "SamTickers.h"
 #import "SamLiveHandler.h"
+#import "SamTickerActionsViewController.h"
 
 @interface SamContributionViewController () <SamTickersDelegate>
 
@@ -51,7 +52,19 @@
 {
     self.tickersView = [SamTickersView loadTickersView];
     [self.view addSubview:self.tickersView];
+    self.tickersView.frame = CGRectMake(0, 150, kScreenWidth, 125);
     self.tickersView.delegate = self;
+    self.navigationController.navigationBar.topItem.title = @"";
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
+    [self.tickersView addGestureRecognizer:tapGesture];
+
+}
+
+- (void)clickTickerOfTickersView:(UITapGestureRecognizer *)tapGesture
+{
+    SamTickerActionsViewController *actionVC = [[SamTickerActionsViewController alloc]init];
+    actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
+    [self.navigationController pushViewController:actionVC animated:YES];
 }
 
 -(void) loadData
@@ -63,6 +76,11 @@
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    self.tickersView.frame = CGRectMake(0, 150, kScreenWidth, 125);
 }
 
 - (void)viewDidLoad {

@@ -44,16 +44,48 @@
     
     
     // title
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"what we got?";//self.urlString;
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont systemFontOfSize:22];
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.equalTo(@30);
-        make.width.equalTo(@50);
-    }];
+//    UILabel *titleLabel = [[UILabel alloc] init];
+//    titleLabel.text = @"what we got?";//self.urlString;
+//    titleLabel.textColor = [UIColor whiteColor];
+//    titleLabel.font = [UIFont systemFontOfSize:22];
+//    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.height.equalTo(@30);
+//        make.width.equalTo(@50);
+//    }];
+//    self.navigationController.navigationBar.topItem.title = @"";
+//    self.navigationItem.titleView = titleLabel;
+//    [self.navigationItem.titleView sizeToFit];
     self.navigationController.navigationBar.topItem.title = @"";
-    self.navigationItem.titleView = titleLabel;
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
+    self.navigationController.navigationBar.titleTextAttributes = attributes;
+    self.navigationItem.title = @"what we got?";
+    
+//    NSLog(@"self.navigationController.interactivePopGestureRecognizer:%@",self.navigationController.interactivePopGestureRecognizer);
+//    unsigned int count = 0;
+//    Ivar *var = class_copyIvarList([UIGestureRecognizer class], &count);
+//    for (int i = 0; i < count; i++) {
+//        Ivar _var = *(var + i);
+//        NSLog(@"ivar_getTypeEncoding:%s",ivar_getTypeEncoding(_var));
+//        NSLog(@"ivar_getName:%s",ivar_getName(_var));
+//    }
+//    NSMutableArray *_targets = [self.navigationController.interactivePopGestureRecognizer valueForKey:@"_targets"];
+//    NSLog(@"_targets:%@",_targets);
+//    NSLog(@"_targets.count:%ld",_targets.count);
+//    NSLog(@"_targets[0]:%@",_targets[0]);
+    
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        UIGestureRecognizer *gesture = self.navigationController.interactivePopGestureRecognizer;
+//        gesture.enabled = NO;
+//        UIView *gestureView = gesture.view;
+//        NSMutableArray *_targets = [gesture valueForKey:@"_targets"];
+//        id gestureRecognizerTarget = [_targets firstObject];
+//        id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@"target"];
+//        SEL handleTransition = NSSelectorFromString(@"handleNavigationTransition:");
+//        UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:navigationInteractiveTransition action:handleTransition];
+//        [gestureView addGestureRecognizer:popRecognizer];
+//    });
+    
     
 }
 
