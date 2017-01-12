@@ -21,8 +21,20 @@
     self.navigationBar.barTintColor = [UIColor colorWithRed:0 green:216 blue:201 alpha:1];
     self.navigationBar.tintColor = [UIColor whiteColor];
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;
+//        gesture.enabled = NO;
+//        UIView *gestureView = gesture.view;
+//        NSMutableArray *_targets = [gesture valueForKey:@"_targets"];
+//        id gestureRecognizerTarget = [_targets firstObject];
+//        id navigationInteractiveTransition = [gestureRecognizerTarget valueForKey:@"target"];
+//        SEL handleTransition = NSSelectorFromString(@"handleNavigationTransition:");
+//        UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:navigationInteractiveTransition action:handleTransition];
+//        popRecognizer.delegate = self;
+//        [gestureView addGestureRecognizer:popRecognizer];
+//    });
+    
         UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;
         gesture.enabled = NO;
         UIView *gestureView = gesture.view;
@@ -33,8 +45,6 @@
         UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:navigationInteractiveTransition action:handleTransition];
         popRecognizer.delegate = self;
         [gestureView addGestureRecognizer:popRecognizer];
-    });
-    
 }
 
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated

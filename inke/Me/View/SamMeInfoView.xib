@@ -158,7 +158,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="1" blue="0.9276562371850301" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.13812658595002572" green="0.97680455446243286" blue="0.91976651252699759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="sxz-AR-DPc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="4Hq-IF-P8j"/>
                 <constraint firstItem="dIe-Np-3wL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="85j-b2-C87"/>
@@ -186,7 +186,7 @@
         </view>
     </objects>
     <resources>
-        <image name="Sam" width="300" height="200"/>
+        <image name="Sam" width="100" height="100"/>
         <image name="global_male" width="19" height="19"/>
         <image name="global_search" width="17" height="17"/>
         <image name="me_btn_edit_h" width="14" height="13"/>

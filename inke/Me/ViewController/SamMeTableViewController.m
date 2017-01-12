@@ -12,10 +12,17 @@
 #import "SamContributionViewController.h"
 #import "SamShortVideosViewController.h"
 
+#define tableHeaderViewHeight 363
+
 @interface SamMeTableViewController ()
 
 @property(nonatomic, strong) NSArray * dataList;
 @property(nonatomic, strong) SamMeInfoView * infoView;
+
+@property (nonatomic, strong) UIView *header;
+
+
+
 
 @end
 
@@ -28,17 +35,11 @@
         _infoView = [SamMeInfoView loadInfoView];
         _infoView.headImageView.layer.cornerRadius = 30;
         _infoView.headImageView.layer.masksToBounds = YES;
+        _infoView.contentMode = UIViewContentModeScaleToFill;
+        _infoView.clipsToBounds = YES;
     }
     return _infoView;
 }
-
-//-(NSMutableArray *)dataList
-//{
-//    if (!_dataList) {
-//        _dataList = [NSMutableArray array];
-//    }
-//    return _dataList;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,11 +48,14 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.rowHeight = 60;
     self.tableView.sectionFooterHeight = 0;
-    self.tableView.tableHeaderView = self.infoView;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    self.header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, tableHeaderViewHeight)];
+    [_header addSubview:self.infoView];
+    self.tableView.tableHeaderView = _header;
     
     [self loadData];
 }
@@ -112,20 +116,18 @@
     self.navigationController.navigationBarHidden = NO;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
     return self.dataList.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     NSArray *array = self.dataList[section];
     return array.count;
 }
@@ -167,11 +169,24 @@
         [self.navigationController pushViewController:detailViewController animated:YES];
         return;
     } else {
-        return ;
+    return ;
     }
-    
-    
 }
+
+#pragma mark - Scroll view delegate
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat Offset_y = scrollView.contentOffset.y;
+
+    if ( Offset_y < 0) {
+        // the hight after pull down
+        CGFloat totalOffset = tableHeaderViewHeight - Offset_y;
+        // set frame
+        _infoView.frame = CGRectMake(0, Offset_y, kScreenWidth, totalOffset);
+    }
+}
+
 
 
 

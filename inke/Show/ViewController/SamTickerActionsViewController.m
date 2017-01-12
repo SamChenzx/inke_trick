@@ -43,18 +43,6 @@
     [self.view addSubview:self.progressView];
     
     
-    // title
-//    UILabel *titleLabel = [[UILabel alloc] init];
-//    titleLabel.text = @"what we got?";//self.urlString;
-//    titleLabel.textColor = [UIColor whiteColor];
-//    titleLabel.font = [UIFont systemFontOfSize:22];
-//    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.height.equalTo(@30);
-//        make.width.equalTo(@50);
-//    }];
-//    self.navigationController.navigationBar.topItem.title = @"";
-//    self.navigationItem.titleView = titleLabel;
-//    [self.navigationItem.titleView sizeToFit];
     self.navigationController.navigationBar.topItem.title = @"";
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
     self.navigationController.navigationBar.titleTextAttributes = attributes;

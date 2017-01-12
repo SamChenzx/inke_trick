@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIImageView *leftImageView, *middleImageView, *rightImageView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, assign) NSInteger scrollerViewWidth, scrollerViewHeight;
+@property (nonatomic, assign) NSInteger indexSum;
 
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, strong) NSMutableArray *images;
@@ -167,8 +168,13 @@
     }
 }
 
+
+
 - (void)downloadImageWithURLString:(NSString *)urlString atIndex:(NSInteger)index
 {
+    static NSInteger imageCheckNum = (self.dataList.count-1) * self.dataList.count / 2;
+    
+    
     if (![urlString hasPrefix:@"http://img2.inke.cn"]) {
         urlString = [@"http://img2.inke.cn/" stringByAppendingString:urlString];
     }
@@ -211,10 +217,11 @@
         } else {
             //[self.images removeObjectAtIndex:index];
         }
-        
-        if (index == 0) {
-//            NSLog(@"Finish download images in block!");
+        _indexSum += index;
+        if (_indexSum >= imageCheckNum) {
+            NSLog(@"Finish download images in block _indexSum:%ld",_indexSum);
             // init pageControl
+            _indexSum = 0;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (self.images.count > 1) {
                     self.isPageControl = YES;

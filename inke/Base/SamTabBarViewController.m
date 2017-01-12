@@ -33,6 +33,7 @@
     // add controller
     [self configViewControllers];
     // add tabbar
+    [[UITabBar appearance] setBackgroundImage:[UIImage new]];
     [[UITabBar appearance] setShadowImage:[UIImage new]];
     [self setValue:self.samTabBar forKey:@"tabBar"];
 }

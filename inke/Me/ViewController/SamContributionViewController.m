@@ -28,15 +28,6 @@
 {
     if (!_imageAndLinkArray) {
         _imageAndLinkArray = [NSMutableArray array];
-        //        [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
-        //            [_imageAndLinkArray removeAllObjects];
-        //            [_imageAndLinkArray addObjectsFromArray:obj];
-        //            [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
-        //            //NSLog(@"_imageAndLinkArray init: %@",_imageAndLinkArray);
-        //        } failed:^(id obj) {
-        //            NSLog(@"%@",obj);
-        //        }];
-        // if failed to get tickers from internet, load images from local.
         if (!_imageAndLinkArray) {
             for (int i = 0; i < 7; i++) {
                 UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+1]];
@@ -55,6 +46,12 @@
     self.tickersView.frame = CGRectMake(0, 150, kScreenWidth, 125);
     self.tickersView.delegate = self;
     self.navigationController.navigationBar.topItem.title = @"";
+
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
+    self.navigationController.navigationBar.titleTextAttributes = attributes;
+    self.navigationItem.title = @"映票贡献榜";
+
+    
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
     [self.tickersView addGestureRecognizer:tapGesture];
 
@@ -83,17 +80,23 @@
     self.tickersView.frame = CGRectMake(0, 150, kScreenWidth, 125);
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    self.tickers = [[SamtickersView alloc] initWithFrame:CGRectMake(0, 150, kScreenWidth, kScreenHeight*0.3)];
     [self initUI];
     [self loadData];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*
