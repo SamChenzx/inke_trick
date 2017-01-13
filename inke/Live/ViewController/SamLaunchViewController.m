@@ -9,7 +9,8 @@
 #import "SamLaunchViewController.h"
 #import "LFLivePreview.h"
 
-@interface SamLaunchViewController ()
+@interface SamLaunchViewController () 
+
 
 @end
 
@@ -25,7 +26,6 @@
 }
 
 - (IBAction)startLive:(id)sender {
-    
     UIView *backView = [[UIView alloc] initWithFrame:self.view.bounds];
     backView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:backView];
@@ -37,12 +37,6 @@
     [preview startLive];
 }
 
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 
 

@@ -23,6 +23,7 @@
 		222750121E0CBF0A0065A15E /* SamContributionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222750101E0CBF0A0065A15E /* SamContributionViewController.xib */; };
 		222907CE1E1E8ABD00AD862F /* SamTickerActionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 222907CC1E1E8ABD00AD862F /* SamTickerActionsViewController.m */; };
 		222907CF1E1E8ABD00AD862F /* SamTickerActionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 222907CD1E1E8ABD00AD862F /* SamTickerActionsViewController.xib */; };
+		222D23311E2776AB00BD44D3 /* SamLaunchOptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 222D23301E2776AB00BD44D3 /* SamLaunchOptionView.m */; };
 		2231C47A1DF2E718006DC590 /* SamMainTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2231C4791DF2E718006DC590 /* SamMainTopView.m */; };
 		2236FA421E02BB27003529C6 /* SamHotViewControler.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2236FA411E02BB27003529C6 /* SamHotViewControler.xib */; };
 		2236FA451E04001E003529C6 /* SamAdvertise.m in Sources */ = {isa = PBXBuildFile; fileRef = 2236FA441E04001E003529C6 /* SamAdvertise.m */; };
@@ -154,6 +155,8 @@
 		222907CB1E1E8ABD00AD862F /* SamTickerActionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTickerActionsViewController.h; sourceTree = "<group>"; };
 		222907CC1E1E8ABD00AD862F /* SamTickerActionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTickerActionsViewController.m; sourceTree = "<group>"; };
 		222907CD1E1E8ABD00AD862F /* SamTickerActionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamTickerActionsViewController.xib; sourceTree = "<group>"; };
+		222D232F1E2776AB00BD44D3 /* SamLaunchOptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLaunchOptionView.h; sourceTree = "<group>"; };
+		222D23301E2776AB00BD44D3 /* SamLaunchOptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLaunchOptionView.m; sourceTree = "<group>"; };
 		2231C4781DF2E718006DC590 /* SamMainTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamMainTopView.h; sourceTree = "<group>"; };
 		2231C4791DF2E718006DC590 /* SamMainTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamMainTopView.m; sourceTree = "<group>"; };
 		2236FA411E02BB27003529C6 /* SamHotViewControler.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamHotViewControler.xib; sourceTree = "<group>"; };
@@ -586,6 +589,8 @@
 			children = (
 				22F693751E096A080083BAAE /* LFLivePreview.h */,
 				22F693761E096A080083BAAE /* LFLivePreview.m */,
+				222D232F1E2776AB00BD44D3 /* SamLaunchOptionView.h */,
+				222D23301E2776AB00BD44D3 /* SamLaunchOptionView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1185,6 +1190,7 @@
 				220C038B1DF9A33F0088D79F /* SamPlayerViewController.m in Sources */,
 				224F09E11DDDC2F200EAC0F4 /* AppDelegate.m in Sources */,
 				2236FA451E04001E003529C6 /* SamAdvertise.m in Sources */,
+				222D23311E2776AB00BD44D3 /* SamLaunchOptionView.m in Sources */,
 				227F9CF91E16199800822960 /* SamTickers.m in Sources */,
 				2231C47A1DF2E718006DC590 /* SamMainTopView.m in Sources */,
 				227A00471DFEEDBE00F87208 /* SamNearbyLiveCell.m in Sources */,

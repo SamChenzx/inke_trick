@@ -9,10 +9,13 @@
 #import "SamTabBarViewController.h"
 #import "SamBaseNavViewController.h"
 #import "SamLaunchViewController.h"
+#import "SamLaunchOptionView.h"
 
-@interface SamTabBarViewController () <SamTabBarDelegate>
+@interface SamTabBarViewController () <SamTabBarDelegate,SamLaunchOptionDelegate>
 
 @property(nonatomic, strong) SamTabBar* samTabBar;
+@property (nonatomic, strong) SamLaunchOptionView *launchOptionView;
+
 
 @end
 
@@ -25,6 +28,15 @@
         _samTabBar.delegate = self;
     }
     return _samTabBar;
+}
+
+- (SamLaunchOptionView *)launchOptionView
+{
+    if (!_launchOptionView) {
+        _launchOptionView = [[SamLaunchOptionView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _launchOptionView.delegate = self;
+    }
+    return _launchOptionView;
 }
 
 - (void)viewDidLoad {
@@ -63,9 +75,16 @@
         self.selectedIndex = index - SamItemTypeLive;
         
     } else if(index == SamItemTypeLaunch) {
-        [self launchLive];
+        [self.launchOptionView showUp];
     }
     
+}
+
+- (void)launchOptionView:(SamLaunchOptionView *)launchOptionView clickButtonAtIndex:(SamLaunchType)index
+{
+    if (index == SamLaunchTypeCamera) {
+        [self launchLive];
+    }
 }
 
 -(void) launchLive

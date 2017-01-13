@@ -52,9 +52,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIImageView *backGroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"global_tab_bg"]];
-        backGroundImage.frame = frame;
-        [self addSubview:backGroundImage];
         self.translucent = NO;
         // add items
         for (NSInteger i = 0; i<self.datalist.count; i++) {
@@ -95,7 +92,6 @@
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
     UIView *view = nil;
-    
     for (UIView *subView in self.subviews) {
         CGPoint tp = [subView convertPoint:point fromView:self];
         if (CGRectContainsPoint(subView.bounds, tp)) {
@@ -112,6 +108,8 @@
     }
     return view;
 }
+
+
 
 -(void)clickItem:(UIButton *)button
 {
