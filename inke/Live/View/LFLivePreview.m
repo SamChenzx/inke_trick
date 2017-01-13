@@ -116,7 +116,7 @@ inline static NSString *formatedSpeed(float bytes, float elapsed_milli) {
     NSLog(@"liveStateDidChange: %ld", state);
     switch (state) {
     case LFLiveReady:
-        _stateLabel.text = @"未连接";
+//        _stateLabel.text = @"未连接";
         break;
     case LFLivePending:
         _stateLabel.text = @"连接中";

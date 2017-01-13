@@ -74,7 +74,6 @@
 		22A525291DF56FC200EDB904 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A525281DF56FC200EDB904 /* UIKit.framework */; };
 		22A5252B1DF56FD000EDB904 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A5252A1DF56FD000EDB904 /* Foundation.framework */; };
 		22AF217B1DF13B300035F221 /* SamLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF21791DF13B300035F221 /* SamLaunchViewController.m */; };
-		22AF217C1DF13B300035F221 /* SamLaunchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22AF217A1DF13B300035F221 /* SamLaunchViewController.xib */; };
 		22AF21801DF148100035F221 /* SamFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF217E1DF148100035F221 /* SamFocusViewController.m */; };
 		22AF21851DF148230035F221 /* SamHotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF21831DF148230035F221 /* SamHotViewController.m */; };
 		22AF218A1DF148550035F221 /* SamNearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF21881DF148550035F221 /* SamNearbyViewController.m */; };
@@ -238,7 +237,6 @@
 		22A5252A1DF56FD000EDB904 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		22AF21781DF13B300035F221 /* SamLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLaunchViewController.h; sourceTree = "<group>"; };
 		22AF21791DF13B300035F221 /* SamLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLaunchViewController.m; sourceTree = "<group>"; };
-		22AF217A1DF13B300035F221 /* SamLaunchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamLaunchViewController.xib; sourceTree = "<group>"; };
 		22AF217D1DF148100035F221 /* SamFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamFocusViewController.h; sourceTree = "<group>"; };
 		22AF217E1DF148100035F221 /* SamFocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamFocusViewController.m; sourceTree = "<group>"; };
 		22AF21821DF148230035F221 /* SamHotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamHotViewController.h; sourceTree = "<group>"; };
@@ -600,7 +598,6 @@
 			children = (
 				22AF21781DF13B300035F221 /* SamLaunchViewController.h */,
 				22AF21791DF13B300035F221 /* SamLaunchViewController.m */,
-				22AF217A1DF13B300035F221 /* SamLaunchViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -999,7 +996,6 @@
 				224F09E71DDDC2F200EAC0F4 /* Main.storyboard in Resources */,
 				22741CC01E0FF9240052A197 /* SamTestView.xib in Resources */,
 				22B103C51E0AAD6B00605CB0 /* README.txt in Resources */,
-				22AF217C1DF13B300035F221 /* SamLaunchViewController.xib in Resources */,
 				22B103D81E0BC11F00605CB0 /* SamMeInfoView.xib in Resources */,
 				222907CF1E1E8ABD00AD862F /* SamTickerActionsViewController.xib in Resources */,
 				22C76E531DEF1BC2003A7518 /* SamMainViewController.xib in Resources */,

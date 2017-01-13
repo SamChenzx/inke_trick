@@ -92,7 +92,7 @@
             CGRect frame = view.frame;
             if (frame.size.width == 75) {
                 view.frame = CGRectMake(56.25 + i*kScreenWidth / 2, 0, 75, 75);
-                [UIView animateWithDuration:1 delay:0.1*i usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+                [UIView animateWithDuration:1 delay:0.1*i usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseIn| UIViewAnimationOptionAllowUserInteraction animations:^{
                     view.frame = frame;
                 } completion:nil];
             }
