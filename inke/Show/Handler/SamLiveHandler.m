@@ -18,11 +18,10 @@
 
 +(void) executeGetHotLiveTaskWithSuccess:(SuccessBlock) success failed:(FailedBlock) failed
 {
-//    NSDictionary *params = @{@"lc":@"0000000000000045",@"cc":@"TG0001",@"cv":@"IK3.8.30_Iphone",@"proto":@"7",@"idfa":@"00000000-0000-0000-0000-000000000000",@"idfv":@"73A74722-B15B-48E1-8246-BBF344D3FA8C",@"devi":@"49ada13d88c4c6e87b0d5cc7c510fbb900bb2904",@"osversion":@"ios_10.100000",@"ua":@"iPhone7_2",@"imei":@"",@"imsi":@"",@"uid":@"313054160",@"sid":@"20gPQiPAyqHk3D22keDdi0Q2cAXeLtFWsAju4Rhm9cZ9TcKzi1Vfe",@"conn":@"wifi",@"mtid":@"e7d80f17b447125143549330ee05cb30",@"mtxid":@"80e650124b1a",@"logid":@"133,5",@"id":@"1483172985230112",@"multiaddr":@"1",@"s_sg":@"7392f4d4b4240c49db44c41557b578a1",@"s_sc":@"100",@"s_st":@"1483172794"};
+    NSDictionary *params = @{@"lc":@"0000000000000045",@"cc":@"TG0001",@"cv":@"IK3.8.30_Iphone",@"proto":@"7",@"idfa":@"00000000-0000-0000-0000-000000000000",@"idfv":@"73A74722-B15B-48E1-8246-BBF344D3FA8C",@"devi":@"49ada13d88c4c6e87b0d5cc7c510fbb900bb2904",@"osversion":@"ios_10.100000",@"ua":@"iPhone7_2",@"imei":@"",@"imsi":@"",@"uid":@"313054160",@"sid":@"20AjNs0lbcb5EYvo45VIi2oWWvi1zc6hi2ui0nlXIa9C38RL8WwucB",@"conn":@"wifi",@"mtid":@"e7d80f17b447125143549330ee05cb30",@"mtxid":@"80e650124b1a",@"logid":@"133,5",@"id":@"1484370946508623,1484373765772108,1484372896008296,1484373662019674,1484373779344801",@"multiaddr":@"1",@"s_sg":@"a42e58ce0aa09fb4fa243da40ba305a8",@"s_sc":@"100",@"s_st":@"1484373631"};
     
-//    lc=0000000000000045&cc=TG0001&cv=IK3.8.30_Iphone&proto=7&idfa=00000000-0000-0000-0000-000000000000&idfv=73A74722-B15B-48E1-8246-BBF344D3FA8C&devi=49ada13d88c4c6e87b0d5cc7c510fbb900bb2904&osversion=ios_10.100000&ua=iPhone7_2&imei=&imsi=&uid=313054160&sid=20gPQiPAyqHk3D22keDdi0Q2cAXeLtFWsAju4Rhm9cZ9TcKzi1Vfe&conn=wifi&mtid=e7d80f17b447125143549330ee05cb30&mtxid=80e650124b1a&logid=133,5&start=0&count=20&id=1483172985230112&s_sg=7392f4d4b4240c49db44c41557b578a1&s_sc=100&s_st=1483172794
-    
-    [HttpTool getWithPath:API_HOT_LIVE params:nil success:^(id json) {
+//    /api/live/infos?lc=0000000000000045&cc=TG0001&cv=IK3.8.30_Iphone&proto=7&idfa=00000000-0000-0000-0000-000000000000&idfv=73A74722-B15B-48E1-8246-BBF344D3FA8C&devi=49ada13d88c4c6e87b0d5cc7c510fbb900bb2904&osversion=ios_10.100000&ua=iPhone7_2&imei=&imsi=&uid=313054160&sid=20AjNs0lbcb5EYvo45VIi2oWWvi1zc6hi2ui0nlXIa9C38RL8WwucB&conn=wifi&mtid=e7d80f17b447125143549330ee05cb30&mtxid=80e650124b1a&logid=133,5&id=1484370946508623%2C1484373765772108%2C1484372896008296%2C1484373662019674%2C1484373779344801&multiaddr=1&s_sg=a42e58ce0aa09fb4fa243da40ba305a8&s_sc=100&s_st=1484373631    
+    [HttpTool getWithPath:API_HOT_LIVE params:params success:^(id json) {
         if ([json[@"dm_error"]integerValue]) {
             failed(json[@"error_msg"]);
         } else {

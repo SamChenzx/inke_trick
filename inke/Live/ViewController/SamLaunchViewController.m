@@ -71,6 +71,9 @@
 {
         // start live
     [self.preview startLive];
+    [self.titleTextField resignFirstResponder];
+    self.titleTextField.hidden = YES;
+    self.startLiveButton.hidden = YES;
 }
 
 

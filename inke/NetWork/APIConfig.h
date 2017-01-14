@@ -16,7 +16,7 @@
 #define IMAGE_SERVER_HOST @"http://img2.inke.cn/"
 
 // hot live
-#define API_HOT_LIVE @"api/live/gettop"
+#define API_HOT_LIVE @"api/live/infos"
 
 // live in
 
