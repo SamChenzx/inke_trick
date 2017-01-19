@@ -16,6 +16,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *votesButton;
 @property (weak, nonatomic) IBOutlet UILabel *onLineUserLabel;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
+
+
 @property (nonatomic, strong) dispatch_source_t timer;
 
 
@@ -41,9 +44,15 @@
     dispatch_source_set_timer(self.timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.timer, ^{
         
-        [self showMoreLoveAnimateFromView:self.votesButton addToView:self.view];
+        [self showMoreLoveAnimateFromView:self.shareButton addToView:self.view];
     });
     dispatch_resume(self.timer);
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    //
+    [self showMoreLoveAnimateFromView:self.shareButton addToView:self.view];
+    
 }
 
 - (void)showMoreLoveAnimateFromView:(UIView *)fromView addToView:(UIView *)addToView {
@@ -53,7 +62,7 @@
     CGPoint position = CGPointMake(fromView.layer.position.x, loveFrame.origin.y - 30);
     imageView.layer.position = position;
     NSArray *imgArr = @[@"heart_1",@"heart_2",@"heart_3",@"heart_4",@"heart_5",@"heart_2-1"];
-    NSInteger img = arc4random()%6;
+    NSInteger img = arc4random()%imgArr.count;
     imageView.image = [UIImage imageNamed:imgArr[img]];
     [addToView addSubview:imageView];
     
@@ -75,8 +84,7 @@
     CGFloat controlPointValue = (arc4random()%50 + arc4random()%100) * sign;
     [sPath addCurveToPoint:CGPointMake(position.x, position.y - 300) controlPoint1:CGPointMake(position.x - controlPointValue, position.y - 150) controlPoint2:CGPointMake(position.x + controlPointValue, position.y - 150)];
     positionAnimate.path = sPath.CGPath;
-    [imageView.layer addAnimation:positionAnimate forKey:@"heartAnimated"];
-    
+    [imageView.layer addAnimation:positionAnimate forKey:@"heartAnimate"];
     
     [UIView animateWithDuration:duration animations:^{
         imageView.layer.opacity = 0;
@@ -89,31 +97,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
+    [self initTimer];
+    
     [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer * _Nonnull timer)
-    {
-//        [HttpTool getWithPath:API_HOT_LIVE params:nil success:^(id json) {
-//            if ([json[@"dm_error"]integerValue]) {
-//                failed(json[@"error_msg"]);
-//            } else {
-//                // get correct data
-//                NSArray *lives = [SamLive mj_objectArrayWithKeyValuesArray:json[@"lives"]];
-//                success(lives);
-//            }
-//        } failure:^(NSError *error) {
-//            
-//            failed(error);
-//        }];
-        
-        self.onLineUserLabel.text = [NSString stringWithFormat:@"%ld", (long)self.live.onlineUsers];
-        [self.votesButton setTitle:[NSString stringWithFormat:@"映票:%d",10000+arc4random_uniform(100)] forState:UIControlStateNormal];
-        [self.votesButton.titleLabel sizeToFit];
-    } repeats:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             self.onLineUserLabel.text = [NSString stringWithFormat:@"%ld", (long)self.live.onlineUsers];
+             [self.votesButton setTitle:[NSString stringWithFormat:@"映票:%d",10000+arc4random_uniform(100)] forState:UIControlStateNormal];
+             [self.votesButton.titleLabel sizeToFit];
+             
+         });
+     } repeats:YES];
 }
 
 /*

@@ -91,6 +91,12 @@
 
 -(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
+    if (point.y < - self.cameraButton.bounds.size.height) {
+        return nil;
+    }
+    if (self.isHidden) {
+        return nil;
+    }
     UIView *view = nil;
     for (UIView *subView in self.subviews) {
         CGPoint tp = [subView convertPoint:point fromView:self];

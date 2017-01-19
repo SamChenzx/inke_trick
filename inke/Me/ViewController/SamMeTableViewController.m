@@ -160,6 +160,7 @@
         
         // Push the view controller.
         [self.navigationController pushViewController:detailViewController animated:YES];
+//        self.tabBarController.tabBar.frame = CGRectMake(0, kScreenHeight, kScreenWidth, 49);
         return;
     } else if ([setting.vcName isEqualToString:(NSStringFromClass([SamShortVideosViewController class]))]){
         

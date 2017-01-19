@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="iconView" destination="fpG-Je-ooR" id="sb3-uY-WWU"/>
                 <outlet property="onLineUserLabel" destination="KjP-QP-QIL" id="rGi-R9-183"/>
+                <outlet property="shareButton" destination="c0E-vL-zoH" id="xJm-2S-XoM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="votesButton" destination="H5F-g1-kwy" id="4G6-g5-CT7"/>
             </connections>
@@ -27,31 +28,45 @@
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_xinxi_h" translatesAutoresizingMaskIntoConstraints="NO" id="4DE-Ah-JHU">
-                            <rect key="frame" x="175" y="12" width="40" height="40"/>
+                            <rect key="frame" x="167.5" y="10" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="JOt-Hh-Gmw"/>
+                                <constraint firstAttribute="width" secondItem="4DE-Ah-JHU" secondAttribute="height" multiplier="1:1" id="M1y-Mb-v0X"/>
+                            </constraints>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_liwu_h" translatesAutoresizingMaskIntoConstraints="NO" id="lu8-TM-AU8">
-                            <rect key="frame" x="225" y="12" width="40" height="40"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_fenxiang_h" translatesAutoresizingMaskIntoConstraints="NO" id="exv-zY-gFO">
-                            <rect key="frame" x="275" y="12" width="40" height="40"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_liao_h" translatesAutoresizingMaskIntoConstraints="NO" id="IEn-tc-wKx">
-                            <rect key="frame" x="8" y="12" width="40" height="40"/>
+                            <rect key="frame" x="222.5" y="10" width="40" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="IEn-tc-wKx" secondAttribute="height" multiplier="1:1" id="MyX-Ab-cYk"/>
+                                <constraint firstAttribute="width" constant="40" id="WhD-3c-yfd"/>
+                                <constraint firstAttribute="width" secondItem="lu8-TM-AU8" secondAttribute="height" multiplier="1:1" id="yX2-na-ug2"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0E-vL-zoH">
+                            <rect key="frame" x="277.5" y="10" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="9Uf-Fe-a1Z"/>
+                                <constraint firstAttribute="width" secondItem="c0E-vL-zoH" secondAttribute="height" multiplier="1:1" id="VFa-5p-LDp"/>
+                            </constraints>
+                            <state key="normal" image="mg_room_btn_fenxiang_h"/>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_liao_h" translatesAutoresizingMaskIntoConstraints="NO" id="IEn-tc-wKx">
+                            <rect key="frame" x="8" y="10" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="f5B-4g-6Cq"/>
+                                <constraint firstAttribute="width" secondItem="IEn-tc-wKx" secondAttribute="height" multiplier="1:1" id="oga-s9-IEA"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="lu8-TM-AU8" firstAttribute="leading" secondItem="4DE-Ah-JHU" secondAttribute="trailing" constant="10" id="4w3-xj-OFj"/>
-                        <constraint firstAttribute="bottom" secondItem="IEn-tc-wKx" secondAttribute="bottom" constant="8" id="6xm-NR-dLx"/>
-                        <constraint firstAttribute="trailing" secondItem="exv-zY-gFO" secondAttribute="trailing" constant="60" id="C0L-Rr-48l"/>
-                        <constraint firstItem="exv-zY-gFO" firstAttribute="leading" secondItem="lu8-TM-AU8" secondAttribute="trailing" constant="10" id="C5t-VB-Sq4"/>
-                        <constraint firstItem="4DE-Ah-JHU" firstAttribute="centerY" secondItem="IEn-tc-wKx" secondAttribute="centerY" id="FPv-bw-7of"/>
-                        <constraint firstItem="exv-zY-gFO" firstAttribute="centerY" secondItem="IEn-tc-wKx" secondAttribute="centerY" id="Frx-Mw-SoD"/>
+                        <constraint firstItem="IEn-tc-wKx" firstAttribute="centerY" secondItem="MGn-5W-t0a" secondAttribute="centerY" id="25Z-by-UeW"/>
+                        <constraint firstItem="4DE-Ah-JHU" firstAttribute="centerY" secondItem="MGn-5W-t0a" secondAttribute="centerY" id="84L-9f-NJw"/>
+                        <constraint firstItem="4DE-Ah-JHU" firstAttribute="centerX" secondItem="MGn-5W-t0a" secondAttribute="centerX" id="C9h-Gt-qTL"/>
+                        <constraint firstItem="lu8-TM-AU8" firstAttribute="top" secondItem="4DE-Ah-JHU" secondAttribute="top" id="NWF-JS-rwH"/>
+                        <constraint firstItem="lu8-TM-AU8" firstAttribute="leading" secondItem="4DE-Ah-JHU" secondAttribute="trailing" constant="15" id="Nbt-P4-Dc3"/>
+                        <constraint firstItem="c0E-vL-zoH" firstAttribute="leading" secondItem="lu8-TM-AU8" secondAttribute="trailing" constant="15" id="PAN-sv-V8M"/>
                         <constraint firstAttribute="height" constant="60" id="d30-A6-hxD"/>
-                        <constraint firstItem="IEn-tc-wKx" firstAttribute="leading" secondItem="MGn-5W-t0a" secondAttribute="leading" constant="8" id="eSa-AN-WVp"/>
-                        <constraint firstItem="lu8-TM-AU8" firstAttribute="centerY" secondItem="IEn-tc-wKx" secondAttribute="centerY" id="taF-75-1cg"/>
+                        <constraint firstItem="IEn-tc-wKx" firstAttribute="leading" secondItem="MGn-5W-t0a" secondAttribute="leading" constant="8" id="dp8-Ek-NgY"/>
+                        <constraint firstItem="c0E-vL-zoH" firstAttribute="centerY" secondItem="MGn-5W-t0a" secondAttribute="centerY" id="mxA-px-rpT"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_touxiang" translatesAutoresizingMaskIntoConstraints="NO" id="sBC-TV-nhl">

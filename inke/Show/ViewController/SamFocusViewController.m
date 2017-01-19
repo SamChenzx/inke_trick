@@ -85,6 +85,7 @@ static NSString * identifier = @"focus";
     SamTickerActionsViewController *actionVC = [[SamTickerActionsViewController alloc]init];
     actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
     [self.navigationController pushViewController:actionVC animated:YES];
+    [self.tabBarController setHidesBottomBarWhenPushed:YES];
 }
 
 - (void)loadData
