@@ -10,7 +10,6 @@
 
 @interface SamNearbyHeaderView ()
 
-@property (weak, nonatomic) IBOutlet UIButton *filterGender;
 
 @end
 
@@ -23,25 +22,6 @@
     // Drawing code
 }
 */
-
-//-(instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//        [self addSubview:self.filterGender];
-//        return self;
-//    }
-//    return nil;
-//}
-
--(UIButton *)filterGender
-{
-    if (!_filterGender) {
-        _filterGender = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_filterGender addTarget:self action:@selector(clickFilterGnender:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _filterGender;
-}
 
 + (instancetype)loadHeaderView
 {
@@ -67,10 +47,13 @@
     return self;
 }
 
-- (void)clickFilterGnender:(UIButton *)button
-{
-    NSLog(@"Need to show only girls' lives!!");
+- (IBAction)clickFilterGender:(UIButton *)sender {
+    
+    if ([self.delegate respondsToSelector:@selector(headerView:clickFilterGender:)]) {
+        [self.delegate headerView:self clickFilterGender:sender];
+    }
 }
+
 
 
 @end

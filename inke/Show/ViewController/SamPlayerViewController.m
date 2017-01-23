@@ -79,7 +79,10 @@
 {
     //self.view.backgroundColor = [UIColor blackColor];
     self.blurImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    [self.blurImageView downloadImage:[NSString stringWithFormat:@"%@%@",IMAGE_SERVER_HOST,self.live.creator.portrait] placeholder:@"default_room"];
+    if (![_live.creator.portrait hasPrefix:IMAGE_SERVER_HOST]) {
+        _live.creator.portrait = [IMAGE_SERVER_HOST stringByAppendingString:_live.creator.portrait];
+    }
+    [self.blurImageView downloadImage:_live.creator.portrait placeholder:@"default_room"];
     // blur effect
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     // blur view

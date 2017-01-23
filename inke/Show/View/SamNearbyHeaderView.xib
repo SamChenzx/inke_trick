@@ -41,8 +41,11 @@
                             <rect key="frame" x="324" y="10" width="43" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="看全部">
-                                <color key="titleColor" red="0.98431378599999997" green="0.81526431909999997" blue="0.11563187680000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <connections>
+                                <action selector="clickFilterGender:" destination="TfV-bt-kGT" eventType="touchUpInside" id="dtT-DE-WJV"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -68,7 +71,7 @@
                 <constraint firstItem="cZ3-tL-GDK" firstAttribute="leading" secondItem="TfV-bt-kGT" secondAttribute="leading" id="mHH-Ii-EKd"/>
             </constraints>
             <connections>
-                <outlet property="filterGender" destination="QsJ-yd-rmE" id="LAr-aJ-TdJ"/>
+                <outlet property="filterGender" destination="QsJ-yd-rmE" id="fLS-Bj-blQ"/>
             </connections>
             <point key="canvasLocation" x="-23" y="-288"/>
         </collectionReusableView>

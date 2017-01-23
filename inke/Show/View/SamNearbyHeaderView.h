@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+
+@class SamNearbyHeaderView;
+
+@protocol SamHeaderViewDelegate <NSObject>
+
+- (void)headerView:(SamNearbyHeaderView *)headerView clickFilterGender:(UIButton *)button;
+
+@end
+
 @interface SamNearbyHeaderView : UICollectionReusableView
 
 @property(nonatomic, strong) UILabel * title;
+@property(nonatomic, assign) id<SamHeaderViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UIButton *filterGender;
 
 + (instancetype)loadHeaderView;
 - (instancetype)initWithFrame:(CGRect)frame;
-
 
 @end

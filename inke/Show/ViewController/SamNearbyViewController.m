@@ -18,14 +18,24 @@ static NSString *identifier = @"SamNearbyLiveCell";
 #define kItemWidth 100
 
 
-@interface SamNearbyViewController() <UICollectionViewDelegate,UICollectionViewDataSource>
+@interface SamNearbyViewController() <UICollectionViewDelegate,UICollectionViewDataSource,SamHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) NSArray *dataList;
+@property (nonatomic, strong) NSArray *dataList;    
+@property (nonatomic, assign) NSInteger genderIndex;
+@property (nonatomic, strong) NSArray *titles;
 
 @end
 
 @implementation SamNearbyViewController
+
+- (NSArray *)titles
+{
+    if (!_titles) {
+        _titles = [[NSArray alloc] initWithObjects:@"看全部",@"只看女",@"只看男", nil];
+    }
+    return _titles;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,18 +56,15 @@ static NSString *identifier = @"SamNearbyLiveCell";
 {
     [self.collectionView registerNib:[UINib nibWithNibName:@"SamNearbyLiveCell" bundle:nil] forCellWithReuseIdentifier:identifier];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SamNearbyHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView"];
-//    [self.collectionView registerClass:[SamNearbyHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView"];
 }
 
 - (void)loadData
 {
     [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
-        NSLog(@"%@",obj);
         self.dataList = obj;
         [self.collectionView reloadData];
     } failed:^(id obj) {
         NSLog(@"%@",obj);
-        
     }];
 }
 
@@ -107,22 +114,20 @@ static NSString *identifier = @"SamNearbyLiveCell";
     UICollectionReusableView *reusableView = nil;
     
     if (kind == UICollectionElementKindSectionHeader){
-        
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView" forIndexPath:indexPath];
+        ((SamNearbyHeaderView *)headerView).delegate = self;
+        [((SamNearbyHeaderView *)headerView).filterGender setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
         reusableView = headerView;
-        
+
     }
     if (kind == UICollectionElementKindSectionFooter) {
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView" forIndexPath:indexPath];
-        // reusableView = [self prepareForHeaderView:headerView];
         reusableView = headerView;
     }
-    
     return reusableView;
 }
 
-- (UICollectionReusableView *)prepareForHeaderView:(UICollectionReusableView *)headView
-{
+- (UICollectionReusableView *)prepareForHeaderView:(UICollectionReusableView *)headView {
     UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nearby_icon_now_live"]];
     [headView addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -144,8 +149,9 @@ static NSString *identifier = @"SamNearbyLiveCell";
     }];
     UIButton *filterGender = [[UIButton alloc]init];
     [filterGender setTitle:@"只看女" forState:UIControlStateNormal];
-    [filterGender setTitleColor:[UIColor yellowColor] forState:UIControlStateNormal];
+    [filterGender setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
     filterGender.titleLabel.font = [UIFont systemFontOfSize:14];
+    [filterGender addTarget:self action:@selector(clickFilterGender:) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:filterGender];
     [filterGender mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(headView.mas_centerY);
@@ -154,8 +160,49 @@ static NSString *identifier = @"SamNearbyLiveCell";
         make.width.greaterThanOrEqualTo(@50);
     }];
     NSLog(@"current title: %@",filterGender.currentTitle);
-
     return headView;
+}
+
+- (void)clickFilterGender: (UIButton *)button {
+}
+
+-(void)headerView:(SamNearbyHeaderView *)headerView clickFilterGender:(UIButton *)button
+{
+    UIAlertController *alertSheetViewController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *seeAllAction = [UIAlertAction actionWithTitle:@"看全部" style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self loadData];
+        self.genderIndex = 0;
+        [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
+    }];
+    [seeAllAction setValue:[UIColor colorWithHexString:@"00FFCC"] forKey:@"titleTextColor"];
+//    [seeAllAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
+    UIAlertAction *seeGirlsAction = [UIAlertAction actionWithTitle:@"只看女" style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self loadData];
+        self.genderIndex = 1;
+        [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
+    }];
+    [seeGirlsAction setValue:[UIColor colorWithHexString:@"FF33FF"] forKey:@"titleTextColor"];
+//    [seeGirlsAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
+
+    UIAlertAction *seeBoysAction = [UIAlertAction actionWithTitle:@"只看男" style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self loadData];
+        self.genderIndex = 2;
+        [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
+    }];
+    [seeBoysAction setValue:[UIColor colorWithHexString:@"3366FF"] forKey:@"titleTextColor"];
+//    [seeBoysAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        ;
+    }];
+    [cancelAction setValue:[UIColor colorWithHexString:@"#333333"] forKey:@"_titleTextColor"];
+//    [cancelAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
+
+    [alertSheetViewController addAction:seeAllAction];
+    [alertSheetViewController addAction:seeGirlsAction];
+    [alertSheetViewController addAction:seeBoysAction];
+    [alertSheetViewController addAction:cancelAction];
+    [self presentViewController:alertSheetViewController animated:YES completion:nil];
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
