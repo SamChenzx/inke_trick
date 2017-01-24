@@ -17,6 +17,7 @@ PODS:
   - LFLiveKit (2.5)
   - Masonry (1.0.2)
   - MJExtension (3.0.13)
+  - MJRefresh (3.1.12)
   - SDWebImage (4.0.0-beta2):
     - SDWebImage/Core (= 4.0.0-beta2)
   - SDWebImage/Core (4.0.0-beta2)
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - LFLiveKit
   - Masonry (~> 1.0.2)
   - MJExtension
+  - MJRefresh (~> 3.1.12)
   - SDWebImage (~> 4.0.0-beta2)
   - YYKit (~> 1.0.9)
 
@@ -37,9 +39,10 @@ SPEC CHECKSUMS:
   LFLiveKit: 4361bd588ae0c9244589119ccdb1c30d14686414
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SDWebImage: e379f33106cf8d6766f970c0ef1c3fb609c94d78
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: fe8bed857e88cf74073d9814e5c256c2c12cbf8f
+PODFILE CHECKSUM: e6c20510ca5ac2ff5335a4cfc1de92bf6a75fa89
 
 COCOAPODS: 1.1.1

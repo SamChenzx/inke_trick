@@ -12,6 +12,7 @@
 #import "SamPlayerViewController.h"
 #import "SamNearbyHeaderView.h"
 #import "UILabel+SamAlertActionFont.h"
+#import "MJRefresh.h"
 
 static NSString *identifier = @"SamNearbyLiveCell";
 
@@ -44,7 +45,7 @@ static NSString *identifier = @"SamNearbyLiveCell";
     
     [self initUI];
     [self loadData];
-    
+    [self prepareRefresh];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -63,11 +64,33 @@ static NSString *identifier = @"SamNearbyLiveCell";
     [appearanceLabel setAppearanceFont:font];
 }
 
+- (void)prepareRefresh
+{
+    NSMutableArray *imagesArray = [NSMutableArray array];
+    for (int i = 1; i < 29; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_fly_00%02d",i]];
+        [imagesArray addObject:image];
+    }
+    MJRefreshGifHeader *gifRefreshHeader = [MJRefreshGifHeader headerWithRefreshingBlock:^{
+        [self loadData];
+    }];
+    gifRefreshHeader.stateLabel.hidden = YES;
+    gifRefreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateIdle];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStatePulling];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateRefreshing];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateNoMoreData];
+    self.collectionView.mj_header = gifRefreshHeader;
+}
+
 - (void)loadData
 {
     [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
         self.dataList = obj;
         [self.collectionView reloadData];
+        if (self.collectionView.mj_header.isRefreshing) {
+            [self.collectionView.mj_header endRefreshing];
+        }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];

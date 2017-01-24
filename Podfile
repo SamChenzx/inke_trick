@@ -12,6 +12,7 @@ target 'inke' do
   pod 'YYKit', '~> 1.0.9'
   pod 'MJExtension'
   pod 'LFLiveKit'
+  pod 'MJRefresh', '~> 3.1.12'
 
   target 'inkeTests' do
     inherit! :search_paths

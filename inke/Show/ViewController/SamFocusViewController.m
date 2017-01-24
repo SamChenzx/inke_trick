@@ -13,7 +13,7 @@
 #import "SamLiveHandler.h"
 #import "SamTickersView.h"
 #import "SamTickerActionsViewController.h"
-
+#import "MJRefresh.h"
 
 
 
@@ -60,6 +60,8 @@ static NSString * identifier = @"focus";
     [self initUI];
     
     [self loadData];
+    
+    [self prepareRefresh];
 }
 
 -(SamTickersView *)TickersView
@@ -78,6 +80,25 @@ static NSString * identifier = @"focus";
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
     [self.tickersView addGestureRecognizer:tapGesture];
     self.tableView.tableHeaderView = self.tickersView;
+}
+
+- (void)prepareRefresh
+{
+    NSMutableArray *imagesArray = [NSMutableArray array];
+    for (int i = 1; i < 29; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_fly_00%02d",i]];
+        [imagesArray addObject:image];
+    }
+    MJRefreshGifHeader *gifRefreshHeader = [MJRefreshGifHeader headerWithRefreshingBlock:^{
+        [self loadData];
+    }];
+    gifRefreshHeader.stateLabel.hidden = YES;
+    gifRefreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateIdle];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStatePulling];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateRefreshing];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateNoMoreData];
+    self.tableView.mj_header = gifRefreshHeader;
 }
 
 - (void)clickTickerOfTickersView:(UITapGestureRecognizer *)tapGesture
@@ -105,10 +126,13 @@ static NSString * identifier = @"focus";
         [self.imageAndLinkArray removeAllObjects];
         [self.imageAndLinkArray addObjectsFromArray:obj];
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+        if (self.tableView.mj_header.isRefreshing) {
+            [self.tableView.mj_header endRefreshing];
+        }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];
-
+    
     
     [self.tableView reloadData];
 }

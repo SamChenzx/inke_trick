@@ -14,6 +14,7 @@
 #import "SamTabBarViewController.h"
 #import "SamTickersView.h"
 #import "SamTickerActionsViewController.h"
+#import "MJRefresh.h"
 
 static NSString *identifier = @"SamLiveCell";
 
@@ -75,6 +76,7 @@ static NSString *identifier = @"SamLiveCell";
 {
     [super viewWillAppear:animated];
     [self loadData];
+    [self prepareRefresh];
 }
 
 -(void) initUI
@@ -87,6 +89,25 @@ static NSString *identifier = @"SamLiveCell";
     self.tableView.tableHeaderView = self.tickersView;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+}
+
+- (void)prepareRefresh
+{
+    NSMutableArray *imagesArray = [NSMutableArray array];
+    for (int i = 1; i < 29; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"refresh_fly_00%02d",i]];
+        [imagesArray addObject:image];
+    }
+    MJRefreshGifHeader *gifRefreshHeader = [MJRefreshGifHeader headerWithRefreshingBlock:^{
+        [self loadData];
+    }];
+    gifRefreshHeader.stateLabel.hidden = YES;
+    gifRefreshHeader.lastUpdatedTimeLabel.hidden = YES;
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateIdle];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStatePulling];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateRefreshing];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateNoMoreData];
+    self.tableView.mj_header = gifRefreshHeader;
 }
 
 - (void)clickTickerOfTickersView:(UITapGestureRecognizer *)tapGesture
@@ -103,6 +124,9 @@ static NSString *identifier = @"SamLiveCell";
        // NSLog(@"%@",obj);
         [self.dataList addObjectsFromArray:obj];
         [self.tableView reloadData];
+        if (self.tableView.mj_header.isRefreshing) {
+            [self.tableView.mj_header endRefreshing];
+        }
     } failed:^(id obj) {
         NSLog(@"%@",obj);        
     }];
