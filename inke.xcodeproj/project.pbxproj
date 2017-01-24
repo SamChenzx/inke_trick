@@ -50,6 +50,7 @@
 		225449461DF851160055BCA0 /* MJExtensionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 225449451DF851160055BCA0 /* MJExtensionConfig.m */; };
 		2254494D1DF902AD0055BCA0 /* SamLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254494B1DF902AD0055BCA0 /* SamLiveCell.m */; };
 		2254494E1DF902AD0055BCA0 /* SamLiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */; };
+		226981C31E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 226981C21E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m */; };
 		22741CBE1E0FF9130052A197 /* SamTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22741CBD1E0FF9130052A197 /* SamTestView.m */; };
 		22741CC01E0FF9240052A197 /* SamTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22741CBF1E0FF9240052A197 /* SamTestView.xib */; };
 		22741CCB1E10F6630052A197 /* SamNearbyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22741CC91E10F6630052A197 /* SamNearbyHeaderView.m */; };
@@ -203,6 +204,8 @@
 		2254494A1DF902AD0055BCA0 /* SamLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLiveCell.h; sourceTree = "<group>"; };
 		2254494B1DF902AD0055BCA0 /* SamLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLiveCell.m; sourceTree = "<group>"; };
 		2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamLiveCell.xib; sourceTree = "<group>"; };
+		226981C11E371C6A00AE5E9D /* UILabel+SamAlertActionFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SamAlertActionFont.h"; sourceTree = "<group>"; };
+		226981C21E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SamAlertActionFont.m"; sourceTree = "<group>"; };
 		22741CBC1E0FF9130052A197 /* SamTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamTestView.h; sourceTree = "<group>"; };
 		22741CBD1E0FF9130052A197 /* SamTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamTestView.m; sourceTree = "<group>"; };
 		22741CBF1E0FF9240052A197 /* SamTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamTestView.xib; sourceTree = "<group>"; };
@@ -523,6 +526,8 @@
 		227A003D1DFEB59300F87208 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				226981C11E371C6A00AE5E9D /* UILabel+SamAlertActionFont.h */,
+				226981C21E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1198,6 +1203,7 @@
 				22AF217B1DF13B300035F221 /* SamLaunchViewController.m in Sources */,
 				2236FA4D1E040B02003529C6 /* SamCacheHelper.m in Sources */,
 				22AF21851DF148230035F221 /* SamHotViewController.m in Sources */,
+				226981C31E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m in Sources */,
 				22741CBE1E0FF9130052A197 /* SamTestView.m in Sources */,
 				227A003A1DFE72A900F87208 /* SamLiveChatViewController.m in Sources */,
 				229183981DEDB52900680984 /* SamTabBar.m in Sources */,

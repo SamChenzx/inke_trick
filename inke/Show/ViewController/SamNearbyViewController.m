@@ -11,6 +11,7 @@
 #import "SamNearbyLiveCell.h"
 #import "SamPlayerViewController.h"
 #import "SamNearbyHeaderView.h"
+#import "UILabel+SamAlertActionFont.h"
 
 static NSString *identifier = @"SamNearbyLiveCell";
 
@@ -56,6 +57,10 @@ static NSString *identifier = @"SamNearbyLiveCell";
 {
     [self.collectionView registerNib:[UINib nibWithNibName:@"SamNearbyLiveCell" bundle:nil] forCellWithReuseIdentifier:identifier];
     [self.collectionView registerNib:[UINib nibWithNibName:@"SamNearbyHeaderView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerView"];
+    
+    UILabel *appearanceLabel = [UILabel appearanceWhenContainedInInstancesOfClasses:@[[UIAlertController class]]];
+    UIFont *font = [UIFont systemFontOfSize:14];
+    [appearanceLabel setAppearanceFont:font];
 }
 
 - (void)loadData
@@ -203,6 +208,7 @@ static NSString *identifier = @"SamNearbyLiveCell";
     [alertSheetViewController addAction:seeBoysAction];
     [alertSheetViewController addAction:cancelAction];
     [self presentViewController:alertSheetViewController animated:YES completion:nil];
+
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
