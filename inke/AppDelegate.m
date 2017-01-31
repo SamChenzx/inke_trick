@@ -41,11 +41,10 @@
     self.window.rootViewController = mainVC;
     
     [[SamLocationManager sharedManager] getGPS:^(NSString *lat, NSString *lon) {
-//        NSLog(@"%@,%@",lat,lon);
     }];
     SamAdvertiseView * advertiseView = [SamAdvertiseView loadAdvertiseView];
     
-    [self.window makeKeyAndVisible];
+    //[self.window makeKeyAndVisible];
     [self.window addSubview:advertiseView];
     return YES;
 }

@@ -20,7 +20,6 @@
     
     self.navigationBar.barTintColor = [UIColor colorWithRed:0 green:216 blue:201 alpha:1];
     self.navigationBar.tintColor = [UIColor whiteColor];
-    
 //    static dispatch_once_t onceToken;
 //    dispatch_once(&onceToken, ^{
 //        UIGestureRecognizer *gesture = self.interactivePopGestureRecognizer;
@@ -45,6 +44,11 @@
         UIPanGestureRecognizer *popRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:navigationInteractiveTransition action:handleTransition];
         popRecognizer.delegate = self;
         [gestureView addGestureRecognizer:popRecognizer];
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle
+{
+    return self;
 }
 
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated

@@ -19,7 +19,7 @@
 
 static NSString * identifier = @"focus";
 
-@interface SamFocusViewController () <SamTickersDelegate>
+@interface SamFocusViewController () <SamTickersDelegate,UIScrollViewDelegate>
 
 @property(nonatomic, strong) NSArray *dataList;
 @property(nonatomic, strong) SamTickersView *tickersView;
@@ -62,6 +62,7 @@ static NSString * identifier = @"focus";
     [self loadData];
     
     [self prepareRefresh];
+    
 }
 
 -(SamTickersView *)TickersView
@@ -74,13 +75,16 @@ static NSString * identifier = @"focus";
 
 -(void) initUI
 {
-    [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"SamLiveCell" bundle:nil] forCellReuseIdentifier:identifier] ;
     self.tickersView = [SamTickersView loadTickersView];
     self.tickersView.delegate = self;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
     [self.tickersView addGestureRecognizer:tapGesture];
     self.tableView.tableHeaderView = self.tickersView;
+    self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
+    self.tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
 }
+
 
 - (void)prepareRefresh
 {
@@ -127,7 +131,9 @@ static NSString * identifier = @"focus";
         [self.imageAndLinkArray addObjectsFromArray:obj];
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
         if (self.tableView.mj_header.isRefreshing) {
-            [self.tableView.mj_header endRefreshing];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.tableView.mj_header endRefreshing];
+            });
         }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
@@ -200,6 +206,9 @@ static NSString * identifier = @"focus";
         return CGSizeMake(kScreenWidth, kScreenHeight*0.3);
     }
 }
+
+
+
 
 /*
 #pragma mark - Navigation

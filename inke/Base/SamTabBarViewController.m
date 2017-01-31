@@ -25,7 +25,6 @@
 {
     if (!_samTabBar) {
         _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 50, kScreenWidth, 50)];
-//        _samTabBar = [[SamTabBar alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 50)];
         _samTabBar.delegate = self;
     }
     return _samTabBar;
@@ -49,8 +48,6 @@
     [[UITabBar appearance] setBackgroundImage:[UIImage new]];
     [[UITabBar appearance] setShadowImage:[UIImage new]];
     [self setValue:self.samTabBar forKey:@"tabBar"];
-//    self.tabBar.maskView = self.samTabBar.maskView;
-//    [self.tabBar addSubview:self.samTabBar];
 }
 
 -(void)configViewControllers

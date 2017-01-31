@@ -7,7 +7,9 @@
 //
 
 #import "SamBaseViewController.h"
+#import "FJBaseTableViewController.h"
 
-@interface SamFocusViewController : UITableViewController
+
+@interface SamFocusViewController : FJBaseTableViewController
 
 @end

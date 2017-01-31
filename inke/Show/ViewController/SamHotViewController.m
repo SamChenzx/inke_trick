@@ -16,9 +16,10 @@
 #import "SamTickerActionsViewController.h"
 #import "MJRefresh.h"
 
+
 static NSString *identifier = @"SamLiveCell";
 
-@interface SamHotViewController () <SamTickersDelegate>
+@interface SamHotViewController () <SamTickersDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property(nonatomic, strong) SamTickersView *tickersView;
@@ -27,6 +28,9 @@ static NSString *identifier = @"SamLiveCell";
 @end
 
 @implementation SamHotViewController
+
+
+
 
 -(NSMutableArray *)dataList
 {
@@ -87,8 +91,10 @@ static NSString *identifier = @"SamLiveCell";
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTickerOfTickersView:)];
     [self.tickersView addGestureRecognizer:tapGesture];
     self.tableView.tableHeaderView = self.tickersView;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
+    self.tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
+
+//    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)prepareRefresh
@@ -121,14 +127,16 @@ static NSString *identifier = @"SamLiveCell";
 -(void) loadData
 {
     [SamLiveHandler executeGetHotLiveTaskWithSuccess:^(id obj) {
-       // NSLog(@"%@",obj);
+        // NSLog(@"%@",obj);
         [self.dataList addObjectsFromArray:obj];
         [self.tableView reloadData];
         if (self.tableView.mj_header.isRefreshing) {
-            [self.tableView.mj_header endRefreshing];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.tableView.mj_header endRefreshing];
+            });
         }
     } failed:^(id obj) {
-        NSLog(@"%@",obj);        
+        NSLog(@"%@",obj);
     }];
     
     [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
@@ -187,14 +195,6 @@ static NSString *identifier = @"SamLiveCell";
 //    self.parentViewController.view.hidden = YES;
 //    playerVC.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:playerVC animated:YES];
-    
-    
-  /****
-    // we can't use the default media player
-    MPMoviePlayerViewController *movieVC = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL URLWithString:live.streamAddr]];
-    [self presentViewController:movieVC animated:YES completion:nil];
-  ****/
-    
     
 }
 

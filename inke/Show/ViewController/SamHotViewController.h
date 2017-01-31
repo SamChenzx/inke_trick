@@ -7,8 +7,9 @@
 //
 
 #import "SamBaseViewController.h"
+#import "FJBaseTableViewController.h"
 
-@interface SamHotViewController : UITableViewController
+@interface SamHotViewController : FJBaseTableViewController
 
 -(void) loadData;
 

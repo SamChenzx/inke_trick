@@ -76,10 +76,10 @@ static NSString *identifier = @"SamNearbyLiveCell";
     }];
     gifRefreshHeader.stateLabel.hidden = YES;
     gifRefreshHeader.lastUpdatedTimeLabel.hidden = YES;
-    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateIdle];
-    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStatePulling];
-    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateRefreshing];
-    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateNoMoreData];
+    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateIdle];
+    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStatePulling];
+    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateRefreshing];
+    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateNoMoreData];
     self.collectionView.mj_header = gifRefreshHeader;
 }
 
@@ -89,7 +89,9 @@ static NSString *identifier = @"SamNearbyLiveCell";
         self.dataList = obj;
         [self.collectionView reloadData];
         if (self.collectionView.mj_header.isRefreshing) {
-            [self.collectionView.mj_header endRefreshing];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.collectionView.mj_header endRefreshing];
+            });
         }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
@@ -239,6 +241,29 @@ static NSString *identifier = @"SamNearbyLiveCell";
     return size;
 }
 
+#pragma mark ScrollView Delegate
+
+// Hide or show bars when moved
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    //get scrollView's PanGesture
+    UIPanGestureRecognizer *pan = scrollView.panGestureRecognizer;
+    //get velocity >0 pull down <0 move up
+    CGFloat velocity = [pan velocityInView:scrollView].y;
+    
+    if (velocity <- 5) {
+        //move up hide bars
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        self.collectionView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+        self.tabBarController.tabBar.hidden = YES;
+    }else if (velocity > 5) {
+        //pull down show bars
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        self.tabBarController.tabBar.hidden = NO;
+    }else if(velocity == 0){
+        //stop...
+    }
+}
 
 /*
 #pragma mark - Navigation

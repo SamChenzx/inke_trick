@@ -16,6 +16,9 @@
 		220C03811DF9A2330088D79F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220C03801DF9A2330088D79F /* OpenGLES.framework */; };
 		220C03831DF9A2590088D79F /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 220C03821DF9A2590088D79F /* VideoToolbox.framework */; };
 		220C038B1DF9A33F0088D79F /* SamPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 220C038A1DF9A33F0088D79F /* SamPlayerViewController.m */; };
+		221BD8DB1E40C32A007A5340 /* UINavigationBar+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 221BD8D81E40C32A007A5340 /* UINavigationBar+Gradient.m */; };
+		221BD8DC1E40C32A007A5340 /* UITabBar+Gradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 221BD8DA1E40C32A007A5340 /* UITabBar+Gradient.m */; };
+		221BD8DF1E40C3F0007A5340 /* FJBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 221BD8DE1E40C3F0007A5340 /* FJBaseTableViewController.m */; };
 		2223C02D1DEDACD2004F3C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2223C02C1DEDACD2004F3C7F /* Images.xcassets */; };
 		2223CC161E097BB6007F1CC9 /* SamLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2223CC141E097BB6007F1CC9 /* SamLoginViewController.m */; };
 		2223CC171E097BB6007F1CC9 /* SamLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2223CC151E097BB6007F1CC9 /* SamLoginViewController.xib */; };
@@ -146,6 +149,12 @@
 		220C03821DF9A2590088D79F /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		220C03891DF9A33F0088D79F /* SamPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamPlayerViewController.h; sourceTree = "<group>"; };
 		220C038A1DF9A33F0088D79F /* SamPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamPlayerViewController.m; sourceTree = "<group>"; };
+		221BD8D71E40C32A007A5340 /* UINavigationBar+Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Gradient.h"; sourceTree = "<group>"; };
+		221BD8D81E40C32A007A5340 /* UINavigationBar+Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Gradient.m"; sourceTree = "<group>"; };
+		221BD8D91E40C32A007A5340 /* UITabBar+Gradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+Gradient.h"; sourceTree = "<group>"; };
+		221BD8DA1E40C32A007A5340 /* UITabBar+Gradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+Gradient.m"; sourceTree = "<group>"; };
+		221BD8DD1E40C3F0007A5340 /* FJBaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FJBaseTableViewController.h; sourceTree = "<group>"; };
+		221BD8DE1E40C3F0007A5340 /* FJBaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FJBaseTableViewController.m; sourceTree = "<group>"; };
 		2223C02C1DEDACD2004F3C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2223CC131E097BB6007F1CC9 /* SamLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLoginViewController.h; sourceTree = "<group>"; };
 		2223CC141E097BB6007F1CC9 /* SamLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLoginViewController.m; sourceTree = "<group>"; };
@@ -462,8 +471,8 @@
 			children = (
 				229183921DEDB46800680984 /* Base */,
 				22B1038D1E0AAD6B00605CB0 /* Lib */,
-				2223CC0E1E097B83007F1CC9 /* Me */,
 				227A003C1DFEB59300F87208 /* Helper */,
+				2223CC0E1E097B83007F1CC9 /* Me */,
 				22AF21731DF13AE80035F221 /* Live */,
 				22C76E4A1DEF1B96003A7518 /* Show */,
 				225449301DF7E1200055BCA0 /* NetWork */,
@@ -529,6 +538,10 @@
 		227A003D1DFEB59300F87208 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				221BD8D71E40C32A007A5340 /* UINavigationBar+Gradient.h */,
+				221BD8D81E40C32A007A5340 /* UINavigationBar+Gradient.m */,
+				221BD8D91E40C32A007A5340 /* UITabBar+Gradient.h */,
+				221BD8DA1E40C32A007A5340 /* UITabBar+Gradient.m */,
 				226981C11E371C6A00AE5E9D /* UILabel+SamAlertActionFont.h */,
 				226981C21E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m */,
 			);
@@ -553,6 +566,8 @@
 		229183921DEDB46800680984 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				221BD8DD1E40C3F0007A5340 /* FJBaseTableViewController.h */,
+				221BD8DE1E40C3F0007A5340 /* FJBaseTableViewController.m */,
 				229183931DEDB4D900680984 /* SamTabBarViewController.h */,
 				229183941DEDB4D900680984 /* SamTabBarViewController.m */,
 				229183961DEDB52900680984 /* SamTabBar.h */,
@@ -1181,12 +1196,15 @@
 				227A00411DFEB5C200F87208 /* SamLocationManager.m in Sources */,
 				22C76E491DEF1ACD003A7518 /* SamBaseViewController.m in Sources */,
 				224F09EA1DDDC2F200EAC0F4 /* inke.xcdatamodeld in Sources */,
+				221BD8DC1E40C32A007A5340 /* UITabBar+Gradient.m in Sources */,
 				2236FA481E0401C2003529C6 /* SamAdvertiseView.m in Sources */,
 				225449361DF7E49B0055BCA0 /* HttpTool.m in Sources */,
 				22B103CE1E0BB09100605CB0 /* SamUserHelper.m in Sources */,
 				22F693771E096A080083BAAE /* LFLivePreview.m in Sources */,
+				221BD8DF1E40C3F0007A5340 /* FJBaseTableViewController.m in Sources */,
 				22AF21801DF148100035F221 /* SamFocusViewController.m in Sources */,
 				2254493D1DF836DC0055BCA0 /* SamLiveHandler.m in Sources */,
+				221BD8DB1E40C32A007A5340 /* UINavigationBar+Gradient.m in Sources */,
 				225449461DF851160055BCA0 /* MJExtensionConfig.m in Sources */,
 				22C76E5B1DEF1D51003A7518 /* SamBaseNavViewController.m in Sources */,
 				2248EE411E1D195D00461399 /* SamShortVideosViewController.m in Sources */,
