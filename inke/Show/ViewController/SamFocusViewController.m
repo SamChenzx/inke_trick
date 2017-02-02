@@ -124,7 +124,28 @@ static NSString * identifier = @"focus";
     creator.nick = @"Sam";
     creator.portrait = @"Sam";
     live.creator = creator;
-    self.dataList = @[live];
+    
+    SamLive *live1 = [[SamLive alloc]init];
+    live1.city = @"LA";
+    live1.onlineUsers = 17999;
+    live1.streamAddr = LIVE_SAM;
+    
+    SamCreator *creator1 = [[SamCreator alloc]init];
+    creator1.nick = @"Joe";
+    creator1.portrait = @"Joe";
+    live1.creator = creator1;
+    
+    SamLive *live2 = [[SamLive alloc]init];
+    live2.city = @"上海";
+    live2.onlineUsers = 16999;
+    live2.streamAddr = LIVE_SAM;
+    
+    SamCreator *creator2 = [[SamCreator alloc]init];
+    creator2.nick = @"Ha";
+    creator2.portrait = @"Ha";
+    live2.creator = creator2;
+    
+    self.dataList = @[live,live1,live2];
     
     [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
         [self.imageAndLinkArray removeAllObjects];
@@ -148,7 +169,7 @@ static NSString * identifier = @"focus";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return self.dataList.count;
-    return 1;
+    return 3;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -196,17 +217,6 @@ static NSString * identifier = @"focus";
 {
     return self.imageAndLinkArray;
 }
-
--(CGSize)sizeForTickersView
-{
-    if ([[self.imageAndLinkArray firstObject] isKindOfClass:[UIImage class]]) {
-        UIImage *image = [self.imageAndLinkArray firstObject];
-        return CGSizeMake(image.size.width, image.size.height);
-    } else {
-        return CGSizeMake(kScreenWidth, kScreenHeight*0.3);
-    }
-}
-
 
 
 

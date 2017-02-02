@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *onLineLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *liveImageView;
+@property (nonatomic, strong) NSArray * defaultName;
 
 
 
@@ -22,6 +23,13 @@
 
 @implementation SamLiveCell
 
+- (NSArray *)defaultName
+{
+    if (!_defaultName) {
+        _defaultName = [[NSArray alloc] initWithObjects:@"Sam",@"Joe",@"Ha", nil];
+    }
+    return _defaultName;
+}
 
 -(void)setLive:(SamLive *)live
 {
@@ -31,9 +39,12 @@
     self.locationLabel.text = live.creator.location;
     self.onLineLabel.text = [@(live.onlineUsers) stringValue];
     
-    if ([live.creator.portrait isEqualToString:@"Sam"]) {
-        self.headView.image = [UIImage imageNamed:@"Sam"];
-        self.liveImageView.image = [UIImage imageNamed:@"Sam"];
+    if ([self.defaultName containsObject:live.creator.portrait] ) {
+        
+        
+        
+        self.headView.image = [UIImage imageNamed:live.creator.portrait];
+        self.liveImageView.image = [UIImage imageNamed:live.creator.portrait];
     } else {
         if (![live.creator.portrait hasPrefix:IMAGE_SERVER_HOST]) {
             live.creator.portrait = [IMAGE_SERVER_HOST stringByAppendingString:live.creator.portrait];

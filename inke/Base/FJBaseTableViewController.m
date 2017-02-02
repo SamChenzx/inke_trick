@@ -21,7 +21,8 @@
 @implementation FJBaseTableViewController
 
 // 标签栏 高度
-const CGFloat kStatusBarHeight = 86.0f;
+const CGFloat kStatusBarHeight = 49.0f;
+const CGFloat kCustomTabBarHeight = 86.0f;
 // 导航栏 高度
 const CGFloat kNavigationBarHeight = 64.0f;
 // 动画   默认 时间
@@ -32,28 +33,12 @@ const CGFloat kDefaultAnimationTime = 0.3f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // 设置 导航栏
-    //    [self setUpNavigationBar];
     // 添加 tableView
     [self.view addSubview:self.tableView];
     
 }
 
 #pragma mark --- private method
-
-// 设置 导航栏
-- (void)setUpNavigationBar {
-    //适配ios7
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    
-    UINavigationBar *navBar = [self.navigationController navigationBar];
-    if ([navBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        [navBar setBackgroundImage:[UIImage imageNamed:@"navi_bar_black.png"] forBarMetrics:UIBarMetricsDefault];
-    }
-}
 
 // 显示navigationBar 和 tabbar
 - (void)showNavigationBarAndStatusBar {
@@ -66,7 +51,6 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     [self setNavigationBarTransformProgress:1 navigationBarStatusType:NavigationBarStatusOfTypeHidden];
     [self setStatusBarTransformProgress:1 statusBarStatusType:StatusBarStatusTypeOfHidden];
 }
-
 
 //恢复或隐藏navigationBar和statusBar
 - (void)restoreNavigationBarAndStatusBarWithContentOffset:(CGPoint)contentOffset {
@@ -86,11 +70,11 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     }
 }
 
-
 // 通过偏移量移动NavigationBar和StatusBar
 - (void)moveNavigationBarAndStatusBarByOffsetY:(CGFloat)offsetY {
     CGFloat transformTy = self.navigationController.navigationBar.transform.ty;
     CGFloat tabbarTransformTy = self.tabBarController.tabBar.transform.ty;
+//    NSLog(@"transformTy: %lf---tabbarTransformTy: %lf",transformTy,tabbarTransformTy);
     
     // offset 向上滚动
     if (offsetY > 0) {
@@ -119,7 +103,7 @@ const CGFloat kDefaultAnimationTime = 0.3f;
             [self setNavigationBarTransformProgress:0 navigationBarStatusType:NavigationBarStatusOfTypeShow];
         }
         
-        if (tabbarTransformTy <= kStatusBarHeight && tabbarTransformTy > 0) {
+        if (tabbarTransformTy <= kCustomTabBarHeight && tabbarTransformTy > 0) {
             //当StatusTabBar的transfrom.ty小于StatusTabBar高度，导航栏进入可视范围内，设置StatusTabBar偏移位置和背景透明度
             [self setStatusBarTransformProgress:offsetY statusBarStatusType:StatusBarStatusTypeOfNormal];
         } else {
@@ -134,8 +118,8 @@ const CGFloat kDefaultAnimationTime = 0.3f;
 - (void)setStatusBarTransformProgress:(CGFloat)progress statusBarStatusType:(StatusBarStatusType)statusBarStatusType{
     CGFloat transfromTy = self.tabBarController.tabBar.transform.ty;
     if (statusBarStatusType == StatusBarStatusTypeOfHidden) {
-        if (transfromTy != kStatusBarHeight) {
-            [self.tabBarController.tabBar fj_moveByTranslationY:kStatusBarHeight * progress];
+        if (transfromTy <= kCustomTabBarHeight) {
+            [self.tabBarController.tabBar fj_moveByTranslationY:kCustomTabBarHeight * progress];
 //            [self.tabBarController.tabBar fj_setImageViewAlpha:progress];
         }
     }else if(statusBarStatusType == StatusBarStatusTypeOfNormal) {
@@ -157,6 +141,13 @@ const CGFloat kDefaultAnimationTime = 0.3f;
         if(transfromTy != -kNavigationBarHeight){
             [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
 //            [self.navigationController.navigationBar fj_setImageViewAlpha:progress];
+            if (self.tableView.bounds.origin.y < 0) {
+                self.tableView.transform = CGAffineTransformMakeTranslation(0, -fabs(self.tableView.bounds.origin.y));
+                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight -fabs(self.tableView.bounds.origin.y), kScreenWidth, kScreenHeight + kNavigationBarHeight);
+            }
+            if (self.tableView.frame.origin.y < -kNavigationBarHeight) {
+                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight -fabs(self.tableView.bounds.origin.y), kScreenWidth, kScreenHeight + kNavigationBarHeight);
+            }
         }
     }else if(navigationBarStatusType == NavigationBarStatusOfTypeNormal) {
         [self.navigationController.navigationBar fj_setTranslationY: - progress];
@@ -165,6 +156,10 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     }else if(navigationBarStatusType == NavigationBarStatusOfTypeShow) {
         if(transfromTy != 0){
             [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
+            if (self.tableView.frame.origin.y < -kNavigationBarHeight) {
+//                self.tableView.transform = CGAffineTransformMakeTranslation(0, -fabs(self.tableView.frame.origin.y)+kNavigationBarHeight);
+                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
+            }
 //            [self.navigationController.navigationBar fj_setImageViewAlpha:(1-progress)];
         }
     }
@@ -195,18 +190,16 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
 /***************************************** UIScrollViewDelegate *****************************************/
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    CGFloat bottomOffset = scrollView.contentSize.height - scrollView.contentOffset.y - scrollView.frame.size.height;
-    if (scrollView.contentOffset.y > - kNavigationBarHeight /* && bottomOffset > 0 */) {
+    CGFloat bottomOffset = scrollView.contentSize.height - scrollView.contentOffset.y - scrollView.frame.size.height;
+    if (scrollView.contentOffset.y > - kNavigationBarHeight  && bottomOffset > 0 ) {
         CGFloat offsetY = scrollView.contentOffset.y - _originalOffsetY;
         [self moveNavigationBarAndStatusBarByOffsetY:offsetY];
     }
     _originalOffsetY = scrollView.contentOffset.y;
 }
-
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self restoreNavigationBarAndStatusBarWithContentOffset:scrollView.contentOffset];

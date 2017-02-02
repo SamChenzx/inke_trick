@@ -31,7 +31,6 @@ static NSString *identifier = @"SamLiveCell";
 
 
 
-
 -(NSMutableArray *)dataList
 {
     if (!_dataList) {
@@ -51,7 +50,6 @@ static NSString *identifier = @"SamLiveCell";
                 [_imageAndLinkArray addObject:image];
             }
         }
-        
     }
     return _imageAndLinkArray;
 }
@@ -63,7 +61,6 @@ static NSString *identifier = @"SamLiveCell";
     }
     return _tickersView;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -94,7 +91,6 @@ static NSString *identifier = @"SamLiveCell";
     self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
     self.tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
 
-//    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)prepareRefresh
@@ -122,7 +118,6 @@ static NSString *identifier = @"SamLiveCell";
     actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
     [self.navigationController pushViewController:actionVC animated:YES];
 }
-
 
 -(void) loadData
 {
@@ -195,7 +190,6 @@ static NSString *identifier = @"SamLiveCell";
 //    self.parentViewController.view.hidden = YES;
 //    playerVC.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:playerVC animated:YES];
-    
 }
 
 
