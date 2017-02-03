@@ -123,6 +123,7 @@ static NSString *identifier = @"SamLiveCell";
 {
     [SamLiveHandler executeGetHotLiveTaskWithSuccess:^(id obj) {
         // NSLog(@"%@",obj);
+        [self.dataList removeAllObjects];
         [self.dataList addObjectsFromArray:obj];
         [self.tableView reloadData];
         if (self.tableView.mj_header.isRefreshing) {
@@ -182,7 +183,9 @@ static NSString *identifier = @"SamLiveCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SamLive *live = self.dataList[indexPath.row];
     SamPlayerViewController *playerVC = [[SamPlayerViewController alloc]init];
+    playerVC.dataList = self.dataList;
     playerVC.live = live;
+    playerVC.index = indexPath.row;
     
     [playerVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:playerVC animated:YES completion:nil];

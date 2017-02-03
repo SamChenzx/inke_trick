@@ -11,13 +11,15 @@
 #import "SamLiveChatViewController.h"
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
+#import "SamScrollablePlayerView.h"
 
-@interface SamPlayerViewController ()
+@interface SamPlayerViewController () <SamScrollablePlayerViewDelegate>
 
 @property(atomic, retain) id<IJKMediaPlayback> player;
+@property(nonatomic, strong) UIButton * closeButton;
 @property(nonatomic, strong) UIImageView *blurImageView;
-@property(nonatomic, strong) UIButton *closeButton;
 @property(nonatomic, strong) SamLiveChatViewController *liveChatVC;
+@property(nonatomic, strong) SamScrollablePlayerView * scrollablePlayerView;
 //@property(nonatomic, strong) WKWebView * webView;
 
 
@@ -31,6 +33,16 @@
         _liveChatVC = [[SamLiveChatViewController alloc]init];
     }
     return _liveChatVC;
+}
+
+- (SamScrollablePlayerView *)scrollablePlayerView
+{
+    if (!_scrollablePlayerView) {
+        _scrollablePlayerView = [SamScrollablePlayerView loadScrollablePlayerView];
+        _scrollablePlayerView.index = self.index;
+        _scrollablePlayerView.playerDelegate = self;
+    }
+    return _scrollablePlayerView;
 }
 
 -(UIButton *)closeButton
@@ -56,9 +68,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initPlayer];
     [self initUI];
-    [self addChildVC];
+    [self initPlayer];
+//    [self addChildVC];
 }
 
 -(void) initPlayer
@@ -67,31 +79,35 @@
     
     IJKFFMoviePlayerController *player = [[IJKFFMoviePlayerController alloc]initWithContentURLString:self.live.streamAddr withOptions:options];
     self.player = player;
-    self.player.view.frame = self.view.bounds;
+    self.player.view.frame = CGRectMake(0, self.scrollablePlayerView.playerScrollView.contentOffset.y, kScreenWidth, kScreenHeight);
     self.player.shouldAutoplay = YES;
-    
     self.view.autoresizesSubviews = YES;
-    [self.view addSubview:self.player.view];
-    
+    [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
+}
+
+- (void)reloadPlayerWithLive:(SamLive *)live
+{
+    [self.player shutdown];
+    [self removeMovieNotificationObservers];
+    [self.player.view removeFromSuperview];
+    IJKFFOptions *options = [IJKFFOptions optionsByDefault];
+    IJKFFMoviePlayerController *player = [[IJKFFMoviePlayerController alloc]initWithContentURLString:live.streamAddr withOptions:options];
+    self.player = player;
+    self.player.view.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight);
+    self.player.shouldAutoplay = YES;
+    // register live's notification
+    [self installMovieNotificationObservers];
+    [self.player prepareToPlay];
+    [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
 }
 
 -(void) initUI
 {
-    //self.view.backgroundColor = [UIColor blackColor];
-    self.blurImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    if (![_live.creator.portrait hasPrefix:IMAGE_SERVER_HOST]) {
-        _live.creator.portrait = [IMAGE_SERVER_HOST stringByAppendingString:_live.creator.portrait];
-    }
-    [self.blurImageView downloadImage:_live.creator.portrait placeholder:@"default_room"];
-    // blur effect
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    // blur view
-    UIVisualEffectView *visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    visualEffectView.frame = self.blurImageView.bounds;
-    
-    [self.blurImageView addSubview:visualEffectView];
-    [self.view addSubview:self.blurImageView];
-    
+    self.scrollablePlayerView = [SamScrollablePlayerView loadScrollablePlayerView];
+    [self.scrollablePlayerView updateForLives:self.dataList withCurrentIndex:self.index];
+//    [self.scrollablePlayerView.layer addSublayer:self.liveChatVC.view.layer];
+    self.scrollablePlayerView.playerDelegate = self;
+    [self.view addSubview:self.scrollablePlayerView];
 }
 
 -(void) addChildVC
@@ -122,12 +138,28 @@
     [super viewDidDisappear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-    
     // shutdown
     [self.player shutdown];
     [self removeMovieNotificationObservers];
     [self.closeButton removeFromSuperview];
 }
+
+#pragma mark SamScrollablePlayerViewDelegate
+
+- (NSMutableArray *)preparePlayerData
+{
+    return self.dataList;
+}
+
+- (void)scrollablePlayerView:(SamScrollablePlayerView *)scrollablePlayerView currentPlayIndex:(NSInteger)index
+{
+    NSLog(@"%ld",(long)index);
+    [self reloadPlayerWithLive:self.dataList[index]];
+    
+}
+
+
+#pragma mark player staff
 
 - (void)loadStateDidChange:(NSNotification*)notification
 {

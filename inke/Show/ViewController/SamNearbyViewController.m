@@ -23,7 +23,7 @@ static NSString *identifier = @"SamNearbyLiveCell";
 @interface SamNearbyViewController() <UICollectionViewDelegate,UICollectionViewDataSource,SamHeaderViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) NSArray *dataList;    
+@property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) NSInteger genderIndex;
 @property (nonatomic, strong) NSArray *titles;
 
@@ -37,6 +37,14 @@ static NSString *identifier = @"SamNearbyLiveCell";
         _titles = [[NSArray alloc] initWithObjects:@"看全部",@"只看女",@"只看男", nil];
     }
     return _titles;
+}
+
+- (NSMutableArray *)dataList
+{
+    if (!_dataList) {
+        _dataList = [NSMutableArray array];
+    }
+    return _dataList;
 }
 
 - (void)viewDidLoad {
@@ -86,7 +94,8 @@ static NSString *identifier = @"SamNearbyLiveCell";
 - (void)loadData
 {
     [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
-        self.dataList = obj;
+        [self.dataList removeAllObjects];
+        [self.dataList addObjectsFromArray:obj];
         [self.collectionView reloadData];
         if (self.collectionView.mj_header.isRefreshing) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -130,8 +139,9 @@ static NSString *identifier = @"SamNearbyLiveCell";
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     SamLive *live = self.dataList[indexPath.row];
     SamPlayerViewController *playerVC = [[SamPlayerViewController alloc]init];
-
+    playerVC.dataList = self.dataList;
     playerVC.live = live;
+    playerVC.index = indexPath.row;
     
     [playerVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:playerVC animated:YES completion:nil];
@@ -205,28 +215,22 @@ static NSString *identifier = @"SamNearbyLiveCell";
         [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
     }];
     [seeAllAction setValue:[UIColor colorWithHexString:@"00FFCC"] forKey:@"titleTextColor"];
-//    [seeAllAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
     UIAlertAction *seeGirlsAction = [UIAlertAction actionWithTitle:@"只看女" style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self loadData];
         self.genderIndex = 1;
         [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
     }];
     [seeGirlsAction setValue:[UIColor colorWithHexString:@"FF33FF"] forKey:@"titleTextColor"];
-//    [seeGirlsAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
-
     UIAlertAction *seeBoysAction = [UIAlertAction actionWithTitle:@"只看男" style: UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self loadData];
         self.genderIndex = 2;
         [button setTitle:self.titles[_genderIndex] forState:UIControlStateNormal];
     }];
     [seeBoysAction setValue:[UIColor colorWithHexString:@"3366FF"] forKey:@"titleTextColor"];
-//    [seeBoysAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
-
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style: UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         ;
     }];
     [cancelAction setValue:[UIColor colorWithHexString:@"#333333"] forKey:@"_titleTextColor"];
-//    [cancelAction setValue:[UIFont systemFontOfSize:15] forKey:@"titleTextFont"];
 
     [alertSheetViewController addAction:seeAllAction];
     [alertSheetViewController addAction:seeGirlsAction];

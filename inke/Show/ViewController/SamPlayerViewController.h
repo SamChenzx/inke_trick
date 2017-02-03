@@ -13,5 +13,7 @@
 @interface SamPlayerViewController : SamBaseViewController
 
 @property (nonatomic, strong) SamLive *live;
+@property (nonatomic, strong) NSMutableArray *dataList;
+@property (nonatomic, assign) NSInteger index;
 
 @end
