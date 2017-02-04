@@ -17,11 +17,8 @@
 
 @property(atomic, retain) id<IJKMediaPlayback> player;
 @property(nonatomic, strong) UIButton * closeButton;
-@property(nonatomic, strong) UIImageView *blurImageView;
 @property(nonatomic, strong) SamLiveChatViewController *liveChatVC;
 @property(nonatomic, strong) SamScrollablePlayerView * scrollablePlayerView;
-//@property(nonatomic, strong) WKWebView * webView;
-
 
 @end
 
@@ -53,7 +50,6 @@
         [_closeButton sizeToFit];
         _closeButton.frame = CGRectMake(self.view.bounds.size.width-_closeButton.bounds.size.width-8, self.view.bounds.size.height-_closeButton.bounds.size.height-8, _closeButton.bounds.size.width, _closeButton.bounds.size.height);
         [_closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
-        
     }
     return _closeButton;
 }
@@ -79,10 +75,11 @@
     
     IJKFFMoviePlayerController *player = [[IJKFFMoviePlayerController alloc]initWithContentURLString:self.live.streamAddr withOptions:options];
     self.player = player;
-    self.player.view.frame = CGRectMake(0, self.scrollablePlayerView.playerScrollView.contentOffset.y, kScreenWidth, kScreenHeight);
+    self.player.view.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight);
     self.player.shouldAutoplay = YES;
     self.view.autoresizesSubviews = YES;
     [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
+    [self addLiveChatViewToView:self.scrollablePlayerView.playerScrollView WithLive:self.live];
 }
 
 - (void)reloadPlayerWithLive:(SamLive *)live
@@ -90,6 +87,7 @@
     [self.player shutdown];
     [self removeMovieNotificationObservers];
     [self.player.view removeFromSuperview];
+    [self.liveChatVC.view removeFromSuperview];
     IJKFFOptions *options = [IJKFFOptions optionsByDefault];
     IJKFFMoviePlayerController *player = [[IJKFFMoviePlayerController alloc]initWithContentURLString:live.streamAddr withOptions:options];
     self.player = player;
@@ -99,6 +97,7 @@
     [self installMovieNotificationObservers];
     [self.player prepareToPlay];
     [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
+    [self addLiveChatViewToView:self.scrollablePlayerView.playerScrollView WithLive:live];
 }
 
 -(void) initUI
@@ -110,14 +109,12 @@
     [self.view addSubview:self.scrollablePlayerView];
 }
 
--(void) addChildVC
+-(void) addLiveChatViewToView:(UIView *)view WithLive: (SamLive *)live
 {
     [self addChildViewController:self.liveChatVC];
-    [self.view addSubview:self.liveChatVC.view];
-    [self.liveChatVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
-    self.liveChatVC.live = self.live;
+    self.liveChatVC.view.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight);
+    [view addSubview:self.liveChatVC.view];
+    self.liveChatVC.live = live;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -153,9 +150,13 @@
 
 - (void)scrollablePlayerView:(SamScrollablePlayerView *)scrollablePlayerView currentPlayIndex:(NSInteger)index
 {
-    NSLog(@"%ld",(long)index);
-    [self reloadPlayerWithLive:self.dataList[index]];
-    
+    NSLog(@"current index from delegate:%ld  %s",(long)index,__FUNCTION__);
+    if (self.index == index) {
+        return;
+    } else {
+        [self reloadPlayerWithLive:self.dataList[index]];
+        self.index = index;
+    }
 }
 
 
@@ -248,8 +249,6 @@
             break;
         }
     }
-    self.blurImageView.hidden = YES;
-    [self.blurImageView removeFromSuperview];
 }
 
 #pragma mark Install Movie Notifications
