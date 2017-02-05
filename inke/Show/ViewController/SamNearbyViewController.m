@@ -167,45 +167,6 @@ static NSString *identifier = @"SamNearbyLiveCell";
     return reusableView;
 }
 
-- (UICollectionReusableView *)prepareForHeaderView:(UICollectionReusableView *)headView {
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"nearby_icon_now_live"]];
-    [headView addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(headView.mas_centerY);
-        make.left.equalTo(headView.mas_left).with.offset(8);
-        make.height.equalTo(@(imageView.bounds.size.height));
-
-    }];
-    UILabel *title = [[UILabel alloc]init];
-    title.text = @"正在直播";
-    title.textColor = [UIColor cyanColor];
-    title.font = [UIFont systemFontOfSize:14];
-    [headView addSubview:title];
-    [title mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(headView.mas_centerY);
-        make.height.equalTo(imageView.mas_height);
-        make.left.equalTo(imageView.mas_right).with.offset(8);
-        make.width.greaterThanOrEqualTo(@50);
-    }];
-    UIButton *filterGender = [[UIButton alloc]init];
-    [filterGender setTitle:@"只看女" forState:UIControlStateNormal];
-    [filterGender setTitleColor:[UIColor cyanColor] forState:UIControlStateNormal];
-    filterGender.titleLabel.font = [UIFont systemFontOfSize:14];
-    [filterGender addTarget:self action:@selector(clickFilterGender:) forControlEvents:UIControlEventTouchUpInside];
-    [headView addSubview:filterGender];
-    [filterGender mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(headView.mas_centerY);
-        make.height.equalTo(@30);
-        make.right.equalTo(headView.mas_right).with.offset(-16);
-        make.width.greaterThanOrEqualTo(@50);
-    }];
-    NSLog(@"current title: %@",filterGender.currentTitle);
-    return headView;
-}
-
-- (void)clickFilterGender: (UIButton *)button {
-}
-
 -(void)headerView:(SamNearbyHeaderView *)headerView clickFilterGender:(UIButton *)button
 {
     UIAlertController *alertSheetViewController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -237,7 +198,6 @@ static NSString *identifier = @"SamNearbyLiveCell";
     [alertSheetViewController addAction:seeBoysAction];
     [alertSheetViewController addAction:cancelAction];
     [self presentViewController:alertSheetViewController animated:YES completion:nil];
-
 }
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
@@ -268,15 +228,5 @@ static NSString *identifier = @"SamNearbyLiveCell";
         //stop...
     }
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

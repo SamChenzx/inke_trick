@@ -21,6 +21,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.distanceLabel.backgroundColor = [UIColor whiteColor];
+    self.distanceLabel.layer.masksToBounds = YES;
 }
 
 -(void)setLive:(SamLive *)live
