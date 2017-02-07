@@ -16,10 +16,9 @@
 #import "MJRefresh.h"
 
 
-
 static NSString * identifier = @"focus";
 
-@interface SamFocusViewController () <SamTickersDelegate,UIScrollViewDelegate>
+@interface SamFocusViewController () <SamTickersDelegate>
 
 @property(nonatomic, strong) NSArray *dataList;
 @property(nonatomic, strong) SamTickersView *tickersView;

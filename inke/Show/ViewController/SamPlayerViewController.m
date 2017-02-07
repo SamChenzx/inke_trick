@@ -11,14 +11,14 @@
 #import "SamLiveChatViewController.h"
 #import "AppDelegate.h"
 #import <WebKit/WebKit.h>
-#import "SamScrollablePlayerView.h"
+#import "SamPlayerScrollView.h"
 
-@interface SamPlayerViewController () <SamScrollablePlayerViewDelegate>
+@interface SamPlayerViewController () <SamPlayerScrollViewDelegate>
 
 @property(atomic, retain) id<IJKMediaPlayback> player;
 @property(nonatomic, strong) UIButton * closeButton;
 @property(nonatomic, strong) SamLiveChatViewController *liveChatVC;
-@property(nonatomic, strong) SamScrollablePlayerView * scrollablePlayerView;
+@property(nonatomic, strong) SamPlayerScrollView * playerScrollView;
 
 @end
 
@@ -32,14 +32,14 @@
     return _liveChatVC;
 }
 
-- (SamScrollablePlayerView *)scrollablePlayerView
+- (SamPlayerScrollView *)playerScrollView
 {
-    if (!_scrollablePlayerView) {
-        _scrollablePlayerView = [SamScrollablePlayerView loadScrollablePlayerView];
-        _scrollablePlayerView.index = self.index;
-        _scrollablePlayerView.playerDelegate = self;
+    if (!_playerScrollView) {
+        _playerScrollView = [[SamPlayerScrollView alloc] initWithFrame:self.view.frame];
+        _playerScrollView.playerDelegate = self;
+        _playerScrollView.index = self.index;
     }
-    return _scrollablePlayerView;
+    return _playerScrollView;
 }
 
 -(UIButton *)closeButton
@@ -78,8 +78,8 @@
     self.player.view.frame = CGRectMake(0, kScreenHeight, kScreenWidth, kScreenHeight);
     self.player.shouldAutoplay = YES;
     self.view.autoresizesSubviews = YES;
-    [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
-    [self addLiveChatViewToView:self.scrollablePlayerView.playerScrollView WithLive:self.live];
+    [self.playerScrollView addSubview:self.player.view];
+    [self addLiveChatViewToView:self.playerScrollView WithLive:self.live];
 }
 
 - (void)reloadPlayerWithLive:(SamLive *)live
@@ -96,17 +96,15 @@
     // register live's notification
     [self installMovieNotificationObservers];
     [self.player prepareToPlay];
-    [self.scrollablePlayerView.playerScrollView addSubview:self.player.view];
-    [self addLiveChatViewToView:self.scrollablePlayerView.playerScrollView WithLive:live];
+    [self.playerScrollView addSubview:self.player.view];
+    [self addLiveChatViewToView:self.playerScrollView WithLive:live];
 }
 
 -(void) initUI
 {
-    self.scrollablePlayerView = [SamScrollablePlayerView loadScrollablePlayerView];
-    [self.scrollablePlayerView updateForLives:self.dataList withCurrentIndex:self.index];
-//    [self.scrollablePlayerView.layer addSublayer:self.liveChatVC.view.layer];
-    self.scrollablePlayerView.playerDelegate = self;
-    [self.view addSubview:self.scrollablePlayerView];
+    [self.playerScrollView updateForLives:self.dataList withCurrentIndex:self.index];
+    self.playerScrollView.playerDelegate = self;
+    [self.view addSubview:self.playerScrollView];
 }
 
 -(void) addLiveChatViewToView:(UIView *)view WithLive: (SamLive *)live
@@ -141,14 +139,9 @@
     [self.closeButton removeFromSuperview];
 }
 
-#pragma mark SamScrollablePlayerViewDelegate
+#pragma mark PlayerScrollViewDelegate
 
-- (NSMutableArray *)preparePlayerData
-{
-    return self.dataList;
-}
-
-- (void)scrollablePlayerView:(SamScrollablePlayerView *)scrollablePlayerView currentPlayIndex:(NSInteger)index
+- (void)playerScrollView:(SamPlayerScrollView *)playerScrollView currentPlayerIndex:(NSInteger)index
 {
     NSLog(@"current index from delegate:%ld  %s",(long)index,__FUNCTION__);
     if (self.index == index) {
@@ -158,6 +151,7 @@
         self.index = index;
     }
 }
+
 
 
 #pragma mark player staff

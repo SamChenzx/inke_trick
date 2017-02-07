@@ -53,6 +53,7 @@
 		225449461DF851160055BCA0 /* MJExtensionConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 225449451DF851160055BCA0 /* MJExtensionConfig.m */; };
 		2254494D1DF902AD0055BCA0 /* SamLiveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254494B1DF902AD0055BCA0 /* SamLiveCell.m */; };
 		2254494E1DF902AD0055BCA0 /* SamLiveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */; };
+		226128A41E49B19600FA0172 /* SamPlayerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 226128A31E49B19600FA0172 /* SamPlayerScrollView.m */; };
 		22655DB71E431F5A00146483 /* SamScrollablePlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22655DB61E431F5A00146483 /* SamScrollablePlayerView.m */; };
 		22655DB91E431F6C00146483 /* SamScrollablePlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22655DB81E431F6C00146483 /* SamScrollablePlayerView.xib */; };
 		226981C31E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 226981C21E371C6A00AE5E9D /* UILabel+SamAlertActionFont.m */; };
@@ -216,6 +217,8 @@
 		2254494A1DF902AD0055BCA0 /* SamLiveCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamLiveCell.h; sourceTree = "<group>"; };
 		2254494B1DF902AD0055BCA0 /* SamLiveCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamLiveCell.m; sourceTree = "<group>"; };
 		2254494C1DF902AD0055BCA0 /* SamLiveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamLiveCell.xib; sourceTree = "<group>"; };
+		226128A21E49B19600FA0172 /* SamPlayerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamPlayerScrollView.h; sourceTree = "<group>"; };
+		226128A31E49B19600FA0172 /* SamPlayerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamPlayerScrollView.m; sourceTree = "<group>"; };
 		22655DB51E431F5A00146483 /* SamScrollablePlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamScrollablePlayerView.h; sourceTree = "<group>"; };
 		22655DB61E431F5A00146483 /* SamScrollablePlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamScrollablePlayerView.m; sourceTree = "<group>"; };
 		22655DB81E431F6C00146483 /* SamScrollablePlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SamScrollablePlayerView.xib; sourceTree = "<group>"; };
@@ -807,6 +810,8 @@
 				22655DB51E431F5A00146483 /* SamScrollablePlayerView.h */,
 				22655DB61E431F5A00146483 /* SamScrollablePlayerView.m */,
 				22655DB81E431F6C00146483 /* SamScrollablePlayerView.xib */,
+				226128A21E49B19600FA0172 /* SamPlayerScrollView.h */,
+				226128A31E49B19600FA0172 /* SamPlayerScrollView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1220,6 +1225,7 @@
 				2248EE411E1D195D00461399 /* SamShortVideosViewController.m in Sources */,
 				22AF218A1DF148550035F221 /* SamNearbyViewController.m in Sources */,
 				2223CC161E097BB6007F1CC9 /* SamLoginViewController.m in Sources */,
+				226128A41E49B19600FA0172 /* SamPlayerScrollView.m in Sources */,
 				222907CE1E1E8ABD00AD862F /* SamTickerActionsViewController.m in Sources */,
 				220C038B1DF9A33F0088D79F /* SamPlayerViewController.m in Sources */,
 				224F09E11DDDC2F200EAC0F4 /* AppDelegate.m in Sources */,

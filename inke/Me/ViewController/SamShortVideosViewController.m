@@ -8,6 +8,7 @@
 
 #import "SamShortVideosViewController.h"
 #import <WebKit/WebKit.h>
+#import "SamPlayerScrollView.h"
 
 #define kScreenbounds [UIScreen mainScreen].bounds
 #define pictureHeight 200
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *pictureImageView;
 @property (nonatomic, strong) UIView *header;
+@property (nonatomic, strong) SamPlayerScrollView *playerScrollView;
 
 @end
 
@@ -38,7 +40,8 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
     self.navigationController.navigationBar.titleTextAttributes = attributes;
     self.navigationItem.title = @"短视频";
-    
+    self.playerScrollView = [[SamPlayerScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self.view addSubview:self.playerScrollView];
     // progress bar
   
 }
