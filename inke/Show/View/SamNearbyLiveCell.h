@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) SamLive * live;
 
+- (void)updateImageForCellWithLive:(SamLive *)live;
 - (void)showAnimation;
 
 @end

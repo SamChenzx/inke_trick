@@ -90,7 +90,7 @@ static NSString *identifier = @"SamLiveCell";
     self.tableView.tableHeaderView = self.tickersView;
     self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
     self.tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
-
+    self.tableView.rowHeight = 70 + [UIScreen mainScreen].bounds.size.width;
 }
 
 - (void)prepareRefresh
@@ -127,7 +127,7 @@ static NSString *identifier = @"SamLiveCell";
         [self.dataList addObjectsFromArray:obj];
         [self.tableView reloadData];
         if (self.tableView.mj_header.isRefreshing) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
                 [self.tableView.mj_header endRefreshing];
             });
         }
@@ -169,12 +169,12 @@ static NSString *identifier = @"SamLiveCell";
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat cellHeight;
-    cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
-    return cellHeight;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    CGFloat cellHeight;
+//    cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
+//    return cellHeight;
+//}
 
 #pragma mark TableView delegate
 

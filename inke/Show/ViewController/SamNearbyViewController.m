@@ -26,6 +26,7 @@ static NSString *identifier = @"SamNearbyLiveCell";
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property (nonatomic, assign) NSInteger genderIndex;
 @property (nonatomic, strong) NSArray *titles;
+@property (nonatomic, strong) NSValue *targetRect;
 
 @end
 
@@ -84,27 +85,65 @@ static NSString *identifier = @"SamNearbyLiveCell";
     }];
     gifRefreshHeader.stateLabel.hidden = YES;
     gifRefreshHeader.lastUpdatedTimeLabel.hidden = YES;
-    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateIdle];
-    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStatePulling];
-    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateRefreshing];
-    [gifRefreshHeader setImages:imagesArray forState:MJRefreshStateNoMoreData];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateIdle];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStatePulling];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateRefreshing];
+    [gifRefreshHeader setImages:imagesArray duration:1.5 forState:MJRefreshStateNoMoreData];
     self.collectionView.mj_header = gifRefreshHeader;
 }
 
-- (void)loadData
+-(void) loadData
 {
     [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
+        // NSLog(@"%@",obj);
         [self.dataList removeAllObjects];
         [self.dataList addObjectsFromArray:obj];
         [self.collectionView reloadData];
         if (self.collectionView.mj_header.isRefreshing) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
                 [self.collectionView.mj_header endRefreshing];
             });
         }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];
+}
+
+//- (void)loadData
+//{
+//    [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
+//        [self.dataList removeAllObjects];
+//        [self.dataList addObjectsFromArray:obj];
+//        [self.dataList removeObjectsInRange:NSMakeRange(2, self.dataList.count - 2)];
+//        [self.collectionView reloadData];
+//        if (self.collectionView.mj_header.isRefreshing) {
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.collectionView.mj_header endRefreshing];
+//            });
+//        }
+//    } failed:^(id obj) {
+//        NSLog(@"%@",obj);
+//    }];
+//}
+
+- (void)loadImageForVisibleCells
+{
+    NSArray *cells = [self.collectionView visibleCells];
+    for (SamNearbyLiveCell *cell in cells) {
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+        [self setupCell:cell withIndexPath:indexPath];
+    }
+}
+
+- (void)setupCell:(SamNearbyLiveCell *)cell withIndexPath:(NSIndexPath *)indexPath
+{
+    BOOL shouldLoadImage = YES;
+    if (self.targetRect && !CGRectIntersectsRect([self.targetRect CGRectValue], cell.frame)) {
+        shouldLoadImage = NO;
+    }
+    if (shouldLoadImage) {
+        [cell updateImageForCellWithLive:(SamLive *)self.dataList[indexPath.row]];
+    }
 }
 
 #pragma mark collectionView delegate
@@ -117,7 +156,9 @@ static NSString *identifier = @"SamNearbyLiveCell";
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SamNearbyLiveCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+
     cell.live = self.dataList[indexPath.row];
+    [self setupCell:cell withIndexPath:indexPath];
     return cell;
 }
 
@@ -227,6 +268,24 @@ static NSString *identifier = @"SamNearbyLiveCell";
     }else if(velocity == 0){
         //stop...
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    self.targetRect = nil;
+    [self loadImageForVisibleCells];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    CGRect targetRect = CGRectMake(targetContentOffset->x, targetContentOffset->y, scrollView.frame.size.width, scrollView.frame.size.height);
+    self.targetRect = [NSValue valueWithCGRect:targetRect];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    self.targetRect = nil;
+    [self loadImageForVisibleCells];
 }
 
 @end

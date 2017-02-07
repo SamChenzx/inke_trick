@@ -151,7 +151,7 @@ static NSString * identifier = @"focus";
         [self.imageAndLinkArray addObjectsFromArray:obj];
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
         if (self.tableView.mj_header.isRefreshing) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
                 [self.tableView.mj_header endRefreshing];
             });
         }
