@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSMutableArray * lives;
 @property (nonatomic, strong) SamLive *live;
-@property (nonatomic, strong) UIImageView *upperBlurImageView, *middleBlurImageView, *downBlurImageView;
+@property (nonatomic, strong) UIImageView *upperImageView, *middleImageView, *downImageView;
 @property (nonatomic, strong) SamLive *upperLive, *middleLive, *downLive;
 @property (nonatomic, assign) NSInteger currentIndex, previousIndex;
 
@@ -50,18 +50,18 @@
         UIVisualEffectView *visualEffectViewUpper = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         UIVisualEffectView *visualEffectViewMiddle = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
         UIVisualEffectView *visualEffectViewDown = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-        self.upperBlurImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
-        self.middleBlurImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height)];
-        self.downBlurImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, frame.size.height*2, frame.size.width, frame.size.height)];
+        self.upperImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.middleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, frame.size.height, frame.size.width, frame.size.height)];
+        self.downImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, frame.size.height*2, frame.size.width, frame.size.height)];
         // add image views
-        [self addSubview:self.upperBlurImageView];
-        [self addSubview:self.middleBlurImageView];
-        [self addSubview:self.downBlurImageView];
-        visualEffectViewUpper.frame = self.upperBlurImageView.frame;
+        [self addSubview:self.upperImageView];
+        [self addSubview:self.middleImageView];
+        [self addSubview:self.downImageView];
+        visualEffectViewUpper.frame = self.upperImageView.frame;
         [self addSubview:visualEffectViewUpper];
-        visualEffectViewMiddle.frame = self.middleBlurImageView.frame;
+        visualEffectViewMiddle.frame = self.middleImageView.frame;
         [self addSubview:visualEffectViewMiddle];
-        visualEffectViewDown.frame = self.downBlurImageView.frame;
+        visualEffectViewDown.frame = self.downImageView.frame;
         [self addSubview:visualEffectViewDown];
 
     }
@@ -91,9 +91,9 @@
             _downLive = (SamLive *)_lives[_currentIndex + 1];
         }
         
-        [self prepareForImageView:self.upperBlurImageView withLive:_upperLive];
-        [self prepareForImageView:self.middleBlurImageView withLive:_middleLive];
-        [self prepareForImageView:self.downBlurImageView withLive:_downLive];
+        [self prepareForImageView:self.upperImageView withLive:_upperLive];
+        [self prepareForImageView:self.middleImageView withLive:_middleLive];
+        [self prepareForImageView:self.downImageView withLive:_downLive];
     }
 }
 
@@ -109,13 +109,13 @@
 {
     CGFloat offset = scrollView.contentOffset.y;
     if (self.lives.count) {
-        if (offset >= 2*kScreenHeight)
+        if (offset >= 2*self.frame.size.height)
         {
             // slides to the down player
-            scrollView.contentOffset = CGPointMake(0, kScreenHeight);
+            scrollView.contentOffset = CGPointMake(0, self.frame.size.height);
             _currentIndex++;
-            self.upperBlurImageView.image = self.middleBlurImageView.image;
-            self.middleBlurImageView.image = self.downBlurImageView.image;
+            self.upperImageView.image = self.middleImageView.image;
+            self.middleImageView.image = self.downImageView.image;
             if (_currentIndex == self.lives.count - 1)
             {
                 _downLive = [self.lives firstObject];
@@ -128,7 +128,7 @@
             {
                 _downLive = self.lives[_currentIndex+1];
             }
-            [self prepareForImageView:self.downBlurImageView withLive:_downLive];
+            [self prepareForImageView:self.downImageView withLive:_downLive];
             if (_previousIndex == _currentIndex) {
                 return;
             }
@@ -140,11 +140,11 @@
         }
         else if (offset <= 0)
         {
-            // slides to the middle imageView
-            scrollView.contentOffset = CGPointMake(0, kScreenHeight);
+            // slides to the upper player
+            scrollView.contentOffset = CGPointMake(0, self.frame.size.height);
             _currentIndex--;
-            self.downBlurImageView.image = self.middleBlurImageView.image;
-            self.middleBlurImageView.image = self.upperBlurImageView.image;
+            self.downImageView.image = self.middleImageView.image;
+            self.middleImageView.image = self.upperImageView.image;
             if (_currentIndex == 0)
             {
                 _upperLive = [self.lives lastObject];
@@ -157,9 +157,8 @@
             } else
             {
                 _upperLive = self.lives[_currentIndex - 1];
-                [self prepareForImageView:self.upperBlurImageView withLive:_upperLive];
             }
-            [self prepareForImageView:self.upperBlurImageView withLive:_upperLive];
+            [self prepareForImageView:self.upperImageView withLive:_upperLive];
             if (_previousIndex == _currentIndex) {
                 return;
             }

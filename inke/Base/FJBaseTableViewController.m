@@ -38,6 +38,11 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     
 }
 
+- (void)setUpNavigationBar
+{
+    
+}
+
 #pragma mark --- private method
 
 // 显示navigationBar 和 tabbar

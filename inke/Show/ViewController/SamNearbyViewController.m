@@ -248,27 +248,32 @@ static NSString *identifier = @"SamNearbyLiveCell";
 
 #pragma mark ScrollView Delegate
 
-// Hide or show bars when moved
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //get scrollView's PanGesture
-    UIPanGestureRecognizer *pan = scrollView.panGestureRecognizer;
-    //get velocity >0 pull down <0 move up
-    CGFloat velocity = [pan velocityInView:scrollView].y;
-    
-    if (velocity <- 5) {
-        //move up hide bars
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        self.collectionView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-        self.tabBarController.tabBar.hidden = YES;
-    }else if (velocity > 5) {
-        //pull down show bars
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        self.tabBarController.tabBar.hidden = NO;
-    }else if(velocity == 0){
-        //stop...
-    }
-}
+//// Hide or show bars when moved
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    //get scrollView's PanGesture
+//    UIPanGestureRecognizer *pan = scrollView.panGestureRecognizer;
+//    //get velocity >0 pull down <0 move up
+//    CGFloat velocity = [pan velocityInView:scrollView].y;
+//    
+//    if (velocity <- 5) {
+//        //move up hide bars
+//        [UIView animateWithDuration:0.5 animations:^{
+//            self.navigationController.navigationBar.frame = CGRectMake(0, -44, kScreenWidth, kScreenHeight);
+//            self.collectionView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+//            self.tabBarController.tabBar.frame = CGRectMake(0, self.tabBarController.tabBar.frame.origin.y + 86, kScreenWidth, kScreenHeight);
+//        }];
+//    }else if (velocity > 5) {
+//        //pull down show bars
+//        [UIView animateWithDuration:0.5 animations:^{
+//            self.navigationController.navigationBar.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+//            self.collectionView.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight);
+//            self.tabBarController.tabBar.frame = CGRectMake(0, self.tabBarController.tabBar.frame.origin.y - 86, kScreenWidth, kScreenHeight);
+//        }];
+//    }else if(velocity == 0){
+//        //stop...
+//    }
+//}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {

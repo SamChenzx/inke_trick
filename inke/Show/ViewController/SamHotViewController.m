@@ -78,6 +78,7 @@ static NSString *identifier = @"SamLiveCell";
     [super viewWillAppear:animated];
     [self loadData];
     [self prepareRefresh];
+    DLog(@"I'm here");
 }
 
 -(void) initUI
@@ -145,8 +146,6 @@ static NSString *identifier = @"SamLiveCell";
 }
 
 #pragma mark TableView staff
-
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

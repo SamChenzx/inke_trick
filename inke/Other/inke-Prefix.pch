@@ -10,6 +10,14 @@
 #define inke_Prefix_pch
 
 
+#ifdef DEBUG
+#define DLog( s, ... ) NSLog( @"<%p %@:(%d) %s> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, __FUNCTION__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+//分别是方法地址，文件名，在文件的第几行，自定义输出内容
+#else
+#define DLog( s, ... )
+#endif
+
+
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 

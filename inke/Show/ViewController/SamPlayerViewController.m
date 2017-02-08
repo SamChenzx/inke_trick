@@ -152,8 +152,6 @@
     }
 }
 
-
-
 #pragma mark player staff
 
 - (void)loadStateDidChange:(NSNotification*)notification

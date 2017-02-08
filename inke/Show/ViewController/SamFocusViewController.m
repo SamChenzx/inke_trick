@@ -32,14 +32,6 @@ static NSString * identifier = @"focus";
 {
     if (!_imageAndLinkArray) {
         _imageAndLinkArray = [NSMutableArray array];
-//        [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
-//            [_imageAndLinkArray removeAllObjects];
-//            [_imageAndLinkArray addObjectsFromArray:obj];
-//            [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
-//            //NSLog(@"_imageAndLinkArray init: %@",_imageAndLinkArray);
-//        } failed:^(id obj) {
-//            NSLog(@"%@",obj);
-//        }];
         // if failed to get tickers from internet, load images from local.
         if (!_imageAndLinkArray) {
             for (int i = 0; i < 7; i++) {
@@ -64,6 +56,12 @@ static NSString * identifier = @"focus";
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    DLog(@"I'm here");
+}
+
 -(SamTickersView *)TickersView
 {
     if (!_tickersView) {
@@ -82,8 +80,8 @@ static NSString * identifier = @"focus";
     self.tableView.tableHeaderView = self.tickersView;
     self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
     self.tableView.contentInset = UIEdgeInsetsMake(kNavigationBarHeight, 0, 0, 0);
+    self.tableView.rowHeight = 70 + [UIScreen mainScreen].bounds.size.width;
 }
-
 
 - (void)prepareRefresh
 {
@@ -145,6 +143,7 @@ static NSString * identifier = @"focus";
     live2.creator = creator2;
     
     self.dataList = @[live,live1,live2];
+    [self.tableView reloadData];
     
     [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
         [self.imageAndLinkArray removeAllObjects];
@@ -158,9 +157,6 @@ static NSString * identifier = @"focus";
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];
-    
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark TableView staff
@@ -184,13 +180,6 @@ static NSString * identifier = @"focus";
     }
     cell.live = self.dataList[indexPath.row];
     return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat cellHeight;
-    cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
-    return cellHeight;
 }
 
 #pragma mark TableView delegate
@@ -217,16 +206,5 @@ static NSString * identifier = @"focus";
     return self.imageAndLinkArray;
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -105,14 +105,17 @@
     // index to move button line
     [self.topView scrolling:index];
     
-    // get view controller according index    
+    // get view controller according index
     UIViewController *vc = self.childViewControllers[index];
     // test if vc has execute viewDidLoaded
     if ([vc isViewLoaded]) {
-        
         return;
     } else {
-        vc.view.frame = CGRectMake(offset, 0, width, height);
+        if (self.navigationController.navigationBar.frame.origin.y < 0) {
+            self.contentScrollView.frame = CGRectMake(offset, -64, width, height);
+        }
+            vc.view.frame = CGRectMake(offset, 0, width, height);
+        
         // add child view controller to scroll view
         [scrollView addSubview:vc.view];
     }
