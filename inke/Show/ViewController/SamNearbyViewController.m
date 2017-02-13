@@ -109,23 +109,6 @@ static NSString *identifier = @"SamNearbyLiveCell";
     }];
 }
 
-//- (void)loadData
-//{
-//    [SamLiveHandler executeGetNearbyLiveTaskWithSuccess:^(id obj) {
-//        [self.dataList removeAllObjects];
-//        [self.dataList addObjectsFromArray:obj];
-//        [self.dataList removeObjectsInRange:NSMakeRange(2, self.dataList.count - 2)];
-//        [self.collectionView reloadData];
-//        if (self.collectionView.mj_header.isRefreshing) {
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.collectionView.mj_header endRefreshing];
-//            });
-//        }
-//    } failed:^(id obj) {
-//        NSLog(@"%@",obj);
-//    }];
-//}
-
 - (void)loadImageForVisibleCells
 {
     NSArray *cells = [self.collectionView visibleCells];

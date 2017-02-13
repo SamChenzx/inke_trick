@@ -34,7 +34,7 @@
     
     // progress bar
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height+self.navigationController.navigationBar.frame.origin.y, kScreenWidth, 3)];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 3)];
     self.progressView.backgroundColor = [UIColor clearColor];
     self.progressView.tintColor = [UIColor clearColor];
     self.progressView.trackTintColor = [UIColor clearColor];
@@ -88,7 +88,7 @@
         self.progressView.progress = [change[@"new"] floatValue];
 //        NSLog(@"change[new]:%f",[change[@"new"] floatValue]);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [UIView animateWithDuration:0.2 animations:^{
+            [UIView animateWithDuration:0.6 animations:^{
                  self.progressView.progress = [change[@"new"] floatValue];
             }];
             if (self.progressView.progress == 1.0) {

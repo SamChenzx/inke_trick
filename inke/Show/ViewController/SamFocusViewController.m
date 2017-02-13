@@ -18,15 +18,25 @@
 
 static NSString * identifier = @"focus";
 
-@interface SamFocusViewController () <SamTickersDelegate>
+@interface SamFocusViewController () <SamTickersDelegate, UIScrollViewDelegate>
 
-@property(nonatomic, strong) NSArray *dataList;
+@property(nonatomic, strong) NSMutableArray *dataList;
 @property(nonatomic, strong) SamTickersView *tickersView;
 @property(nonatomic, strong) NSMutableArray *imageAndLinkArray;
 
 @end
 
 @implementation SamFocusViewController
+
+
+-(NSMutableArray *)dataList
+{
+    if (!_dataList) {
+        _dataList = [NSMutableArray array];
+    }
+    
+    return _dataList;
+}
 
 -(NSMutableArray *)imageAndLinkArray
 {
@@ -44,6 +54,14 @@ static NSString * identifier = @"focus";
     return _imageAndLinkArray;
 }
 
+-(SamTickersView *)TickersView
+{
+    if (!_tickersView) {
+        _tickersView = [SamTickersView loadTickersView];
+    }
+    return _tickersView;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -52,22 +70,14 @@ static NSString * identifier = @"focus";
     
     [self loadData];
     
-    [self prepareRefresh];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self loadData];
+    [self prepareRefresh];
     DLog(@"I'm here");
-}
-
--(SamTickersView *)TickersView
-{
-    if (!_tickersView) {
-        _tickersView = [SamTickersView loadTickersView];
-    }
-    return _tickersView;
 }
 
 -(void) initUI
@@ -107,7 +117,6 @@ static NSString * identifier = @"focus";
     SamTickerActionsViewController *actionVC = [[SamTickerActionsViewController alloc]init];
     actionVC.urlString = [self.tickersView LinkAtCurrentPageIndex];
     [self.navigationController pushViewController:actionVC animated:YES];
-    [self.tabBarController setHidesBottomBarWhenPushed:YES];
 }
 
 - (void)loadData
@@ -142,18 +151,21 @@ static NSString * identifier = @"focus";
     creator2.portrait = @"Ha";
     live2.creator = creator2;
     
-    self.dataList = @[live,live1,live2];
-    [self.tableView reloadData];
+    [self.dataList removeAllObjects];
+    [self.dataList addObjectsFromArray:@[live, live1, live2]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+    if (self.tableView.mj_header.isRefreshing) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
+            [self.tableView.mj_header endRefreshing];
+        });
+    }
     
     [SamLiveHandler executeGetTickersTaskWithSuccess:^(id obj) {
         [self.imageAndLinkArray removeAllObjects];
         [self.imageAndLinkArray addObjectsFromArray:obj];
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
-        if (self.tableView.mj_header.isRefreshing) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
-                [self.tableView.mj_header endRefreshing];
-            });
-        }
     } failed:^(id obj) {
         NSLog(@"%@",obj);
     }];
@@ -164,7 +176,7 @@ static NSString * identifier = @"focus";
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 //    return self.dataList.count;
-    return 3;
+    return self.dataList.count;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -189,7 +201,9 @@ static NSString * identifier = @"focus";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     SamLive *live = self.dataList[indexPath.row];
     SamPlayerViewController *playerVC = [[SamPlayerViewController alloc]init];
+    playerVC.dataList = self.dataList;
     playerVC.live = live;
+    playerVC.index = indexPath.row;
     
     [playerVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:playerVC animated:YES completion:nil];
@@ -197,13 +211,6 @@ static NSString * identifier = @"focus";
     //    self.parentViewController.view.hidden = YES;
     //    playerVC.hidesBottomBarWhenPushed = YES;
     //    [self.navigationController pushViewController:playerVC animated:YES];
-}
-
-#pragma mark TickersDelegate
-
--(NSMutableArray *)tickersDataList
-{
-    return self.imageAndLinkArray;
 }
 
 

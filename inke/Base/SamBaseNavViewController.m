@@ -7,6 +7,7 @@
 //
 
 #import "SamBaseNavViewController.h"
+#import <objc/runtime.h>
 
 @interface SamBaseNavViewController () <UIGestureRecognizerDelegate>
 

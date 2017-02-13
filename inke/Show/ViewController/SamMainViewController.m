@@ -88,8 +88,12 @@
     self.contentScrollView.contentSize =CGSizeMake(([UIScreen mainScreen].bounds.size.width)*self.datalist.count, 0);
     self.contentScrollView.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width,0);
     [self.contentScrollView setFrame:[UIScreen mainScreen].bounds];
-    // show first view controller when start
-    [self scrollViewDidEndScrollingAnimation:self.contentScrollView];
+    // Add views for scrollView
+    for (NSInteger i = 0; i < vcNames.count; i++) {
+        UIViewController *vc = self.childViewControllers[i];
+        vc.view.frame = CGRectMake(kScreenWidth*i, 0, kScreenWidth, kScreenHeight);
+        [self.contentScrollView addSubview:vc.view];
+    }
 }
 
 

@@ -9,7 +9,6 @@
 #import "SamHotViewController.h"
 #import "SamLiveHandler.h"
 #import "SamLiveCell.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "SamPlayerViewController.h"
 #import "SamTabBarViewController.h"
 #import "SamTickersView.h"
@@ -28,7 +27,6 @@ static NSString *identifier = @"SamLiveCell";
 @end
 
 @implementation SamHotViewController
-
 
 
 -(NSMutableArray *)dataList
@@ -70,7 +68,6 @@ static NSString *identifier = @"SamLiveCell";
     
     [self loadData];
     
-    NSLog(@"NSNull is:%@",[NSNull null]);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -167,13 +164,6 @@ static NSString *identifier = @"SamLiveCell";
     cell.live = self.dataList[indexPath.row];
     return cell;
 }
-
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    CGFloat cellHeight;
-//    cellHeight = 70 + [UIScreen mainScreen].bounds.size.width;
-//    return cellHeight;
-//}
 
 #pragma mark TableView delegate
 

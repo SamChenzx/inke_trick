@@ -39,19 +39,22 @@
 +(void) executeGetNearbyLiveTaskWithSuccess:(SuccessBlock) success failed:(FailedBlock) failed
 {
     SamLocationManager *manager = [SamLocationManager sharedManager];
-    NSDictionary *params = @{@"uid":@"313054160",@"latitude":manager.latitude,@"longitude":manager.longitude};
-    
-    [HttpTool getWithPath:API_NEARBY_LIVE params:params success:^(id json) {
-        if ([json[@"dm_error"]integerValue]) {
-            failed(json[@"error_msg"]);
-        } else {
-            // get correct data
-            NSArray *lives = [SamLive mj_objectArrayWithKeyValuesArray:json[@"lives"]];
-            success(lives);
-        }
-    } failure:^(NSError *error) {
-       
-        failed(error);
+    [manager getGPS:^(NSString *lat, NSString *lon) {
+        NSDictionary *params = @{@"uid":@"313054160",@"latitude":manager.latitude,@"longitude":manager.longitude};
+        
+        [HttpTool getWithPath:API_NEARBY_LIVE params:params success:^(id json) {
+            if ([json[@"dm_error"]integerValue]) {
+                failed(json[@"error_msg"]);
+            } else {
+                // get correct data
+                NSArray *lives = [SamLive mj_objectArrayWithKeyValuesArray:json[@"lives"]];
+                success(lives);
+            }
+        } failure:^(NSError *error) {
+            
+            failed(error);
+        }];
+        
     }];
 }
 
