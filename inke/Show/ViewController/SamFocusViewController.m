@@ -168,6 +168,10 @@ static NSString * identifier = @"focus";
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
     } failed:^(id obj) {
         NSLog(@"%@",obj);
+        dispatch_queue_t queue = dispatch_queue_create("test", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_async(queue, ^{
+            DLog(@"I fuck you");
+        });
     }];
 }
 

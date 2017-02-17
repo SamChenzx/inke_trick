@@ -14,8 +14,8 @@
 @interface FJBaseTableViewController ()<UITableViewDelegate, UITableViewDataSource> {
     CGFloat _originalOffsetY; //上一次偏移量
 }
-@end
 
+@end
 
 
 @implementation FJBaseTableViewController
@@ -35,7 +35,6 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     
     // 添加 tableView
     [self.view addSubview:self.tableView];
-    
 }
 
 - (void)setUpNavigationBar
@@ -139,13 +138,43 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     }
 }
 
+//// 根据传入的类型和渐变程度,改变NavigationBar的颜色和位置
+//- (void)setNavigationBarTransformProgress:(CGFloat)progress navigationBarStatusType:(NavigationBarStatusType)navigationBarStatusType{
+//    CGFloat transfromTy = self.navigationController.navigationBar.transform.ty;
+//    if (navigationBarStatusType == NavigationBarStatusOfTypeHidden) {
+//        if(transfromTy != -kNavigationBarHeight){
+//            [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
+////            [self.navigationController.navigationBar fj_setImageViewAlpha:progress];
+//            if (self.tableView.bounds.origin.y < 0) {
+//                self.tableView.transform = CGAffineTransformMakeTranslation(0, -fabs(self.tableView.bounds.origin.y));
+//                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight -fabs(self.tableView.bounds.origin.y), kScreenWidth, kScreenHeight + kNavigationBarHeight);
+//            }
+//            if (self.tableView.frame.origin.y < -kNavigationBarHeight) {
+//                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight -fabs(self.tableView.bounds.origin.y), kScreenWidth, kScreenHeight + kNavigationBarHeight);
+//            }
+//        }
+//    }else if(navigationBarStatusType == NavigationBarStatusOfTypeNormal) {
+//        [self.navigationController.navigationBar fj_setTranslationY: - progress];
+////        CGFloat alpha = 1 - fabs(self.navigationController.navigationBar.transform.ty)/kNavigationBarHeight;
+////        [self.navigationController.navigationBar fj_setImageViewAlpha:alpha];
+//    }else if(navigationBarStatusType == NavigationBarStatusOfTypeShow) {
+//        if(transfromTy != 0){
+//            [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
+//            if (self.tableView.frame.origin.y < -kNavigationBarHeight) {
+//                self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
+//            }
+////            [self.navigationController.navigationBar fj_setImageViewAlpha:(1-progress)];
+//        }
+//    }
+//}
+
 // 根据传入的类型和渐变程度,改变NavigationBar的颜色和位置
 - (void)setNavigationBarTransformProgress:(CGFloat)progress navigationBarStatusType:(NavigationBarStatusType)navigationBarStatusType{
     CGFloat transfromTy = self.navigationController.navigationBar.transform.ty;
     if (navigationBarStatusType == NavigationBarStatusOfTypeHidden) {
         if(transfromTy != -kNavigationBarHeight){
             [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
-//            [self.navigationController.navigationBar fj_setImageViewAlpha:progress];
+            //            [self.navigationController.navigationBar fj_setImageViewAlpha:progress];
             if (self.tableView.bounds.origin.y < 0) {
                 self.tableView.transform = CGAffineTransformMakeTranslation(0, -fabs(self.tableView.bounds.origin.y));
                 self.tableView.frame = CGRectMake(0, -kNavigationBarHeight -fabs(self.tableView.bounds.origin.y), kScreenWidth, kScreenHeight + kNavigationBarHeight);
@@ -156,19 +185,20 @@ const CGFloat kDefaultAnimationTime = 0.3f;
         }
     }else if(navigationBarStatusType == NavigationBarStatusOfTypeNormal) {
         [self.navigationController.navigationBar fj_setTranslationY: - progress];
-//        CGFloat alpha = 1 - fabs(self.navigationController.navigationBar.transform.ty)/kNavigationBarHeight;
-//        [self.navigationController.navigationBar fj_setImageViewAlpha:alpha];
+        //        CGFloat alpha = 1 - fabs(self.navigationController.navigationBar.transform.ty)/kNavigationBarHeight;
+        //        [self.navigationController.navigationBar fj_setImageViewAlpha:alpha];
     }else if(navigationBarStatusType == NavigationBarStatusOfTypeShow) {
         if(transfromTy != 0){
             [self.navigationController.navigationBar fj_moveByTranslationY:-kNavigationBarHeight * progress];
             if (self.tableView.frame.origin.y < -kNavigationBarHeight) {
-//                self.tableView.transform = CGAffineTransformMakeTranslation(0, -fabs(self.tableView.frame.origin.y)+kNavigationBarHeight);
                 self.tableView.frame = CGRectMake(0, -kNavigationBarHeight, kScreenWidth, kScreenHeight + kNavigationBarHeight);
             }
-//            [self.navigationController.navigationBar fj_setImageViewAlpha:(1-progress)];
+            //            [self.navigationController.navigationBar fj_setImageViewAlpha:(1-progress)];
         }
     }
 }
+
+
 
 #pragma mark --- custom delegate
 
@@ -222,4 +252,5 @@ const CGFloat kDefaultAnimationTime = 0.3f;
     }
     return _tableView;
 }
+
 @end

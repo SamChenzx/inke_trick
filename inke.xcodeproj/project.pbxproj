@@ -1420,7 +1420,7 @@
 				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/czx/Desktop/APP/inke/inke/Other/inke-Prefix.pch";
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/inke/Other/inke-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
@@ -1469,7 +1469,7 @@
 				);
 				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/czx/Desktop/APP/inke/inke/Other/inke-Prefix.pch";
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/inke/Other/inke-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
