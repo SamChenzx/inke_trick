@@ -33,6 +33,37 @@ static NSString * identifier = @"focus";
 {
     if (!_dataList) {
         _dataList = [NSMutableArray array];
+        SamLive *live = [[SamLive alloc]init];
+        live.city = @"杭州";
+        live.onlineUsers = 18999;
+        live.streamAddr = LIVE_SAM;
+        
+        SamCreator *creator = [[SamCreator alloc]init];
+        creator.nick = @"Sam";
+        creator.portrait = @"Sam";
+        live.creator = creator;
+        
+        SamLive *live1 = [[SamLive alloc]init];
+        live1.city = @"LA";
+        live1.onlineUsers = 17999;
+        live1.streamAddr = LIVE_SAM;
+        
+        SamCreator *creator1 = [[SamCreator alloc]init];
+        creator1.nick = @"Joe";
+        creator1.portrait = @"Joe";
+        live1.creator = creator1;
+        
+        SamLive *live2 = [[SamLive alloc]init];
+        live2.city = @"上海";
+        live2.onlineUsers = 16999;
+        live2.streamAddr = LIVE_SAM;
+        
+        SamCreator *creator2 = [[SamCreator alloc]init];
+        creator2.nick = @"Ha";
+        creator2.portrait = @"Ha";
+        live2.creator = creator2;
+        [_dataList removeAllObjects];
+        [_dataList addObjectsFromArray:@[live, live1, live2]];
     }
     
     return _dataList;
@@ -42,7 +73,6 @@ static NSString * identifier = @"focus";
 {
     if (!_imageAndLinkArray) {
         _imageAndLinkArray = [NSMutableArray array];
-        // if failed to get tickers from internet, load images from local.
         if (!_imageAndLinkArray) {
             for (int i = 0; i < 7; i++) {
                 UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d",i+1]];
@@ -121,40 +151,8 @@ static NSString * identifier = @"focus";
 
 - (void)loadData
 {
-    SamLive *live = [[SamLive alloc]init];
-    live.city = @"杭州";
-    live.onlineUsers = 18999;
-    live.streamAddr = LIVE_SAM;
-    
-    SamCreator *creator = [[SamCreator alloc]init];
-    creator.nick = @"Sam";
-    creator.portrait = @"Sam";
-    live.creator = creator;
-    
-    SamLive *live1 = [[SamLive alloc]init];
-    live1.city = @"LA";
-    live1.onlineUsers = 17999;
-    live1.streamAddr = LIVE_SAM;
-    
-    SamCreator *creator1 = [[SamCreator alloc]init];
-    creator1.nick = @"Joe";
-    creator1.portrait = @"Joe";
-    live1.creator = creator1;
-    
-    SamLive *live2 = [[SamLive alloc]init];
-    live2.city = @"上海";
-    live2.onlineUsers = 16999;
-    live2.streamAddr = LIVE_SAM;
-    
-    SamCreator *creator2 = [[SamCreator alloc]init];
-    creator2.nick = @"Ha";
-    creator2.portrait = @"Ha";
-    live2.creator = creator2;
-    
-    [self.dataList removeAllObjects];
-    [self.dataList addObjectsFromArray:@[live, live1, live2]];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
     });
     if (self.tableView.mj_header.isRefreshing) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_global_queue(0, 0), ^{
@@ -166,12 +164,11 @@ static NSString * identifier = @"focus";
         [self.imageAndLinkArray removeAllObjects];
         [self.imageAndLinkArray addObjectsFromArray:obj];
         [self.tickersView updateForImagesAndLinks:_imageAndLinkArray];
+        
+        [self.tableView reloadData];
+        
     } failed:^(id obj) {
         NSLog(@"%@",obj);
-        dispatch_queue_t queue = dispatch_queue_create("test", DISPATCH_QUEUE_CONCURRENT);
-        dispatch_async(queue, ^{
-            DLog(@"I fuck you");
-        });
     }];
 }
 
