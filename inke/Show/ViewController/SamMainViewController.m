@@ -10,6 +10,7 @@
 #import "SamMainTopView.h"
 
 @interface SamMainViewController ()<UIScrollViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (nonatomic, strong) NSArray *datalist;
 
@@ -18,6 +19,7 @@
 @end
 
 @implementation SamMainViewController
+
 
 -(NSArray *)datalist
 {
@@ -88,7 +90,8 @@
     // setup scrollview content size
     self.contentScrollView.contentSize =CGSizeMake(([UIScreen mainScreen].bounds.size.width)*self.datalist.count, 0);
     self.contentScrollView.contentOffset = CGPointMake([UIScreen mainScreen].bounds.size.width,0);
-    [self.contentScrollView setFrame:[UIScreen mainScreen].bounds];
+    self.contentScrollView.autoresizesSubviews = NO;
+    [self.contentScrollView setFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight)];
     // Add views for scrollView
     for (NSInteger i = 0; i < vcNames.count; i++) {
         UIViewController *vc = self.childViewControllers[i];
@@ -97,7 +100,7 @@
     }
 }
 
-
+#pragma mark - ScrollView delegate
 // end animation
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
@@ -129,13 +132,7 @@
 // end decelerating init child view controller
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-
     [self scrollViewDidEndScrollingAnimation:scrollView];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 /*

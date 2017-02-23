@@ -8,16 +8,9 @@
 
 
 #import <UIKit/UIKit.h>
+#import "SamBaseViewController.h"
 
-// 标签栏 高度
-extern const CGFloat kStatusBarHeight;
-// 导航栏 高度
-extern const CGFloat kNavigationBarHeight;
-// 动画   默认 时间
-extern const CGFloat kDefaultAnimationTime;
-
-
-@interface FJBaseTableViewController : UIViewController
+@interface FJBaseTableViewController : SamBaseViewController
 // tableView
 @property (nonatomic, strong) UITableView *tableView;
 // 设置 导航栏

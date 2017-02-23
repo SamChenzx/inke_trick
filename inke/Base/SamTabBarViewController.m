@@ -44,6 +44,7 @@
     // Do any additional setup after loading the view.
     // add controller
     [self configViewControllers];
+    self.view.autoresizesSubviews = NO;
     // add tabbar
     [[UITabBar appearance] setBackgroundImage:[UIImage new]];
     [[UITabBar appearance] setShadowImage:[UIImage new]];

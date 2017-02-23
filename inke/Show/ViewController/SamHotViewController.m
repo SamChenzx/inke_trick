@@ -16,9 +16,13 @@
 #import "MJRefresh.h"
 
 
+
 static NSString *identifier = @"SamLiveCell";
 
-@interface SamHotViewController () <SamTickersDelegate, UIScrollViewDelegate>
+@interface SamHotViewController () <SamTickersDelegate, UIScrollViewDelegate> {
+    CGFloat _originalOffsetY; //上一次偏移量
+}
+
 
 @property (nonatomic, strong) NSMutableArray *dataList;
 @property(nonatomic, strong) SamTickersView *tickersView;
@@ -142,6 +146,7 @@ static NSString *identifier = @"SamLiveCell";
     }];
 }
 
+
 #pragma mark TableView staff
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -175,7 +180,6 @@ static NSString *identifier = @"SamLiveCell";
     playerVC.dataList = self.dataList;
     playerVC.live = live;
     playerVC.index = indexPath.row;
-    
     [playerVC setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self presentViewController:playerVC animated:YES completion:nil];
     
@@ -183,6 +187,5 @@ static NSString *identifier = @"SamLiveCell";
 //    playerVC.hidesBottomBarWhenPushed = YES;
 //    [self.navigationController pushViewController:playerVC animated:YES];
 }
-
 
 @end

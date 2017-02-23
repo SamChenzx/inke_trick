@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.view.autoresizesSubviews = NO;
     self.navigationBar.barTintColor = [UIColor colorWithRed:0 green:216 blue:201 alpha:1];
     self.navigationBar.tintColor = [UIColor whiteColor];
 //    static dispatch_once_t onceToken;
