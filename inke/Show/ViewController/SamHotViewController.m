@@ -72,6 +72,29 @@ static NSString *identifier = @"SamLiveCell";
     
     [self loadData];
     
+    NSLock *lock = [NSLock new];
+    //线程1
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        DLog(@"线程1 尝试加速ing...");
+        [lock lock];
+        sleep(3);//睡眠5秒
+        DLog(@"线程1");
+        [lock unlock];
+        DLog(@"线程1解锁成功");
+    });
+    
+    //线程2
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        DLog(@"线程2 尝试加速ing...");
+        BOOL x =  [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:4]];
+        if (x) {
+            DLog(@"线程2");
+            [lock unlock];
+        }else{
+            DLog(@"失败");
+        }
+    });
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
