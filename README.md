@@ -14,4 +14,4 @@
 ![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/demo04.gif)
 
 # my jianshu blog 
-[my jianshu](http://www.jianshu.com/u/90ea169e864c)
+Some of this demo is introduced in [my jianshu](http://www.jianshu.com/u/90ea169e864c)
