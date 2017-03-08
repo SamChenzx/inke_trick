@@ -8,6 +8,10 @@
 
 # screen shot
 
-![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/Simulator%20Screen%20Shot%20Dec%2031%2C%202016%2C%204.09.20%20PM.png)
-![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/Simulator%20Screen%20Shot%20Dec%2031%2C%202016%2C%204.06.48%20PM.png)
-![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/Simulator%20Screen%20Shot%20Dec%2031%2C%202016%2C%204.52.47%20PM.png)
+![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/demo01.gif)
+![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/demo02.gif)
+![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/demo03.gif)
+![](https://github.com/SamChenzx/inke_trick/blob/master/Screen%20shot/demo04.gif)
+
+# my jianshu blog 
+[my jianshu](http://www.jianshu.com/u/90ea169e864c)
