@@ -64,6 +64,8 @@ static NSString *identifier = @"SamLiveCell";
     return _tickersView;
 }
 
+int value = 0;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -72,28 +74,62 @@ static NSString *identifier = @"SamLiveCell";
     
     [self loadData];
     
-    NSLock *lock = [NSLock new];
-    //线程1
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        DLog(@"线程1 尝试加速ing...");
-        [lock lock];
-        sleep(3);//睡眠5秒
-        DLog(@"线程1");
-        [lock unlock];
-        DLog(@"线程1解锁成功");
-    });
+//    NSLock *lock = [NSLock new];
+//    //线程1
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        DLog(@"线程1 尝试加速ing...");
+//        [lock lock];
+//        sleep(3);//睡眠5秒
+//        DLog(@"线程1");
+//        [lock unlock];
+//        DLog(@"线程1解锁成功");
+//    });
+//    
+//    //线程2
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        DLog(@"线程2 尝试加速ing...");
+//        BOOL x =  [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:4]];
+//        if (x) {
+//            DLog(@"线程2");
+//            [lock unlock];
+//        }else{
+//            DLog(@"失败");
+//        }
+//    });
+//    
+//    NSString *aString = @"This is a test of string";
+//    char *cString;
+//    [aString getCString:cString maxLength:aString.length encoding:NSUTF8StringEncoding];
+//    NSRange range = [aString rangeOfString:@"test"];
+//    NSLog(@"range.location, range.length: %ld, %ld",range.location, range.length);
+//    NSLog(@"%c",cString[0]);
+//    NSLog(@"%c",cString[1]);
+//    NSLog(@"%c",cString[2]);
+//    NSLog(@"%c",cString[3]);
     
-    //线程2
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        DLog(@"线程2 尝试加速ing...");
-        BOOL x =  [lock lockBeforeDate:[NSDate dateWithTimeIntervalSinceNow:4]];
-        if (x) {
-            DLog(@"线程2");
-            [lock unlock];
-        }else{
-            DLog(@"失败");
-        }
-    });
+//    {
+//        CFMutableArrayRef cfObject = CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL);
+//        printf("retain count: %ld\n", CFGetRetainCount(cfObject));
+//        id obj = (__bridge_transfer id)cfObject;
+//        printf("retain count after cast: %ld\n", CFGetRetainCount(cfObject));
+//        NSLog(@"class = %@\n", obj);
+//        
+//        NSString *astring = @"This is a test of memory leak";
+//        NSString *bstring = [NSString stringWithString:astring];
+//        NSString *cstring = astring;
+//        NSLog(@"string: %@,%@,%@",astring,bstring,cstring);
+//    }
+    
+    {
+    static int val = 0;
+    void(^blk)(void) = ^{val = 1; value = 1;};
+    blk();
+    }
+    NSMutableString *sss = [[NSMutableString alloc]initWithString:@"let me see what you got"];
+    NSMutableString *ssssss = sss;
+    [ssssss appendString:@" from copy"];
+    NSLog(@"sss: %@    ssssss:%@", sss, ssssss);
+    NSLog(@"sss: %p    ssssss:%p", sss, ssssss);
     
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -28,21 +28,21 @@
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_xinxi_h" translatesAutoresizingMaskIntoConstraints="NO" id="4DE-Ah-JHU">
-                            <rect key="frame" x="167.5" y="10" width="40" height="40"/>
+                            <rect key="frame" x="168" y="10" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="JOt-Hh-Gmw"/>
                                 <constraint firstAttribute="width" secondItem="4DE-Ah-JHU" secondAttribute="height" multiplier="1:1" id="M1y-Mb-v0X"/>
                             </constraints>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mg_room_btn_liwu_h" translatesAutoresizingMaskIntoConstraints="NO" id="lu8-TM-AU8">
-                            <rect key="frame" x="222.5" y="10" width="40" height="40"/>
+                            <rect key="frame" x="223" y="10" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="WhD-3c-yfd"/>
                                 <constraint firstAttribute="width" secondItem="lu8-TM-AU8" secondAttribute="height" multiplier="1:1" id="yX2-na-ug2"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0E-vL-zoH">
-                            <rect key="frame" x="277.5" y="10" width="40" height="40"/>
+                            <rect key="frame" x="278" y="10" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="9Uf-Fe-a1Z"/>
                                 <constraint firstAttribute="width" secondItem="c0E-vL-zoH" secondAttribute="height" multiplier="1:1" id="VFa-5p-LDp"/>

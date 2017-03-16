@@ -11,6 +11,7 @@
 #import "SamSetting.h"
 #import "SamContributionViewController.h"
 #import "SamShortVideosViewController.h"
+#import "SamSettingViewController.h"
 
 #define tableHeaderViewHeight 363
 
@@ -153,24 +154,11 @@
     // Navigation logic may go here, for example:
     // Create the next view controller.
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     SamSetting *setting = self.dataList[indexPath.section][indexPath.row];
-    if ([setting.vcName isEqualToString:(NSStringFromClass([SamContributionViewController class]))]) {
-        SamContributionViewController *detailViewController = [[SamContributionViewController alloc] initWithNibName:@"SamContributionViewController" bundle:nil];
-        // Pass the selected object to the new view controller.
-        
-        // Push the view controller.
+    SamBaseViewController *detailViewController = [[NSClassFromString(setting.vcName) alloc] init];
+    if(detailViewController != nil) {
         [self.navigationController pushViewController:detailViewController animated:YES];
-//        self.tabBarController.tabBar.frame = CGRectMake(0, kScreenHeight, kScreenWidth, 49);
-        return;
-    } else if ([setting.vcName isEqualToString:(NSStringFromClass([SamShortVideosViewController class]))]){
-        
-        SamShortVideosViewController *detailViewController = [[SamShortVideosViewController alloc]init];
-        detailViewController.urlString = @"https://www.baidu.com";
-        // Push the view controller.
-        [self.navigationController pushViewController:detailViewController animated:YES];
-        return;
-    } else {
-    return ;
     }
 }
 

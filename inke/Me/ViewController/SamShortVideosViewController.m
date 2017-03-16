@@ -8,19 +8,19 @@
 
 #import "SamShortVideosViewController.h"
 #import <WebKit/WebKit.h>
-#import "SamPlayerScrollView.h"
 
 #define kScreenbounds [UIScreen mainScreen].bounds
 #define pictureHeight 200
 
-@interface SamShortVideosViewController () <WKUIDelegate,WKNavigationDelegate,UITableViewDataSource, UITableViewDelegate>
+@interface SamShortVideosViewController () <WKUIDelegate,WKNavigationDelegate>
 
 @property (nonatomic, strong) WKWebView * webView;
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIImageView *pictureImageView;
 @property (nonatomic, strong) UIView *header;
-@property (nonatomic, strong) SamPlayerScrollView *playerScrollView;
+@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, assign) NSInteger totalCount;
 
 @end
 
@@ -29,10 +29,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self initUI];
+  
+}
+
+- (void)initUI {
     self.webView = [[WKWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
-    NSURL *url = [NSURL URLWithString:self.urlString];
+    NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     [self.view addSubview:self.webView];
@@ -40,10 +45,15 @@
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
     self.navigationController.navigationBar.titleTextAttributes = attributes;
     self.navigationItem.title = @"短视频";
-    self.playerScrollView = [[SamPlayerScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    [self.view addSubview:self.playerScrollView];
     // progress bar
-  
+    [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 3)];
+    self.progressView.backgroundColor = [UIColor clearColor];
+    self.progressView.tintColor = [UIColor clearColor];
+    self.progressView.trackTintColor = [UIColor clearColor];
+    self.progressView.progressTintColor = [UIColor greenColor];
+    self.progressView.progress = 0;
+    [self.view addSubview:self.progressView];
 }
 
 
@@ -84,18 +94,18 @@
 //    
 //}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    
-    return 20;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.textLabel.text = @"向下拉我";
-    return cell;
-}
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    
+//    return 20;
+//}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+//    cell.textLabel.text = @"向下拉我";
+//    return cell;
+//}
 
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 //{
@@ -119,23 +129,39 @@
 //    
 //}
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 #pragma mark WKWebView delegate
 
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
     
 }
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqual:@"estimatedProgress"] && [object isKindOfClass:[WKWebView class]]) {
+        self.progressView.progress = [change[@"new"] floatValue];
+        //        NSLog(@"change[new]:%f",[change[@"new"] floatValue]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.6 animations:^{
+                self.progressView.progress = [change[@"new"] floatValue];
+            }];
+            if (self.progressView.progress == 1.0) {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.2*NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                    self.progressView.hidden = YES;
+                });
+            } else {
+                self.progressView.hidden = NO;
+            }
+        });
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+-(void)dealloc
+{
+    [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
+}
+
 
 @end
