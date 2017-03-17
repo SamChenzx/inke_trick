@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataList;
 
+@property (nonatomic, strong) UINavigationItem *privateNavigationItem;
+@property (nonatomic, strong) UINavigationBar *privateNavigationBar;
 
 @end
 
@@ -31,6 +33,18 @@
     // Do any additional setup after loading the view.
     [self loadData];
     [self initUI];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //    self.navigationController.navigationBarHidden = YES;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)loadData
@@ -85,17 +99,36 @@
 
 
 - (void)initUI {
-    self.tableView.rowHeight = 60;
-    self.tableView.tableFooterView.height = 150;
-    self.tableView.tableFooterView.width = kScreenWidth;
-//    self.tableView.con
     
+    // table view
+    self.tableView.rowHeight = 55;
+    self.tableView.tableFooterView.height = 140;
+    self.tableView.tableFooterView.width = kScreenWidth;
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+    
+    // navigationBar
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:18],NSFontAttributeName, nil];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"global_back"] style:UIBarButtonItemStylePlain target:self action:@selector(clickBack:)];
+    self.privateNavigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, kScreenWidth, 64)];
+    [self.privateNavigationBar setTitleTextAttributes:attributes];
+    [self.privateNavigationBar setTintColor:[UIColor whiteColor]];
+    [self.privateNavigationBar setBarTintColor:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]];
+    self.privateNavigationItem = [[UINavigationItem alloc] initWithTitle:@"设置"];
+    self.privateNavigationItem.leftBarButtonItem = leftItem;
+    [self.privateNavigationBar setItems:@[self.privateNavigationItem]];
+    [self.view addSubview:self.privateNavigationBar];
 }
+
+- (void)clickBack:(UIBarButtonItem *)item {
+    NSLog(@"should go back");
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)clickLogOutButton:(UIButton *) button {
     
@@ -118,11 +151,13 @@
     // Configure the cell...
     SamSetting *setting = self.dataList[indexPath.section][indexPath.row];
     cell.textLabel.text = setting.title;
+    [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
     cell.detailTextLabel.text = setting.subTitle;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if ([cell.textLabel.text isEqual: @"未关注人私信"]) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         UISwitch *messageSwitch = [[UISwitch alloc] init];
+        [messageSwitch setOnTintColor:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]];
         [messageSwitch setOn:YES];
         [cell addSubview:messageSwitch];
         [messageSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -134,6 +169,7 @@
     if ([cell.textLabel.text isEqual: @"清理缓存"]) {
         cell.accessoryType = UITableViewCellAccessoryNone;
         UILabel *cacheLabel = [[UILabel alloc]init];
+        [cacheLabel setFont:[UIFont systemFontOfSize:13]];
         cacheLabel.text = @"438.42M";
         [cell addSubview:cacheLabel];
         [cacheLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -158,23 +194,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section != _dataList.count-1) {
-        return 10.0;
+        return 5;
     }
     return 0.5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section != 0) {
-        return 10.0;
-    }
-    return 0;
+    return 5;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     if (section == _dataList.count-1) {
         UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 150)];
         UIButton *logOutButton = [[UIButton alloc]init];
-        NSDictionary *buttonAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:17], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
+        NSDictionary *buttonAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
         NSAttributedString *buttonTitle = [[NSAttributedString alloc]initWithString:@"退出登陆" attributes:buttonAttributes];
         [logOutButton setAttributedTitle:buttonTitle forState:UIControlStateNormal];
         [logOutButton setBackgroundImage:[UIImage imageNamed:@"me_button"] forState:UIControlStateNormal];
@@ -186,10 +219,10 @@
             make.centerY.mas_equalTo(tableFooterView.mas_centerY).mas_offset(40);
         }];
         
-        
         UILabel *versionLabel = [[UILabel alloc]init];
         NSDictionary *labelAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:13], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
-        NSAttributedString *labelTitle = [[NSAttributedString alloc]initWithString:@"Version 3.8.5" attributes:labelAttributes];
+        NSAttributedString *labelTitle = [[NSAttributedString alloc]initWithString:@"Version 4.0.10" attributes:labelAttributes];
+        [versionLabel setAttributedText:labelTitle];
         [tableFooterView addSubview:versionLabel];
         [versionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(tableFooterView).centerOffset(CGPointMake(0, 75));

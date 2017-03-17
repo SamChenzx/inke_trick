@@ -12,6 +12,7 @@
 @interface SamTickersView () <UIScrollViewDelegate,UIPageViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *scrollView1;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (nonatomic, strong) UIImageView *leftImageView, *middleImageView, *rightImageView;
 @property (nonatomic, assign) NSInteger currentIndex;
@@ -67,11 +68,41 @@
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class]) owner:self options:nil] lastObject];
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+
+    if (self) {
+        // prepare scrollView
+        self.scrollerViewWidth = kScreenWidth;
+        self.scrollerViewHeight = 125;
+        self.scrollView1 = [[UIScrollView alloc] initWithFrame:frame];
+        self.scrollView1.contentSize = CGSizeMake(frame.size.width*3, 0);
+        self.scrollView1.pagingEnabled = YES;
+        self.scrollView1.delegate = self;
+        
+        // image views
+        self.leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.origin.x-self.scrollerViewWidth, 0, self.scrollerViewWidth, self.scrollerViewHeight)];
+        [self.leftImageView setImage:[UIImage imageNamed:@"1"]];
+        self.middleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.origin.x, 0, self.scrollerViewWidth, self.scrollerViewHeight)];
+        [self.middleImageView setImage:[UIImage imageNamed:@"3"]];
+        self.rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(frame.origin.x+self.scrollerViewWidth, 0, self.scrollerViewWidth, self.scrollerViewHeight)];
+        [self.rightImageView setImage:[UIImage imageNamed:@"5"]];
+        // add image views
+        [self.scrollView1 addSubview:self.leftImageView];
+        [self.scrollView1 addSubview:self.middleImageView];
+        [self.scrollView1 addSubview:self.rightImageView];
+        
+        [self addSubview:self.scrollView1];
+        // init pageControl
+        self.isPageControl = NO;
+        [self initPageControl];
+    }
+    return self;
+}
+
 -(void)awakeFromNib
 {
     [super awakeFromNib];
-//    [self setupImageViews];
-    
     
     [self initUI];
 }
@@ -167,8 +198,6 @@
         }
     }
 }
-
-
 
 - (void)downloadImageWithURLString:(NSString *)urlString atIndex:(NSInteger)index
 {
@@ -339,14 +368,6 @@
 {
     
     return ((SamTickers *)self.dataList[self.pageControl.currentPage]).link;
-}
-
--(instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initUI];
-    }
-    return self;
 }
 
 #pragma mark ScrollView Delegate

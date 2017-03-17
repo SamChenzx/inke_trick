@@ -22,8 +22,6 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:advertiseImage forKey:@"advertiseImage"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-
 }
 
 @end

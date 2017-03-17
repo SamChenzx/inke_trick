@@ -12,6 +12,7 @@
 #import "SamContributionViewController.h"
 #import "SamShortVideosViewController.h"
 #import "SamSettingViewController.h"
+#import "SamBaseNavViewController.h"
 
 #define tableHeaderViewHeight 363
 
@@ -49,7 +50,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.tableView.rowHeight = 60;
+    self.tableView.rowHeight = 55;
     self.tableView.sectionFooterHeight = 0;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -111,11 +112,11 @@
     self.navigationController.navigationBarHidden = YES;
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    self.navigationController.navigationBarHidden = NO;
+//}
 
 -(BOOL)prefersStatusBarHidden
 {
@@ -140,7 +141,9 @@
     // Configure the cell...
     SamSetting *setting = self.dataList[indexPath.section][indexPath.row];
     cell.textLabel.text = setting.title;
+    [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
     cell.detailTextLabel.text = setting.subTitle;
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:14]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -159,6 +162,9 @@
     SamBaseViewController *detailViewController = [[NSClassFromString(setting.vcName) alloc] init];
     if(detailViewController != nil) {
         [self.navigationController pushViewController:detailViewController animated:YES];
+        
+//        SamBaseNavViewController *navController = [[SamBaseNavViewController alloc] initWithRootViewController:self];
+//        [navController pushViewController:detailViewController animated:YES];
     }
 }
 

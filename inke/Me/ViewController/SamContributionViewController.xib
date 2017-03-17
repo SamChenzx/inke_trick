@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SamContributionViewController">
             <connections>
+                <outlet property="privateNavigationBar" destination="WRd-BZ-DuB" id="kPG-mm-h8t"/>
+                <outlet property="privateNavigationItem" destination="dLB-iU-xDe" id="2yd-Vs-7ZK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,8 +21,18 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRd-BZ-DuB">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="64" id="Zja-1L-DaK"/>
+                    </constraints>
+                    <color key="barTintColor" red="0.0042188814841210842" green="0.84569472074508667" blue="0.786396324634552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <items>
+                        <navigationItem title="Title" id="dLB-iU-xDe"/>
+                    </items>
+                </navigationBar>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="GrH-Qv-Dex">
-                    <rect key="frame" x="0.0" y="20" width="375" height="45"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="45"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUi-Hq-nCD">
                             <rect key="frame" x="0.0" y="0.0" width="187.5" height="45"/>
@@ -36,16 +48,20 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="45" id="kdP-Ta-8mj"/>
+                        <constraint firstAttribute="height" constant="45" id="fUs-Ob-Z0S"/>
                     </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="GrH-Qv-Dex" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="984-Ug-a0a"/>
-                <constraint firstAttribute="trailing" secondItem="GrH-Qv-Dex" secondAttribute="trailing" id="EBx-va-Xkb"/>
-                <constraint firstItem="GrH-Qv-Dex" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="eF1-fy-329"/>
+                <constraint firstAttribute="trailing" secondItem="GrH-Qv-Dex" secondAttribute="trailing" id="DDR-4p-j4x"/>
+                <constraint firstAttribute="trailing" secondItem="WRd-BZ-DuB" secondAttribute="trailing" id="RsN-5Q-B19"/>
+                <constraint firstItem="GrH-Qv-Dex" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UIY-Iy-qOc"/>
+                <constraint firstItem="GrH-Qv-Dex" firstAttribute="top" secondItem="WRd-BZ-DuB" secondAttribute="bottom" id="ahy-ox-kOH"/>
+                <constraint firstItem="WRd-BZ-DuB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lAM-lU-LNu"/>
+                <constraint firstItem="WRd-BZ-DuB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qtq-e2-F3n"/>
             </constraints>
+            <point key="canvasLocation" x="-38" y="-106"/>
         </view>
     </objects>
 </document>

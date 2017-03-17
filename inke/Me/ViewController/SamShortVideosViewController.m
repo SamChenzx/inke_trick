@@ -22,6 +22,9 @@
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, assign) NSInteger totalCount;
 
+@property (nonatomic, strong) UINavigationItem *privateNavigationItem;
+@property (nonatomic, strong) UINavigationBar *privateNavigationBar;
+
 @end
 
 @implementation SamShortVideosViewController
@@ -34,20 +37,31 @@
 }
 
 - (void)initUI {
-    self.webView = [[WKWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    // navigationBar
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:18],NSFontAttributeName, nil];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"global_back"] style:UIBarButtonItemStylePlain target:self action:@selector(clickBack:)];
+    self.privateNavigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, kScreenWidth, 64)];
+    [self.privateNavigationBar setTitleTextAttributes:attributes];
+    [self.privateNavigationBar setTintColor:[UIColor whiteColor]];
+    [self.privateNavigationBar setBarTintColor:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]];
+    self.privateNavigationItem = [[UINavigationItem alloc] initWithTitle:@"短视频"];
+    self.privateNavigationItem.leftBarButtonItem = leftItem;
+    [self.privateNavigationBar setItems:@[self.privateNavigationItem]];
+    [self.view addSubview:self.privateNavigationBar];
+
+    // webView
+    self.webView = [[WKWebView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+64, kScreenWidth, kScreenHeight-64)];
     self.webView.UIDelegate = self;
     self.webView.navigationDelegate = self;
-    NSURL *url = [NSURL URLWithString:@"https://www.baidu.com"];
+    NSURL *url = [NSURL URLWithString:@"https://sv.baidu.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     [self.view addSubview:self.webView];
     
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:20],NSFontAttributeName, nil];
-    self.navigationController.navigationBar.titleTextAttributes = attributes;
-    self.navigationItem.title = @"短视频";
     // progress bar
     [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 3)];
+    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 64, kScreenWidth, 3)];
     self.progressView.backgroundColor = [UIColor clearColor];
     self.progressView.tintColor = [UIColor clearColor];
     self.progressView.trackTintColor = [UIColor clearColor];
@@ -56,17 +70,9 @@
     [self.view addSubview:self.progressView];
 }
 
-
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBarHidden = NO;
+- (void)clickBack:(UIBarButtonItem *)item {
+    NSLog(@"should go back");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
