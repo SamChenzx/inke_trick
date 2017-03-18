@@ -16,6 +16,7 @@
 + (instancetype)sharedUser;
 + (BOOL)isAutoLogin;
 + (void)saveUser;
++ (void)logOut;
 
 
 @end

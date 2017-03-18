@@ -9,6 +9,8 @@
 #import "SamSettingViewController.h"
 #import "SamSetting.h"
 #import "SamCacheHelper.h"
+#import "SamUserHelper.h"
+#import "SamLoginViewController.h"
 
 @interface SamSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -41,13 +43,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //    self.navigationController.navigationBarHidden = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)loadData
@@ -167,6 +167,10 @@
 
 - (void)clickLogOutButton:(UIButton *) button {
     NSLog(@"should log out");
+    [SamUserHelper logOut];
+    SamLoginViewController *loginVC = [[SamLoginViewController alloc] init];
+    [loginVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

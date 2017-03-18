@@ -48,5 +48,12 @@
     }
 }
 
++ (void)logOut
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"iconURL"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"nickName"];
+    
+}
+
 
 @end
