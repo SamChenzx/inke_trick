@@ -8,6 +8,7 @@
 
 #import "SamSettingViewController.h"
 #import "SamSetting.h"
+#import "SamCacheHelper.h"
 
 @interface SamSettingViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -16,6 +17,8 @@
 
 @property (nonatomic, strong) UINavigationItem *privateNavigationItem;
 @property (nonatomic, strong) UINavigationBar *privateNavigationBar;
+
+@property (nonatomic, assign) BOOL hasUpdatedCell;
 
 @end
 
@@ -71,9 +74,14 @@
     
     SamSetting *setting5 = [[SamSetting alloc]init];
     setting5.title = @"清理缓存";
-    setting5.subTitle = @"";
-    setting5.vcName = @"";
-    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        setting5.subTitle = [SamCacheHelper cachesSize];
+        setting5.vcName = @"";
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        });
+    });
     SamSetting *setting6 = [[SamSetting alloc]init];
     setting6.title = @"帮助和反馈";
     setting6.subTitle = @"";
@@ -102,7 +110,7 @@
     
     // table view
     self.tableView.rowHeight = 55;
-    self.tableView.tableFooterView.height = 140;
+    self.tableView.tableFooterView.height = 10;
     self.tableView.tableFooterView.width = kScreenWidth;
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -110,6 +118,33 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
+    
+    // table footer view
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 150)];
+    UIButton *logOutButton = [[UIButton alloc]init];
+    [logOutButton setTarget:self action:@selector(clickLogOutButton:) forControlEvents:UIControlEventTouchUpInside];
+    NSDictionary *buttonAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
+    NSAttributedString *buttonTitle = [[NSAttributedString alloc]initWithString:@"退出登陆" attributes:buttonAttributes];
+    [logOutButton setAttributedTitle:buttonTitle forState:UIControlStateNormal];
+    [logOutButton setBackgroundImage:[UIImage imageNamed:@"me_button"] forState:UIControlStateNormal];
+    [logOutButton addTarget:self action:@selector(clickLogOutButton:) forControlEvents:UIControlEventTouchUpInside];
+    [logOutButton sizeToFit];
+    [tableFooterView addSubview:logOutButton];
+    [logOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.mas_equalTo(tableFooterView.mas_centerX);
+        make.centerY.mas_equalTo(tableFooterView.mas_centerY);
+    }];
+    
+    UILabel *versionLabel = [[UILabel alloc]init];
+    NSDictionary *labelAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:13], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
+    NSAttributedString *labelTitle = [[NSAttributedString alloc]initWithString:@"Version 4.0.10" attributes:labelAttributes];
+    [versionLabel setAttributedText:labelTitle];
+    [tableFooterView addSubview:versionLabel];
+    [versionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(tableFooterView).centerOffset(CGPointMake(0, 35));
+    }];
+    [versionLabel setAttributedText:labelTitle];
+    self.tableView.tableFooterView = tableFooterView;
     
     // navigationBar
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,[UIFont systemFontOfSize:18],NSFontAttributeName, nil];
@@ -131,7 +166,7 @@
 
 
 - (void)clickLogOutButton:(UIButton *) button {
-    
+    NSLog(@"should log out");
 }
 
 #pragma mark - Table view data source
@@ -145,6 +180,7 @@
     return array.count;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     
@@ -152,7 +188,6 @@
     SamSetting *setting = self.dataList[indexPath.section][indexPath.row];
     cell.textLabel.text = setting.title;
     [cell.textLabel setFont:[UIFont systemFontOfSize:14]];
-    cell.detailTextLabel.text = setting.subTitle;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if ([cell.textLabel.text isEqual: @"未关注人私信"]) {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -164,13 +199,14 @@
             make.centerY.mas_equalTo(cell.textLabel.centerX);
             make.right.mas_equalTo(cell.right).offset(-8);
         }];
-        
     }
+    
     if ([cell.textLabel.text isEqual: @"清理缓存"]) {
+        
         cell.accessoryType = UITableViewCellAccessoryNone;
         UILabel *cacheLabel = [[UILabel alloc]init];
         [cacheLabel setFont:[UIFont systemFontOfSize:13]];
-        cacheLabel.text = @"438.42M";
+        cacheLabel.text = setting.subTitle;
         [cell addSubview:cacheLabel];
         [cacheLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(cell.textLabel.centerY);
@@ -187,52 +223,27 @@
     // Navigation logic may go here, for example:
     // Create the next view controller.
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if ([_dataList[indexPath.section][indexPath.row]  isEqual: @"清理缓存"]) {
-        ;
+    if ([((SamSetting *)_dataList[indexPath.section][indexPath.row]).title  isEqual: @"清理缓存"]) {
+        NSLog(@"clear cache here");
+        [SamCacheHelper cleanCachesWithCompletion:^{
+            NSLog(@"has cleared cache");
+            ((SamSetting *)_dataList[indexPath.section][indexPath.row]).subTitle = @"Zero KB";
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            });
+        }];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     if (section != _dataList.count-1) {
-        return 5;
+        return 6;
     }
     return 0.5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 5;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == _dataList.count-1) {
-        UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 150)];
-        UIButton *logOutButton = [[UIButton alloc]init];
-        NSDictionary *buttonAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:15], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
-        NSAttributedString *buttonTitle = [[NSAttributedString alloc]initWithString:@"退出登陆" attributes:buttonAttributes];
-        [logOutButton setAttributedTitle:buttonTitle forState:UIControlStateNormal];
-        [logOutButton setBackgroundImage:[UIImage imageNamed:@"me_button"] forState:UIControlStateNormal];
-        [logOutButton addTarget:self action:@selector(clickLogOutButton:) forControlEvents:UIControlEventTouchUpInside];
-        [logOutButton sizeToFit];
-        [tableFooterView addSubview:logOutButton];
-        [logOutButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.mas_equalTo(tableFooterView.mas_centerX);
-            make.centerY.mas_equalTo(tableFooterView.mas_centerY).mas_offset(40);
-        }];
-        
-        UILabel *versionLabel = [[UILabel alloc]init];
-        NSDictionary *labelAttributes = @{NSFontAttributeName:[UIFont systemFontOfSize:13], NSStrokeColorAttributeName:[UIColor colorWithRed:36.0/255.0 green:215.0/255.0 blue:200.0/255.0 alpha:1]};
-        NSAttributedString *labelTitle = [[NSAttributedString alloc]initWithString:@"Version 4.0.10" attributes:labelAttributes];
-        [versionLabel setAttributedText:labelTitle];
-        [tableFooterView addSubview:versionLabel];
-        [versionLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(tableFooterView).centerOffset(CGPointMake(0, 75));
-        }];
-        [versionLabel setAttributedText:labelTitle];
-
-        return tableFooterView;
-    } else {
-        return nil;
-    }
+    return 6;
 }
 
 
