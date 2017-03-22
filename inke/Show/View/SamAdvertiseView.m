@@ -94,7 +94,7 @@
 
 - (void)timerCountDown
 {
-    __block NSInteger timeOut = 0.3;
+    __block NSInteger timeOut = 1;
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(0, 0));
     self.timer = timer;
     dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC, 0 * NSEC_PER_SEC);

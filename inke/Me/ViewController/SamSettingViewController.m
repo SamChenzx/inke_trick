@@ -209,7 +209,7 @@
         
         cell.accessoryType = UITableViewCellAccessoryNone;
         UILabel *cacheLabel = [[UILabel alloc]init];
-        [cacheLabel setFont:[UIFont systemFontOfSize:13]];
+        [cacheLabel setFont:[UIFont systemFontOfSize:14]];
         cacheLabel.text = setting.subTitle;
         [cell addSubview:cacheLabel];
         [cacheLabel mas_makeConstraints:^(MASConstraintMaker *make) {

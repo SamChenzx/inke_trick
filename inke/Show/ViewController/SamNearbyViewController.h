@@ -7,6 +7,7 @@
 //
 
 #import "SamBaseViewController.h"
+#import "FJBaseTableViewController.h"
 
 @interface SamNearbyViewController : SamBaseViewController
 
